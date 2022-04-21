@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -90,7 +89,6 @@
                   <ImageView fx:id="treeStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="25" GridPane.rowIndex="19" />
                   <ImageView fx:id="algorithmStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="13" GridPane.rowIndex="25" />
                   <ImageView fx:id="graphStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="19" GridPane.rowIndex="7" />
-                  <Label text="afjljlkjsdlkjflsd" GridPane.columnIndex="8" GridPane.rowIndex="1" />
                </children>
             </GridPane>
          </center>
