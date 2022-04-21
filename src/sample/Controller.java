@@ -128,6 +128,11 @@ public class Controller {
             gc = canvas.getGraphicsContext2D();
             drawShapes(gc, 1);
             desktop.add(canvas, 7, 16);
+
+            canvas = new Canvas(300, 250);
+            gc = canvas.getGraphicsContext2D();
+            drawShapes(gc, 2);
+            desktop.add(canvas, 1, 10);
         }
 
     }
@@ -141,14 +146,11 @@ public class Controller {
                 gc.setLineWidth(10);
                 gc.strokeLine(20, 15, 20, 235);
                 break;
-            case 8:
-                System.out.println("得B");
-                break;
-            case 7:
-                System.out.println("得C");
-                break;
-            case 6:
-                System.out.println("得D");
+            case 2:
+                gc.setFill(Color.GREEN);
+                gc.setStroke(Color.GREEN);
+                gc.setLineWidth(10);
+                gc.strokeLine(20, 15, 20, 235);
                 break;
             default:
                 System.out.println("");

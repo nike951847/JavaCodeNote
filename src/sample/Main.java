@@ -38,7 +38,7 @@ public class Main extends Application {
     * */
 
     //initialize stationName to avoid typo
-    static  {
+    static {
         stationName.add("OpenMPStation");//0
         stationName.add("InheritanceStation");//1
         stationName.add("PolymorphismStation");//2
