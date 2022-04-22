@@ -2,15 +2,23 @@ package sample;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.awt.*;
 import java.util.*;
 import javafx.animation.*;
 import javafx.stage.StageStyle;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.VBox;
+import javafx.application.Platform;
+import javafx.scene.text.Text;
 
 public class Main extends Application {
 
@@ -71,13 +79,53 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
+        //primary stage
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("EXAMPLE");
         primaryStage.setScene(new Scene(root, 1250, 600));
         primaryStage.setFullScreen(true);
         primaryStage.initStyle(StageStyle.UTILITY);
-        primaryStage.show();
 
+        //loading stage
+        Stage loadingStage = new Stage();
+        loadingStage.setTitle("Take Notes");
+        ProgressBar progressBar = new ProgressBar(0);
+        VBox vBox = new VBox(progressBar);
+        vBox.getChildren().add(new Text( "        LOADING"));
+        Scene scene = new Scene(vBox);
+        vBox.setPadding(new Insets(350, 100, 100, 550));
+        loadingStage.setScene(scene);
+        loadingStage.show();
+        loadingStage.setFullScreen(true);
+
+        Thread taskThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                double progress = 0;
+                for(int i=0; i<100; i++){
+                    try {
+                        Thread.sleep(30);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    progress += 0.01;
+
+                    double reportedProgress = progress;
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressBar.setProgress(reportedProgress);
+                            if(progressBar.getProgress() > 1.0) {
+                                primaryStage.show();
+                                loadingStage.close();
+                            }
+                        }
+                    });
+                }
+
+            }
+        });
+        taskThread.start();
     }
 
 
