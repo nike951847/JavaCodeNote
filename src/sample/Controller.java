@@ -1,6 +1,8 @@
 package sample;
 //package javafx.scene.web;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -9,7 +11,16 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-//import javafx.web.HTMLEditor;
+import javafx.scene.web.HTMLEditor;
+import javafx.scene.layout.VBox;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Separator;
+import javafx.scene.control.ToolBar;
+import javafx.util.*;
+import javafx.scene.Node;
+
+import java.util.EventListener;
 
 public class Controller {
 
@@ -256,18 +267,41 @@ public class Controller {
 
     @FXML
     void openMPStationPressed(MouseEvent event) {
-        System.out.println("OJPSJDF");
+
+        HTMLEditor htmlEditor = new HTMLEditor();
+        String htmlText = "<b>Bold text</b>";
+        htmlEditor.setHtmlText(htmlText);
+
+        String htmlTextEdited = htmlEditor.getHtmlText();
+        System.out.println(htmlTextEdited);
+
         Stage stage = new Stage();
-        stage.setTitle("JavaFX Stage Window Title");
-        stage.setX(500);
-        stage.setY(500);
+        ToolBar toolBar = new ToolBar();
+        Button button1 = new Button("Return");
+        button1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                stage.close();
+                ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);
+            }
+        });
+        toolBar.getItems().add(button1);
 
-        stage.setWidth(600);
-        stage.setHeight(300);
+        VBox vBox = new VBox(toolBar, htmlEditor);
+        Scene scene = new Scene(vBox);
 
+        stage.setTitle("Take Notes");
+        stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.showAndWait();
+
+
+
     }
 
+    //add a tool box to fullscreen
+    //return in fullscreen
+    //toolbox save html file to maybe markdown(?
 
 
 }

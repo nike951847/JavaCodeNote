@@ -13,7 +13,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library name="javafx-fxml">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/javafx-fxml-17.jar!/" />
@@ -24,6 +24,15 @@
           <root url="jar://$MODULE_DIR$/lib/javafx-graphics-17-win.jar!/" />
           <root url="jar://$MODULE_DIR$/lib/javafx-base-17.jar!/" />
           <root url="jar://$MODULE_DIR$/lib/javafx-base-17-win.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Program Files/Java/javafx-sdk-17.0.2/lib/javafx.web.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

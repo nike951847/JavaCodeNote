@@ -76,7 +76,6 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 1250, 600));
         primaryStage.setFullScreen(true);
         primaryStage.initStyle(StageStyle.UTILITY);
-
         primaryStage.show();
 
     }
