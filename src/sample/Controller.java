@@ -19,8 +19,12 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.ToolBar;
 import javafx.util.*;
 import javafx.scene.Node;
-
-import java.util.EventListener;
+import javafx.stage.FileChooser;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Controller {
 
@@ -81,6 +85,12 @@ public class Controller {
 
     @FXML
     private GridPane desktop;
+
+    @FXML
+    private Button fullScreenButton;
+
+    @FXML
+    private Button closeButton;
 
     public void initialize() {
         {
@@ -266,27 +276,59 @@ public class Controller {
     }
 
     @FXML
+    void closeMainTab(ActionEvent event) {
+        ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
+    }
+
+    @FXML
+    void fullScreenMainTab(ActionEvent event) {
+        ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);
+    }
+
+    @FXML
     void openMPStationPressed(MouseEvent event) {
 
         HTMLEditor htmlEditor = new HTMLEditor();
-        String htmlText = "<b>Bold text</b>";
+        String htmlText = "<b>Type here to take notes</b>";
         htmlEditor.setHtmlText(htmlText);
 
-        String htmlTextEdited = htmlEditor.getHtmlText();
-        System.out.println(htmlTextEdited);
+        //String htmlTextEdited = htmlEditor.getHtmlText();
+        //System.out.println(htmlTextEdited);
 
         Stage stage = new Stage();
         ToolBar toolBar = new ToolBar();
-        Button button1 = new Button("Return");
-        button1.setOnAction(new EventHandler<ActionEvent>() {
+        Button buttonReturn = new Button("Return");
+        Button buttonSave = new Button("Save");
+
+        buttonReturn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 stage.close();
                 ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);
             }
         });
-        toolBar.getItems().add(button1);
+        buttonSave.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent t) {
+                String stringHtml = htmlEditor.getHtmlText();
+                //htmlText.setText(stringHtml);
 
+                FileChooser fileChooser = new FileChooser();
+
+                //Set extension filter
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("HTML files (*.html)", "*.html");
+                fileChooser.getExtensionFilters().add(extFilter);
+
+                //Show save file dialog
+                File file = fileChooser.showSaveDialog((Stage) ((Node) event.getSource()).getScene().getWindow());
+                if(file != null){
+                    SaveFile(stringHtml, file);
+                }
+            }
+        });
+
+        toolBar.getItems().add(buttonReturn);
+        toolBar.getItems().add(buttonSave);
         VBox vBox = new VBox(toolBar, htmlEditor);
         Scene scene = new Scene(vBox);
 
@@ -294,14 +336,19 @@ public class Controller {
         stage.setScene(scene);
         stage.setFullScreen(true);
         stage.showAndWait();
-
-
-
     }
 
-    //add a tool box to fullscreen
-    //return in fullscreen
-    //toolbox save html file to maybe markdown(?
+    //could be easily separated to another file
+    private void SaveFile(String content, File file){
+        try {
+            FileWriter fileWriter = null;
 
+            fileWriter = new FileWriter(file);
+            fileWriter.write(content);
+            fileWriter.close();
+        } catch (IOException ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }

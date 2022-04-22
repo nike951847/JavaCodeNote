@@ -97,7 +97,8 @@
          <top>
             <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <items>
-                <Button mnemonicParsing="false" text="Button" />
+                <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeMainTab" text="Close" />
+                  <Button fx:id="fullScreenButton" mnemonicParsing="false" onAction="#fullScreenMainTab" text="FullScreen" />
               </items>
             </ToolBar>
          </top>
