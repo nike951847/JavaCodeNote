@@ -1,16 +1,15 @@
 package sample;
+//package javafx.scene.web;
 
 import javafx.fxml.FXML;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import javafx.scene.layout.GridPane;
-import javafx.scene.shape.Line;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.animation.*;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+//import javafx.web.HTMLEditor;
 
 public class Controller {
 
@@ -254,4 +253,21 @@ public class Controller {
         }
 
     }
+
+    @FXML
+    void openMPStationPressed(MouseEvent event) {
+        System.out.println("OJPSJDF");
+        Stage stage = new Stage();
+        stage.setTitle("JavaFX Stage Window Title");
+        stage.setX(500);
+        stage.setY(500);
+
+        stage.setWidth(600);
+        stage.setHeight(300);
+
+        stage.showAndWait();
+    }
+
+
+
 }
