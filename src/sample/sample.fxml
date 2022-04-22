@@ -11,7 +11,7 @@
    <content>
       <BorderPane>
          <center>
-            <GridPane fx:id="desktop" minHeight="1200.0" minWidth="1200.0" prefHeight="1200.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+            <GridPane fx:id="desktop" minHeight="1260.0" minWidth="1260.0" prefHeight="1260.0" prefWidth="1260.0" BorderPane.alignment="CENTER">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

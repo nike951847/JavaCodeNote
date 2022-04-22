@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.util.*;
+import javafx.animation.*;
 
 public class Main extends Application {
 
@@ -72,6 +73,8 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("EXAMPLE");
         primaryStage.setScene(new Scene(root, 1250, 600));
+        primaryStage.setFullScreen(true);
+
         primaryStage.show();
 
     }
