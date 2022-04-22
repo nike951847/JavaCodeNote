@@ -292,9 +292,6 @@ public class Controller {
         String htmlText = "<b>Type here to take notes</b>";
         htmlEditor.setHtmlText(htmlText);
 
-        //String htmlTextEdited = htmlEditor.getHtmlText();
-        //System.out.println(htmlTextEdited);
-
         Stage stage = new Stage();
         ToolBar toolBar = new ToolBar();
         Button buttonReturn = new Button("Return");
