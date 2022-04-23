@@ -25,7 +25,7 @@ public class Main extends Application {
     static public Vector<Image> imageVector = new Vector<Image>();
     static public Vector<String> stationName = new Vector<String>();
     static final int stationNum = 18;//0~17
-    //static public Vector
+    static public Vector<Terminal> allTerminal = new Vector<Terminal>();
 
     /*
     * 0: OpenMPStation

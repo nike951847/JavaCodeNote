@@ -7,10 +7,15 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
 public class Terminal extends Change {
+    protected String name;
     protected int whichLine;
     protected int score;
 
     public Terminal() {}
+
+    public Terminal(String name) {
+        this.name = name;
+    }
 
     public Terminal(int score) {
         this.score = score;
@@ -18,6 +23,10 @@ public class Terminal extends Change {
 
     public void calculate() {
         //calculate score
+    }
+
+    public String getName() {
+        return name;
     }
 
     public BarChart<String, Number> showChart() {
