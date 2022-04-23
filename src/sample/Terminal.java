@@ -1,3 +1,5 @@
+package sample;
+
 import javafx.scene.chart.BarChart;
 import sample.Change;
 import javafx.scene.chart.CategoryAxis;

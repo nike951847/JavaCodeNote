@@ -1,6 +1,7 @@
+package sample;
+
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
-import sample.Change;
 
 public class Building extends Change {
     protected Terminal whichTerminal;
