@@ -85,7 +85,7 @@ public class Main extends Application {
         primaryStage.setTitle("EXAMPLE");
         primaryStage.setScene(new Scene(root, 1250, 600));
         primaryStage.setFullScreen(true);
-        primaryStage.initStyle(StageStyle.UTILITY);
+        primaryStage.initStyle(StageStyle.DECORATED);
 
         //loading stage
         Stage loadingStage = new Stage();
