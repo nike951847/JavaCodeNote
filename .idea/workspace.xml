@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="commit">
-      <change afterPath="$PROJECT_DIR$/src/sample/BackgroundGrass.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sample/BackgroundRoad.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sample/Change.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sample/Move.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Building.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Terminal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Vehicle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/CentralTerminal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Segment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Segment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -331,7 +330,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650691286862</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="commit">
+      <created>1650692702171</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1650692702171</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
