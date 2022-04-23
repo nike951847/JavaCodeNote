@@ -9,7 +9,10 @@ public class Move extends Segment{
 
     //return the next point
     public Point2D update() {
-        return path.get(path.indexOf(new Point2D(position.getX(), position.getY()))+1);
+        if(path.indexOf(new Point2D(position.getX(), position.getY())) == path.size())
+            return path.get(0);
+        else
+            return path.get(path.indexOf(new Point2D(position.getX(), position.getY()))+1);
     }
 
     public void addPath(Point2D p) {
