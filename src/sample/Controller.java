@@ -307,7 +307,7 @@ public class Controller {
         Stage stage = new Stage();
         ToolBar toolBar = new ToolBar();
         Button buttonReturn = new Button("Return");
-        Button buttonSave = new Button("Save");
+        Button buttonSave = new Button("Export");
 
         buttonReturn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
