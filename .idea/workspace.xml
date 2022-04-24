@@ -6,9 +6,7 @@
       <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/Controller$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/Controller$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/Controller$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/Controller$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/Controller.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/sample.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/sample.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -366,7 +364,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650795828081</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="commit">
+      <created>1650797013379</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1650797013379</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TimeTrackingManager">

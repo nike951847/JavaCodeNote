@@ -35,6 +35,8 @@ import java.util.logging.Logger;
 
 public class Controller {
     private Parent root;
+    boolean railwayLineEnable = false;
+
     @FXML
     private BorderPane borderPane;
     @FXML
@@ -146,7 +148,7 @@ public class Controller {
             graphStation.setFitHeight(40);
         }
 
-        {
+        if(railwayLineEnable) {
             Canvas canvas = new Canvas(300, 250);
             GraphicsContext gc = canvas.getGraphicsContext2D();
             drawShapes(gc, 1);
@@ -298,9 +300,6 @@ public class Controller {
 
     @FXML
     void openMPStationPressed(MouseEvent event) {
-        //
-        //desktopToolBar.setVisible(false);
-        //
         HTMLEditor htmlEditor = new HTMLEditor();
         String htmlText = "<b>Type here to take notes</b>";
         htmlEditor.setHtmlText(htmlText);
@@ -365,7 +364,6 @@ public class Controller {
             desktopToolBar.setVisible(false);
         });
         timeline.play();
-        //desktopToolBar.setVisible(false);
         /*Scene scene = new Scene(root);
         root.translateYProperty().set(scene.getHeight());
         StackPane parentContainer = (StackPane) ((Node) event.getSource()).getScene().getRoot();
