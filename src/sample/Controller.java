@@ -30,8 +30,12 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.*;
 
 public class Controller {
     private Parent root;
@@ -235,6 +239,25 @@ public class Controller {
             desktop.add(canvas, 20, 3);
         }
 
+        //check if the file exist, if not, create them
+        {
+            String storageLocationDirectory = "C:/Users/Public/Documents/JavaCodeNote";
+            File fileDirectory = new File(storageLocationDirectory);
+            if(!fileDirectory.exists()) {
+                System.out.println("not exist\ncreate directory");
+                fileDirectory.mkdirs();
+                storageLocationDirectory += "/";
+                for(int i=0; i<Main.stationNum; i++) {
+                    String tempLocationFile = (storageLocationDirectory + Main.stationName.get(i)+".html");
+                    String defaultContet = "<b>Type here to take notes</b>";
+                    File fileHTML = new File(tempLocationFile);
+                    SaveFile(defaultContet, fileHTML);
+                }
+            } else {
+                System.out.println("exist");
+            }
+        }
+
     }
 
     private void drawShapes(GraphicsContext gc, int type) {
@@ -300,9 +323,13 @@ public class Controller {
 
     @FXML
     void openMPStationPressed(MouseEvent event) {
+
         HTMLEditor htmlEditor = new HTMLEditor();
-        String htmlText = "<b>Type here to take notes</b>";
-        htmlEditor.setHtmlText(htmlText);
+        File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/"+Main.stationName.get(0)+".html");
+        if(openFile != null){
+            String textRead = readFile(openFile);
+            htmlEditor.setHtmlText(textRead);
+        }
 
         Stage stage = new Stage();
         ToolBar toolBar = new ToolBar();
@@ -394,6 +421,34 @@ public class Controller {
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private String readFile(File file){
+        StringBuilder stringBuffer = new StringBuilder();
+        BufferedReader bufferedReader = null;
+
+        try {
+
+            bufferedReader = new BufferedReader(new FileReader(file));
+
+            String text;
+            while ((text = bufferedReader.readLine()) != null) {
+                stringBuffer.append(text);
+            }
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                bufferedReader.close();
+            } catch (IOException ex) {
+                Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return stringBuffer.toString();
     }
 
 }
