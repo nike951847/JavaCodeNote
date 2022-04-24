@@ -339,6 +339,15 @@ public class Controller {
         buttonReturn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+
+                //save the current file, then return
+                File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/"+Main.stationName.get(0)+".html");
+                openFile.delete();
+                if(openFile != null){
+                    String stringHtml = htmlEditor.getHtmlText();
+                    SaveFile(stringHtml, openFile);
+                }
+
                 desktopToolBar.setVisible(true);
                 borderPane.getChildren().remove(root);
                 /*stage.close();
@@ -410,7 +419,6 @@ public class Controller {
         stage.showAndWait();*/
     }
 
-    //could be easily separated to another file
     private void SaveFile(String content, File file){
         try {
             FileWriter fileWriter = null;
