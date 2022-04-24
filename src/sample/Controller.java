@@ -1,13 +1,20 @@
 package sample;
 //package javafx.scene.web;
 
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -27,8 +34,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Controller {
-
-
+    private Parent root;
+    @FXML
+    private BorderPane borderPane;
     @FXML
     private ImageView algorithmStation;
 
@@ -300,8 +308,9 @@ public class Controller {
         buttonReturn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                stage.close();
-                ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);
+                borderPane.getChildren().remove(root);
+                /*stage.close();
+                ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);*/
             }
         });
         buttonSave.setOnAction(new EventHandler<ActionEvent>(){
@@ -326,13 +335,46 @@ public class Controller {
 
         toolBar.getItems().add(buttonReturn);
         toolBar.getItems().add(buttonSave);
-        VBox vBox = new VBox(toolBar, htmlEditor);
-        Scene scene = new Scene(vBox);
+        //toolBar.setMinHeight(50);
+        //htmlEditor.setMinHeight(200);
+        htmlEditor.setMinWidth(desktop.getWidth());
+        root = new VBox(toolBar, htmlEditor);
 
-        stage.setTitle("Take Notes");
+        //Parent root = new HTMLEditor();
+        Scene scene =algorithmStation.getScene();
+
+        root.translateYProperty().set(scene.getHeight());
+
+        borderPane.getChildren().add(root);
+        toolBar.setMinHeight(50);
+        toolBar.setMaxWidth(scene.getWidth());
+        htmlEditor.setMinHeight(scene.getHeight()-50);
+        //htmlEditor.setPrefHeight(scene.getHeight()-50);
+        Timeline timeline = new Timeline();
+        KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
+        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+        timeline.getKeyFrames().add(kf);
+        timeline.setOnFinished(t -> {
+            //desktop.getChildren().remove(anchorRoot);
+        });
+        timeline.play();
+        /*Scene scene = new Scene(root);
+        root.translateYProperty().set(scene.getHeight());
+        StackPane parentContainer = (StackPane) ((Node) event.getSource()).getScene().getRoot();
+
+        parentContainer.getChildren().add(root);
+
+
+        Timeline timeline = new Timeline();
+        KeyValue kv = new KeyValue(parentContainer.translateYProperty(), 0, Interpolator.EASE_IN);
+        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+        timeline.getKeyFrames().add(kf);
+
+        timeline.play();*/
+        /*stage.setTitle("Take Notes");
         stage.setScene(scene);
         stage.setFullScreen(true);
-        stage.showAndWait();
+        stage.showAndWait();*/
     }
 
     //could be easily separated to another file

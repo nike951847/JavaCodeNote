@@ -103,9 +103,10 @@ public class Main extends Application {
             @Override
             public void run() {
                 double progress = 0;
+
                 for(int i=0; i<100; i++){
                     try {
-                        Thread.sleep(30);
+                        Thread.sleep(10);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
