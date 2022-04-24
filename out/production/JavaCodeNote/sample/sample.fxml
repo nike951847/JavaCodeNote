@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<ScrollPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <content>
-      <BorderPane>
+      <BorderPane fx:id="borderPane" maxWidth="1.7976931348623157E308">
          <center>
-            <GridPane fx:id="desktop" minHeight="1260.0" minWidth="1260.0" prefHeight="1260.0" prefWidth="1260.0" BorderPane.alignment="CENTER">
+            <GridPane fx:id="desktop" maxWidth="1.7976931348623157E308" minHeight="1260.0" minWidth="1260.0" prefHeight="1260.0" prefWidth="1260.0" BorderPane.alignment="CENTER">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -74,7 +74,7 @@
               </rowConstraints>
                <children>
                   <ImageView fx:id="openMPStation" fitHeight="150.0" fitWidth="200.0" onMousePressed="#openMPStationPressed" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="1" />
-                  <ImageView fx:id="inheritanceStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="13" GridPane.rowIndex="1" />
+                  <ImageView fx:id="inheritanceStation" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="13" GridPane.rowIndex="1" />
                   <ImageView fx:id="polymorphismStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="19" GridPane.rowIndex="1" />
                   <ImageView fx:id="encapsulationStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="25" GridPane.rowIndex="1" />
                   <ImageView fx:id="mPIStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="7" />
@@ -95,7 +95,7 @@
             </GridPane>
          </center>
          <top>
-            <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <ToolBar maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="1920.0" BorderPane.alignment="CENTER">
               <items>
                 <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeMainTab" text="Close" />
                   <Button fx:id="fullScreenButton" mnemonicParsing="false" onAction="#fullScreenMainTab" text="FullScreen" />

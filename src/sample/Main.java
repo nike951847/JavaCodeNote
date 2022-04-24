@@ -85,7 +85,7 @@ public class Main extends Application {
         primaryStage.setTitle("EXAMPLE");
         primaryStage.setScene(new Scene(root, 1250, 600));
         primaryStage.setFullScreen(true);
-        primaryStage.initStyle(StageStyle.UTILITY);
+        primaryStage.initStyle(StageStyle.DECORATED);
 
         //loading stage
         Stage loadingStage = new Stage();
@@ -103,9 +103,10 @@ public class Main extends Application {
             @Override
             public void run() {
                 double progress = 0;
+
                 for(int i=0; i<100; i++){
                     try {
-                        Thread.sleep(30);
+                        Thread.sleep(10);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
