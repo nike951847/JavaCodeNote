@@ -1,0 +1,621 @@
+Index: .idea/ant.xml
+===================================================================
+diff --git a/.idea/ant.xml b/.idea/ant.xml
+deleted file mode 100644
+--- a/.idea/ant.xml	(revision cf8a8efe27b3364dd557039001cdcf3b8d0cf52e)
++++ /dev/null	(revision cf8a8efe27b3364dd557039001cdcf3b8d0cf52e)
+@@ -1,7 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="AntConfiguration">
+-    <defaultAnt bundledAnt="true" />
+-  </component>
+-</project>
+-
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+--- a/.idea/vcs.xml	(revision cf8a8efe27b3364dd557039001cdcf3b8d0cf52e)
++++ b/.idea/vcs.xml	(date 1650448680476)
+@@ -1,7 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="VcsDirectoryMappings">
+-    <mapping directory="" vcs="" />
++    <mapping directory="" vcs="Git" />
+   </component>
+-</project>
+-
++</project>
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision cf8a8efe27b3364dd557039001cdcf3b8d0cf52e)
++++ b/.idea/workspace.xml	(date 1650562320368)
+@@ -1,7 +1,15 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ChangeListManager">
+-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="" />
++    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
++      <change beforePath="$PROJECT_DIR$/.idea/ant.xml" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/JavaCodeNote.iml" beforeDir="false" afterPath="$PROJECT_DIR$/JavaCodeNote.iml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/sample/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Controller.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/sample/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/sample.fxml" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -11,7 +19,7 @@
+     <option name="PATCH_PATH" value="" />
+   </component>
+   <component name="DebuggerManager">
+-    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
++    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true" converted="true">
+       <breakpoint>
+         <option name="NOTIFY_CAUGHT" value="true" />
+         <option name="NOTIFY_UNCAUGHT" value="true" />
+@@ -45,18 +53,21 @@
+         <option name="LOG_MESSAGE" value="" />
+       </breakpoint>
+     </breakpoint_any>
+-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+-    <breakpoint_rules />
+-    <ui_properties />
+-  </component>
+-  <component name="FavoritesManager">
+-    <favorites_list name="JavaFxApplication" />
++    <ui_properties converted="true" />
++    <breakpoint_rules converted="true" />
+   </component>
+   <component name="FindManager">
+     <FindUsagesManager>
+       <setting name="OPEN_NEW_TAB" value="false" />
+     </FindUsagesManager>
+   </component>
++  <component name="Git.Settings">
++    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++  </component>
++  <component name="HighlightingSettingsPerFile">
++    <setting file="file://$PROJECT_DIR$/src/sample/Controller.java" root0="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/src/sample/Main.java" root0="FORCE_HIGHLIGHTING" />
++  </component>
+   <component name="IdeDocumentHistory">
+     <option name="changedFiles">
+       <list>
+@@ -65,6 +76,9 @@
+         <option value="$PROJECT_DIR$/src/sample/Controller.java" />
+       </list>
+     </option>
++  </component>
++  <component name="MarkdownSettingsMigration">
++    <option name="stateVersion" value="1" />
+   </component>
+   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
+   <component name="ProjectFrameBounds">
+@@ -74,6 +88,7 @@
+     <option name="height" value="876" />
+   </component>
+   <component name="ProjectId" id="283XpvQi8QdkuehO8KgFuhs2ISX" />
++  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+   <component name="ProjectReloadState">
+     <option name="STATE" value="0" />
+   </component>
+@@ -123,22 +138,17 @@
+     <option name="showModules" value="false" />
+     <option name="sortByType" value="true" />
+   </component>
+-  <component name="PropertiesComponent">
+-    <property name="Downloaded.Files.Path.Enabled" value="true" />
+-    <property name="GoToClass.includeLibraries" value="false" />
+-    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+-    <property name="GoToFile.includeJavaFiles" value="false" />
+-    <property name="MemberChooser.copyJavadoc" value="false" />
+-    <property name="MemberChooser.showClasses" value="true" />
+-    <property name="MemberChooser.sorted" value="false" />
+-    <property name="OverrideImplement.combined" value="false" />
+-    <property name="Repository.Attach.Annotations" value="false" />
+-    <property name="Repository.Attach.JavaDocs" value="false" />
+-    <property name="Repository.Attach.Sources" value="false" />
+-    <property name="WebServerToolWindowFactoryState" value="false" />
+-    <property name="dynamic.classpath" value="false" />
+-    <property name="recentsLimit" value="5" />
+-  </component>
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;last_opened_file_path&quot;: &quot;C:/Users/yushshl/Documents/java/Project/JavaCodeNote/src/sample/photo&quot;,
++    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
++    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
++    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
++  }
++}</component>
+   <component name="RunManager">
+     <configuration default="true" type="Applet" factoryName="Applet">
+       <module name="" />
+@@ -161,53 +171,30 @@
+       <option name="testName" />
+       <method />
+     </configuration>
+-    <configuration name="&lt;template&gt;" type="TestNG" default="true" selected="false">
+-      <option name="VM_PARAMETERS" value="-ea" />
+-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+-    </configuration>
+-    <configuration default="true" type="TestNG" factoryName="TestNG">
+-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+-      <module name="" />
+-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+-      <option name="ALTERNATIVE_JRE_PATH" />
+-      <option name="SUITE_NAME" />
+-      <option name="PACKAGE_NAME" />
+-      <option name="MAIN_CLASS_NAME" />
+-      <option name="METHOD_NAME" />
+-      <option name="GROUP_NAME" />
++    <configuration default="true" type="TestNG">
+       <option name="TEST_OBJECT" value="CLASS" />
+-      <option name="VM_PARAMETERS" value="-ea" />
+-      <option name="PARAMETERS" />
+       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+-      <option name="OUTPUT_DIRECTORY" />
+-      <option name="ANNOTATION_TYPE" />
+-      <option name="ENV_VARIABLES" />
+-      <option name="PASS_PARENT_ENVS" value="true" />
+       <option name="TEST_SEARCH_SCOPE">
+         <value defaultName="moduleWithDependencies" />
+       </option>
+-      <option name="USE_DEFAULT_REPORTERS" value="false" />
+-      <option name="PROPERTIES_FILE" />
+-      <envs />
+       <properties />
+       <listeners />
+-      <method />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
+     </configuration>
+     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
+       <Host>localhost</Host>
+       <Port>5050</Port>
+     </configuration>
+-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+-      <module name="" />
+-      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
+-      <option name="PROGRAM_PARAMETERS" />
+-      <method />
+-    </configuration>
+     <configuration name="Main" type="Application" factoryName="Application">
++      <envs>
++        <env name="PATH_TO_FX" value="C:\Program Files\Java\javafx-sdk-17.0.2\lib" />
++      </envs>
+       <option name="MAIN_CLASS_NAME" value="sample.Main" />
+       <module name="JavaCodeNote" />
+-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
++      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-17.0.2\lib&quot; --add-modules=javafx.controls,javafx.fxml" />
++      <extension name="coverage">
+         <pattern>
+           <option name="PATTERN" value="sample.*" />
+           <option name="ENABLED" value="true" />
+@@ -221,13 +208,11 @@
+     </configuration>
+     <configuration default="true" type="Application" factoryName="Application">
+       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+       <method v="2">
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+     <configuration default="true" type="JUnit" factoryName="JUnit">
+-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+       <option name="TEST_OBJECT" value="class" />
+       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+       <option name="TEST_SEARCH_SCOPE">
+@@ -237,11 +222,32 @@
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
++    <configuration default="true" type="TestNG">
++      <option name="TEST_OBJECT" value="CLASS" />
++      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
++      <properties />
++      <listeners />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
++      <module name="" />
++      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
++      <option name="PROGRAM_PARAMETERS" />
++      <predefined_log_file enabled="true" id="idea.log" />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
+   </component>
++  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">
+       <changelist id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="" />
+       <created>1359379246138</created>
++      <option name="number" value="Default" />
++      <option name="presentableId" value="Default" />
+       <updated>1359379246138</updated>
+       <workItem from="1359379250712" duration="1302000" />
+     </task>
+@@ -280,16 +286,20 @@
+       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+     </layout>
+   </component>
+-  <component name="VcsContentAnnotationSettings">
+-    <option name="myLimit" value="2678400000" />
++  <component name="Vcs.Log.Tabs.Properties">
++    <option name="TAB_STATES">
++      <map>
++        <entry key="MAIN">
++          <value>
++            <State />
++          </value>
++        </entry>
++      </map>
++    </option>
+   </component>
+   <component name="VcsManagerConfiguration">
+     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
+     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
+-  </component>
+-  <component name="antWorkspaceConfiguration">
+-    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+-    <option name="FILTER_TARGETS" value="false" />
+   </component>
+   <component name="editorHistoryManager">
+     <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
+Index: JavaCodeNote.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/JavaCodeNote.iml b/JavaCodeNote.iml
+--- a/JavaCodeNote.iml	(revision cf8a8efe27b3364dd557039001cdcf3b8d0cf52e)
++++ b/JavaCodeNote.iml	(date 1650535523297)
+@@ -9,6 +9,7 @@
+     <exclude-output />
+     <content url="file://$MODULE_DIR$">
+       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
++      <excludeFolder url="file://$MODULE_DIR$/src/sample/photo" />
+     </content>
+     <orderEntry type="inheritedJdk" />
+     <orderEntry type="sourceFolder" forTests="false" />
+Index: src/sample/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/sample/Main.java b/src/sample/Main.java
+--- a/src/sample/Main.java	(revision cf8a8efe27b3364dd557039001cdcf3b8d0cf52e)
++++ b/src/sample/Main.java	(date 1650561976026)
+@@ -4,16 +4,76 @@
+ import javafx.fxml.FXMLLoader;
+ import javafx.scene.Parent;
+ import javafx.scene.Scene;
++import javafx.scene.layout.StackPane;
+ import javafx.stage.Stage;
++import javafx.scene.image.Image;
++import javafx.scene.image.ImageView;
++import java.util.*;
+ 
+ public class Main extends Application {
+ 
++    static public Vector<Image> imageVector = new Vector<Image>();
++    static public Vector<String> stationName = new Vector<String>();
++    static final int stationNum = 18;//0~17
++
++    /*
++    * 0: OpenMPStation
++    * 1: InheritanceStation
++    * 2: PolymorphismStation
++    * 3: EncapsulationStation
++    * 4: MPIStation
++    * 5: ClassStation
++    * 6: InterfaceStation
++    * 7: ExceptionStation
++    * 8: ThreadStation
++    * 9: CentralStation
++    * 10: DFS_BFSStation
++    * 11: DistributedStation
++    * 12: GPUStation
++    * 13: DataTypeStation
++    * 14: HashStation
++    * 15: TreeStation
++    * 16: AlgorithmStation
++    * 17: GraphStation
++    * */
++
++    //initialize stationName to avoid typo
++    static  {
++        stationName.add("OpenMPStation");//0
++        stationName.add("InheritanceStation");//1
++        stationName.add("PolymorphismStation");//2
++        stationName.add("EncapsulationStation");//3
++        stationName.add("MPIStation");//4
++        stationName.add("ClassStation");//5
++        stationName.add("InterfaceStation");//6
++        stationName.add("ExceptionStation");//7
++        stationName.add("ThreadStation");//8
++        stationName.add("CentralStation");//9
++        stationName.add("DFS_BFSStation");//10
++        stationName.add("DistributedStation");//11
++        stationName.add("GPUStation");//12
++        stationName.add("DataTypeStation");//13
++        stationName.add("HashStation");//14
++        stationName.add("TreeStation");//15
++        stationName.add("AlgorithmStation");//16
++        stationName.add("GraphStation");//17
++    }
++
++    //initialize imageVector
++    static {
++        for(int i=0; i<stationNum; i++) {
++            imageVector.add(new Image("file:src/sample/photo/"+stationName.get(i)+".jpg"));//0
++        }
++    }
++
+     @Override
+     public void start(Stage primaryStage) throws Exception{
++
+         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+-        primaryStage.setTitle("Hello World");
+-        primaryStage.setScene(new Scene(root, 300, 275));
++        primaryStage.setTitle("EXAMPLE");
++        primaryStage.setScene(new Scene(root, 1250, 600));
+         primaryStage.show();
++
+     }
+ 
+ 
+Index: src/sample/Controller.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/sample/Controller.java b/src/sample/Controller.java
+--- a/src/sample/Controller.java	(revision cf8a8efe27b3364dd557039001cdcf3b8d0cf52e)
++++ b/src/sample/Controller.java	(date 1650564719673)
+@@ -1,4 +1,110 @@
+ package sample;
+ 
++import javafx.fxml.FXML;
++import javafx.scene.image.Image;
++import javafx.scene.image.ImageView;
++import javafx.stage.Stage;
++import javafx.scene.layout.GridPane;
++
+ public class Controller {
++
++    @FXML
++    private ImageView algorithmStation;
++
++    @FXML
++    private ImageView centralStation;
++
++    @FXML
++    private ImageView classStation;
++
++    @FXML
++    private ImageView dFS_BFSStation;
++
++    @FXML
++    private ImageView dataTypeStation;
++
++    @FXML
++    private ImageView distributedStation;
++
++    @FXML
++    private ImageView encapsulationStation;
++
++    @FXML
++    private ImageView exceptionStation;
++
++    @FXML
++    private ImageView gPUStation;
++
++    @FXML
++    private ImageView graphStation;
++
++    @FXML
++    private ImageView hashStation;
++
++    @FXML
++    private ImageView inheritanceStation;
++
++    @FXML
++    private ImageView interfaceStation;
++
++    @FXML
++    private ImageView mPIStation;
++
++    @FXML
++    private ImageView openMPStation;
++
++    @FXML
++    private ImageView polymorphismStation;
++
++    @FXML
++    private ImageView threadStation;
++
++    @FXML
++    private ImageView treeStation;
++
++    @FXML
++    private GridPane desktop;
++
++    public void initialize() {
++
++        openMPStation.setImage(Main.imageVector.get(0));
++        inheritanceStation.setImage(Main.imageVector.get(1));
++        polymorphismStation.setImage(Main.imageVector.get(2));
++        encapsulationStation.setImage(Main.imageVector.get(3));
++        mPIStation.setImage(Main.imageVector.get(4));
++        classStation.setImage(Main.imageVector.get(5));
++        interfaceStation.setImage(Main.imageVector.get(6));
++        exceptionStation.setImage(Main.imageVector.get(7));
++        threadStation.setImage(Main.imageVector.get(8));
++        centralStation.setImage(Main.imageVector.get(9));
++        dFS_BFSStation.setImage(Main.imageVector.get(10));
++        distributedStation.setImage(Main.imageVector.get(11));
++        gPUStation.setImage(Main.imageVector.get(12));
++        dataTypeStation.setImage(Main.imageVector.get(13));
++        hashStation.setImage(Main.imageVector.get(14));
++        treeStation.setImage(Main.imageVector.get(15));
++        algorithmStation.setImage(Main.imageVector.get(16));
++        graphStation.setImage(Main.imageVector.get(17));
++
++        openMPStation.setFitHeight(40);
++        inheritanceStation.setFitHeight(40);
++        polymorphismStation.setFitHeight(40);
++        encapsulationStation.setFitHeight(40);
++        mPIStation.setFitHeight(40);
++        classStation.setFitHeight(40);
++        interfaceStation.setFitHeight(40);
++        exceptionStation.setFitHeight(40);
++        threadStation.setFitHeight(40);
++        centralStation.setFitHeight(40);
++        dFS_BFSStation.setFitHeight(40);
++        distributedStation.setFitHeight(40);
++        gPUStation.setFitHeight(40);
++        dataTypeStation.setFitHeight(40);
++        hashStation.setFitHeight(40);
++        treeStation.setFitHeight(40);
++        algorithmStation.setFitHeight(40);
++        graphStation.setFitHeight(40);
++
++        //desktop.
++    }
+ }
+Index: src/sample/sample.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/sample/sample.fxml b/src/sample/sample.fxml
+--- a/src/sample/sample.fxml	(revision cf8a8efe27b3364dd557039001cdcf3b8d0cf52e)
++++ b/src/sample/sample.fxml	(date 1650564487682)
+@@ -1,8 +1,99 @@
+-<?import javafx.geometry.Insets?>
+-<?import javafx.scene.layout.GridPane?>
++<?xml version="1.0" encoding="UTF-8"?>
+ 
+-<?import javafx.scene.control.Button?>
+ <?import javafx.scene.control.Label?>
+-<GridPane fx:controller="sample.Controller"
+-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+-</GridPane>
+\ No newline at end of file
++<?import javafx.scene.control.ScrollPane?>
++<?import javafx.scene.image.ImageView?>
++<?import javafx.scene.layout.BorderPane?>
++<?import javafx.scene.layout.ColumnConstraints?>
++<?import javafx.scene.layout.GridPane?>
++<?import javafx.scene.layout.RowConstraints?>
++
++<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
++   <content>
++      <BorderPane>
++         <center>
++            <GridPane fx:id="desktop" minHeight="1200.0" minWidth="1200.0" prefHeight="1200.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
++              <columnConstraints>
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
++              </columnConstraints>
++              <rowConstraints>
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
++              </rowConstraints>
++               <children>
++                  <ImageView fx:id="openMPStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="1" />
++                  <ImageView fx:id="inheritanceStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="13" GridPane.rowIndex="1" />
++                  <ImageView fx:id="polymorphismStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="19" GridPane.rowIndex="1" />
++                  <ImageView fx:id="encapsulationStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="25" GridPane.rowIndex="1" />
++                  <ImageView fx:id="mPIStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="7" />
++                  <ImageView fx:id="classStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="13" GridPane.rowIndex="7" />
++                  <ImageView fx:id="interfaceStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="7" />
++                  <ImageView fx:id="exceptionStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="13" />
++                  <ImageView fx:id="threadStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="13" />
++                  <ImageView fx:id="centralStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="13" GridPane.rowIndex="13" />
++                  <ImageView fx:id="dFS_BFSStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="19" GridPane.rowIndex="13" />
++                  <ImageView fx:id="distributedStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="19" />
++                  <ImageView fx:id="gPUStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="19" />
++                  <ImageView fx:id="dataTypeStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="13" GridPane.rowIndex="19" />
++                  <ImageView fx:id="hashStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="19" GridPane.rowIndex="19" />
++                  <ImageView fx:id="treeStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="25" GridPane.rowIndex="19" />
++                  <ImageView fx:id="algorithmStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="13" GridPane.rowIndex="25" />
++                  <ImageView fx:id="graphStation" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="19" GridPane.rowIndex="7" />
++                  <Label text="afjljlkjsdlkjflsd" GridPane.columnIndex="8" GridPane.rowIndex="1" />
++               </children>
++            </GridPane>
++         </center>
++      </BorderPane>
++   </content>
++</ScrollPane>
