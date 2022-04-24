@@ -335,16 +335,10 @@ public class Controller {
 
         toolBar.getItems().add(buttonReturn);
         toolBar.getItems().add(buttonSave);
-        //toolBar.setMinHeight(50);
-        //htmlEditor.setMinHeight(200);
         htmlEditor.setMinWidth(desktop.getWidth());
         root = new VBox(toolBar, htmlEditor);
-
-        //Parent root = new HTMLEditor();
         Scene scene =algorithmStation.getScene();
-
         root.translateYProperty().set(scene.getHeight());
-
         borderPane.getChildren().add(root);
         toolBar.setMinHeight(50);
         toolBar.setMaxWidth(scene.getWidth());

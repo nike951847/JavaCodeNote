@@ -110,6 +110,9 @@ public class Main extends Application {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+
+
+
                     progress += 0.01;
 
                     double reportedProgress = progress;

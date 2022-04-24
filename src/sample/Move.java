@@ -2,22 +2,27 @@ package sample;
 
 import java.util.ArrayList;
 import javafx.geometry.Point2D;
+import javafx.animation.PathTransition;
+import javafx.scene.shape.LineTo;
+import javafx.util.Duration;
 
 public class Move extends Segment{
-    protected ArrayList<Point2D> path;
+    protected ArrayList<LineTo> path;
     protected double pace;//or maybe double?
+    protected PathTransition pathTransition = new PathTransition();
+    /*
+    return the next point
+     public Point2D update() {
+         if(path.indexOf(position) == path.size())
+             return path.get(0);
+         else
+             return path.get(path.indexOf(position)+1);
+     }
+    */
 
-    //return the next point
-    public Point2D update() {
-        if(path.indexOf(position) == path.size())
-            return path.get(0);
-        else
-            return path.get(path.indexOf(position)+1);
-    }
-
-    public void addPath(Point2D p) {
+    public void addPath(int x,int y) {
         //not sure if "new" is needed
-        path.add(new Point2D(p.getX(), p.getY()));
+        path.add(new LineTo(x,y));
     }
 
     public void setPace(double pace) {
