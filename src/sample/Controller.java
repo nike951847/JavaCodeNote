@@ -100,6 +100,9 @@ public class Controller {
     @FXML
     private Button closeButton;
 
+    @FXML
+    private ToolBar desktopToolBar;
+
     public void initialize() {
         {
             openMPStation.setImage(Main.imageVector.get(0));
@@ -295,7 +298,9 @@ public class Controller {
 
     @FXML
     void openMPStationPressed(MouseEvent event) {
-
+        //
+        //desktopToolBar.setVisible(false);
+        //
         HTMLEditor htmlEditor = new HTMLEditor();
         String htmlText = "<b>Type here to take notes</b>";
         htmlEditor.setHtmlText(htmlText);
@@ -308,6 +313,7 @@ public class Controller {
         buttonReturn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                desktopToolBar.setVisible(true);
                 borderPane.getChildren().remove(root);
                 /*stage.close();
                 ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);*/
@@ -350,8 +356,10 @@ public class Controller {
         timeline.getKeyFrames().add(kf);
         timeline.setOnFinished(t -> {
             //desktop.getChildren().remove(anchorRoot);
+            desktopToolBar.setVisible(false);
         });
         timeline.play();
+        //desktopToolBar.setVisible(false);
         /*Scene scene = new Scene(root);
         root.translateYProperty().set(scene.getHeight());
         StackPane parentContainer = (StackPane) ((Node) event.getSource()).getScene().getRoot();
