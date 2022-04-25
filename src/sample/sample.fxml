@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<BorderPane maxWidth="1260.0" minWidth="1260.0" prefWidth="1260.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<BorderPane fx:id="desktopBorderPane" maxWidth="1260.0" minWidth="1260.0" prefWidth="1260.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <center>
       <ScrollPane maxHeight="-Infinity" maxWidth="1260.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1260.0">
          <content>

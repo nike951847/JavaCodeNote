@@ -45,69 +45,50 @@ public class Controller {
     private BorderPane borderPane;
     @FXML
     private ImageView algorithmStation;
-
     @FXML
     private ImageView centralStation;
-
     @FXML
     private ImageView classStation;
-
     @FXML
     private ImageView dFS_BFSStation;
-
     @FXML
     private ImageView dataTypeStation;
-
     @FXML
     private ImageView distributedStation;
-
     @FXML
     private ImageView encapsulationStation;
-
     @FXML
     private ImageView exceptionStation;
-
     @FXML
     private ImageView gPUStation;
-
     @FXML
     private ImageView graphStation;
-
     @FXML
     private ImageView hashStation;
-
     @FXML
     private ImageView inheritanceStation;
-
     @FXML
     private ImageView interfaceStation;
-
     @FXML
     private ImageView mPIStation;
-
     @FXML
     private ImageView openMPStation;
-
     @FXML
     private ImageView polymorphismStation;
-
     @FXML
     private ImageView threadStation;
-
     @FXML
     private ImageView treeStation;
-
     @FXML
     private GridPane desktop;
-
     @FXML
     private Button fullScreenButton;
-
     @FXML
     private Button closeButton;
-
     @FXML
     private ToolBar desktopToolBar;
+    @FXML
+    private BorderPane desktopBorderPane;
 
     public void initialize() {
         {
@@ -334,7 +315,7 @@ public class Controller {
         Stage stage = new Stage();
         ToolBar toolBar = new ToolBar();
         Button buttonReturn = new Button("Return");
-        Button buttonSave = new Button("Export");
+        Button buttonExport = new Button("Export");
 
         buttonReturn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -348,13 +329,15 @@ public class Controller {
                     SaveFile(stringHtml, openFile);
                 }
 
+                toolBar.setVisible(false);
+                desktopBorderPane.setTop(desktopToolBar);
                 desktopToolBar.setVisible(true);
                 borderPane.getChildren().remove(root);
                 /*stage.close();
                 ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);*/
             }
         });
-        buttonSave.setOnAction(new EventHandler<ActionEvent>(){
+        buttonExport.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent t) {
                 String stringHtml = htmlEditor.getHtmlText();
@@ -375,11 +358,15 @@ public class Controller {
         });
 
         toolBar.getItems().add(buttonReturn);
-        toolBar.getItems().add(buttonSave);
+        toolBar.getItems().add(buttonExport);
         //toolBar.setMinHeight(50);
         //htmlEditor.setMinHeight(200);
         htmlEditor.setMinWidth(desktop.getWidth());
-        root = new VBox(toolBar, htmlEditor);
+        //root = new VBox(toolBar, htmlEditor);
+        root = new VBox(htmlEditor);
+        desktopBorderPane.setTop(toolBar);
+        toolBar.setVisible(true);
+
 
         //Parent root = new HTMLEditor();
         Scene scene =algorithmStation.getScene();
