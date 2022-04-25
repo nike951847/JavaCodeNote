@@ -360,6 +360,17 @@ public class Controller {
 
         toolBar.getItems().add(buttonReturn);
 
+        toolBar.getItems().add(buttonExport);
+        //toolBar.setMinHeight(50);
+        //htmlEditor.setMinHeight(200);
+        htmlEditor.setMinWidth(desktop.getWidth());
+        //root = new VBox(toolBar, htmlEditor);
+        root = new VBox(htmlEditor);
+        desktopBorderPane.setTop(toolBar);
+        toolBar.setVisible(true);
+
+
+        //Parent root = new HTMLEditor();
         Scene scene =algorithmStation.getScene();
         root.translateYProperty().set(scene.getHeight());
         borderPane.getChildren().add(root);
