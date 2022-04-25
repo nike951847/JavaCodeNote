@@ -6,10 +6,13 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
+import java.util.ArrayList;
+
 public class Terminal extends Change {
     protected String name;
     protected int whichLine;
     protected int score;
+    protected String[] noteName = new String[8];
 
     public Terminal() {}
 

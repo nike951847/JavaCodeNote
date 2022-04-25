@@ -1,0 +1,31 @@
+.button {
+   -fx-border-top: 1px solid #ffffff;
+   -fx-background: #c4ffe4;
+   -fx-background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#c4ffe4));
+   -fx-background: -webkit-linear-gradient(top, #ffffff, #c4ffe4);
+   -fx-background: -moz-linear-gradient(top, #ffffff, #c4ffe4);
+   -fx-background: -ms-linear-gradient(top, #ffffff, #c4ffe4);
+   -fx-background: -o-linear-gradient(top, #ffffff, #c4ffe4);
+   -fx-padding: 20px 40px;
+   -webkit-border-radius: 40px;
+   -moz-border-radius: 40px;
+   -fx-border-radius: 40px;
+   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -fx-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -fx-text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   -fx-color: #00450a;
+   -fx-font-size: 24px;
+   -fx-font-family: Helvetica, Arial, Sans-Serif;
+  -fx- text-decoration: none;
+   -fx-ertical-align: middle;
+   }
+.button:hover {
+   -fx-border-top-color: #36b2ff;
+   -fx-background: #36b2ff;
+   -fx-color: #ccc;
+   }
+.button:active {
+   -fx-border-top-color: #27f085;
+   -fx-background: #27f085;
+   }

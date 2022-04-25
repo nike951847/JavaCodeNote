@@ -145,7 +145,7 @@
     <option name="sortByType" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../參考專案/javafx-examples" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../參考專案/JavaFX-Tutorial-Codes" />
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration default="true" type="Applet" factoryName="Applet">
@@ -231,6 +231,11 @@
     </configuration>
     <configuration name="sample.Move" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="sample.Move" />
+      <module name="JavaCodeNote" />
+      <method v="2" />
+    </configuration>
+    <configuration name="sample.TerminalController" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="sample.TerminalController" />
       <module name="JavaCodeNote" />
       <method v="2" />
     </configuration>

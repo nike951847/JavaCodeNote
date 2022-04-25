@@ -8,6 +8,7 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -303,17 +304,24 @@ public class Controller {
     }
 
     @FXML
-    void openMPStationPressed(MouseEvent event) {
-
+    void StationPressed(MouseEvent event) throws IOException {
+        int index = 0;
+        for(int i =0 ;i<18;i++){
+            if(Main.stationName.get(i).equals(((ImageView)event.getSource()).getId())) index = i;
+        }
+        System.out.println(index);
 
         HTMLEditor htmlEditor = new HTMLEditor();
-        File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/"+Main.stationName.get(0)+".html");
+        File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/"+Main.stationName.get(index)+".html");
         if(openFile != null){
             String textRead = readFile(openFile);
             htmlEditor.setHtmlText(textRead);
         }
-
+        Parent terminalpage = FXMLLoader.load(getClass().getResource("terminalpage.fxml"));
+        Scene scene = new Scene(terminalpage);
         Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
         ToolBar toolBar = new ToolBar();
         Button buttonReturn = new Button("Return");
         Button buttonExport = new Button("Export");
@@ -366,14 +374,15 @@ public class Controller {
         htmlEditor.setMinWidth(desktop.getWidth());
         //root = new VBox(toolBar, htmlEditor);
         root = new VBox(htmlEditor);
-        desktopBorderPane.setTop(toolBar);
+        //System.out.println(terminalpage.getChildrenUnmodifiable());
+        TerminalController.outside.setTop(toolBar);
         toolBar.setVisible(true);
 
 
         //Parent root = new HTMLEditor();
-        Scene scene =algorithmStation.getScene();
+        //Scene scene =algorithmStation.getScene();
         root.translateYProperty().set(scene.getHeight());
-        borderPane.getChildren().add(root);
+        TerminalController.outside.getChildren().add(root);
         toolBar.setMinHeight(50);
         toolBar.setMaxWidth(scene.getWidth());
         htmlEditor.setMinHeight(scene.getHeight()-50);
