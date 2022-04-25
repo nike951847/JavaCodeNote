@@ -14,10 +14,18 @@ public class Terminal extends Change {
     protected int score;
     protected String[] noteName = new String[8];
 
-    public Terminal() {}
+    public Terminal() {
+        name = "";
+        for(String s:noteName){
+            s = "Add New Note";
+        }
+    }
 
     public Terminal(String name) {
         this.name = name;
+        for(String s:noteName){
+            s = "Add New Note";
+        }
     }
 
     public Terminal(int score) {

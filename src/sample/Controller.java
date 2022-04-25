@@ -168,7 +168,6 @@ public class Controller {
         ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);
     }
 
-<<<<<<< HEAD
     @FXML
     void StationPressed(MouseEvent event) throws IOException {
         int index = 0;
@@ -176,13 +175,13 @@ public class Controller {
             if(Main.stationName.get(i).equals(((ImageView)event.getSource()).getId())) index = i;
         }
         System.out.println(index);
-=======
+        TerminalController.setCurTerminal(Main.allTerminal.get(index));
+        Parent terminalpage = FXMLLoader.load(getClass().getResource("terminalpage.fxml"));
+        Scene scene = new Scene(terminalpage);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
 
-
-
-    void openMPStationPressed(MouseEvent event) {
-
->>>>>>> a357716505aa1f64e9ecd132898aa970a13e7362
 
         HTMLEditor htmlEditor = new HTMLEditor();
         File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/"+Main.stationName.get(index)+".html");
@@ -190,15 +189,11 @@ public class Controller {
             String textRead = readFile(openFile);
             htmlEditor.setHtmlText(textRead);
         }
-        Parent terminalpage = FXMLLoader.load(getClass().getResource("terminalpage.fxml"));
-        Scene scene = new Scene(terminalpage);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+
         ToolBar toolBar = new ToolBar();
         Button buttonReturn = new Button("Return");
         Button buttonExport = new Button("Export");
-
+        TerminalController.initNote();
         buttonReturn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -214,7 +209,7 @@ public class Controller {
                 toolBar.setVisible(false);
                 desktopBorderPane.setTop(desktopToolBar);
                 desktopToolBar.setVisible(true);
-                borderPane.getChildren().remove(root);
+                TerminalController.outside.getChildren().remove(root);
                 /*stage.close();
                 ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);*/
             }
@@ -241,7 +236,6 @@ public class Controller {
 
         toolBar.getItems().add(buttonReturn);
 
-<<<<<<< HEAD
         toolBar.getItems().add(buttonExport);
         //toolBar.setMinHeight(50);
         //htmlEditor.setMinHeight(200);
@@ -249,17 +243,15 @@ public class Controller {
         //root = new VBox(toolBar, htmlEditor);
         root = new VBox(htmlEditor);
         //System.out.println(terminalpage.getChildrenUnmodifiable());
-        TerminalController.outside.setTop(toolBar);
+        TerminalController.outside.getChildren().add(root);
+        TerminalController.static_outside_pane.setTop(toolBar);
         toolBar.setVisible(true);
 
 
         //Parent root = new HTMLEditor();
         //Scene scene =algorithmStation.getScene();
-=======
-        Scene scene =algorithmStation.getScene();
->>>>>>> a357716505aa1f64e9ecd132898aa970a13e7362
         root.translateYProperty().set(scene.getHeight());
-        TerminalController.outside.getChildren().add(root);
+
         toolBar.setMinHeight(50);
         toolBar.setMaxWidth(scene.getWidth());
         htmlEditor.setMinHeight(scene.getHeight()-50);
@@ -273,29 +265,8 @@ public class Controller {
             desktopToolBar.setVisible(false);
         });
         timeline.play();
-        /*Scene scene = new Scene(root);
-        root.translateYProperty().set(scene.getHeight());
-        StackPane parentContainer = (StackPane) ((Node) event.getSource()).getScene().getRoot();
-
-        parentContainer.getChildren().add(root);
-
-
-        Timeline timeline = new Timeline();
-        KeyValue kv = new KeyValue(parentContainer.translateYProperty(), 0, Interpolator.EASE_IN);
-        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
-        timeline.getKeyFrames().add(kf);
-
-        timeline.play();*/
-        /*stage.setTitle("Take Notes");
-        stage.setScene(scene);
-        stage.setFullScreen(true);
-        stage.showAndWait();*/
     }
 
-    /*@FXML
-    void stationPressed(MouseEvent event) {
-        System.out.println(event.getSource());
-    }*/
 
     private void SaveFile(String content, File file){
         try {
