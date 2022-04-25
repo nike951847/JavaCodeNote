@@ -119,9 +119,7 @@ public class Controller {
             for(int i=0; i<Main.stationNum; i++) {
                 allStationImageView.get(i).setImage(Main.imageVector.get(0));
             }
-        }
 
-        {
             for(ImageView imageView: allStationImageView) {
                 imageView.setFitHeight(40);
             }
@@ -141,11 +139,21 @@ public class Controller {
                     File fileHTML = new File(tempLocationFile);
                     SaveFile(defaultContet, fileHTML);
                 }
-            } else {
-                System.out.println("exist");
             }
         }
 
+        //add mouse event handler to all station
+        {
+            for(ImageView imageView: allStationImageView) {
+                imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        System.out.println(event.getSource());
+                        //event.consume(); //stops any further handling of the event
+                    }
+                });
+            }
+        }
     }
 
 
@@ -159,7 +167,9 @@ public class Controller {
         ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);
     }
 
-    @FXML
+
+
+
     void openMPStationPressed(MouseEvent event) {
 
 
@@ -251,6 +261,11 @@ public class Controller {
         stage.setFullScreen(true);
         stage.showAndWait();*/
     }
+
+    /*@FXML
+    void stationPressed(MouseEvent event) {
+        System.out.println(event.getSource());
+    }*/
 
     private void SaveFile(String content, File file){
         try {
