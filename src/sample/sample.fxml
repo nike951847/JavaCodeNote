@@ -11,11 +11,11 @@
 
 <BorderPane fx:id="desktopBorderPane" maxWidth="1260.0" minWidth="1260.0" prefWidth="1260.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <center>
-      <ScrollPane maxHeight="-Infinity" maxWidth="1260.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1260.0">
+      <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1260.0">
          <content>
             <BorderPane fx:id="borderPane">
                <center>
-                  <GridPane fx:id="desktop" maxWidth="1240.0" minHeight="1260.0" prefHeight="1250.0" BorderPane.alignment="CENTER">
+                  <GridPane fx:id="desktop" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="1260.0" prefHeight="1250.0" BorderPane.alignment="CENTER">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

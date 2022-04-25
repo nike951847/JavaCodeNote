@@ -304,12 +304,7 @@ public class Controller {
 
     @FXML
     void openMPStationPressed(MouseEvent event) {
-<<<<<<< HEAD
-        //
-        //desktopToolBar.setVisible(false);
-        //
-=======
->>>>>>> da9e841716c123cacaac402cd1675c50cfd597bf
+
 
         HTMLEditor htmlEditor = new HTMLEditor();
         File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/"+Main.stationName.get(0)+".html");
@@ -364,23 +359,7 @@ public class Controller {
         });
 
         toolBar.getItems().add(buttonReturn);
-<<<<<<< HEAD
-        toolBar.getItems().add(buttonSave);
-        htmlEditor.setMinWidth(desktop.getWidth());
-        root = new VBox(toolBar, htmlEditor);
-=======
-        toolBar.getItems().add(buttonExport);
-        //toolBar.setMinHeight(50);
-        //htmlEditor.setMinHeight(200);
-        htmlEditor.setMinWidth(desktop.getWidth());
-        //root = new VBox(toolBar, htmlEditor);
-        root = new VBox(htmlEditor);
-        desktopBorderPane.setTop(toolBar);
-        toolBar.setVisible(true);
 
-
-        //Parent root = new HTMLEditor();
->>>>>>> da9e841716c123cacaac402cd1675c50cfd597bf
         Scene scene =algorithmStation.getScene();
         root.translateYProperty().set(scene.getHeight());
         borderPane.getChildren().add(root);
