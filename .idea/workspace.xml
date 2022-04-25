@@ -233,6 +233,11 @@
       <module name="JavaCodeNote" />
       <method v="2" />
     </configuration>
+    <configuration name="sample.Move" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="sample.Move" />
+      <module name="JavaCodeNote" />
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />

@@ -92,6 +92,7 @@ public class Main extends Application {
         loadingStage.setTitle("Take Notes");
         ProgressBar progressBar = new ProgressBar(0);
         VBox vBox = new VBox(progressBar);
+
         vBox.getChildren().add(new Text( "        LOADING"));
         Scene scene = new Scene(vBox);
         vBox.setPadding(new Insets(350, 100, 100, 550));

@@ -301,6 +301,7 @@ public class Controller {
         //
         //desktopToolBar.setVisible(false);
         //
+
         HTMLEditor htmlEditor = new HTMLEditor();
         String htmlText = "<b>Type here to take notes</b>";
         htmlEditor.setHtmlText(htmlText);
