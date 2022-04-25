@@ -39,7 +39,7 @@ import java.io.*;
 
 public class Controller {
     private Parent root;
-    boolean railwayLineEnable = false;
+    //boolean railwayLineEnable = false;
 
     @FXML
     private BorderPane borderPane;
@@ -133,93 +133,6 @@ public class Controller {
             graphStation.setFitHeight(40);
         }
 
-        if(railwayLineEnable) {
-            Canvas canvas = new Canvas(300, 250);
-            GraphicsContext gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 1);
-            desktop.add(canvas, 7, 4);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 1);
-            desktop.add(canvas, 7, 10);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 1);
-            desktop.add(canvas, 7, 16);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 2);
-            desktop.add(canvas, 1, 10);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 2);
-            desktop.add(canvas, 13, 4);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 2);
-            desktop.add(canvas, 13, 10);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 3);
-            desktop.add(canvas, 13, 16);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 3);
-            desktop.add(canvas, 19, 10);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 3);
-            desktop.add(canvas, 19, 16);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 3);
-            desktop.add(canvas, 13, 22);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 5);
-            desktop.add(canvas, 2, 15);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 4);
-            desktop.add(canvas, 2, 21);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 5);
-            desktop.add(canvas, 8, 15);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 5);
-            desktop.add(canvas, 14, 3);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 6);
-            desktop.add(canvas, 14, 21);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 6);
-            desktop.add(canvas, 20, 21);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 5);
-            desktop.add(canvas, 20, 3);
-        }
-
         //check if the file exist, if not, create them
         {
             String storageLocationDirectory = "C:/Users/Public/Documents/JavaCodeNote";
@@ -241,56 +154,6 @@ public class Controller {
 
     }
 
-    private void drawShapes(GraphicsContext gc, int type) {
-
-        switch(type) {
-            case 1:
-                gc.setFill(Color.YELLOW);
-                gc.setStroke(Color.YELLOW);
-                gc.setLineWidth(10);
-                gc.strokeLine(20, 15, 20, 235);
-                break;
-
-            case 2:
-                gc.setFill(Color.GREEN);
-                gc.setStroke(Color.GREEN);
-                gc.setLineWidth(10);
-                gc.strokeLine(20, 15, 20, 235);
-                break;
-
-            case 3:
-                gc.setFill(Color.BLUE);
-                gc.setStroke(Color.BLUE);
-                gc.setLineWidth(10);
-                gc.strokeLine(20, 15, 20, 235);
-                break;
-
-            case 4:
-                gc.setFill(Color.YELLOW);
-                gc.setStroke(Color.YELLOW);
-                gc.setLineWidth(10);
-                gc.strokeLine(5, 40, 215, 40);
-                break;
-
-            case 5:
-                gc.setFill(Color.GREEN);
-                gc.setStroke(Color.GREEN);
-                gc.setLineWidth(10);
-                gc.strokeLine(5, 40, 215, 40);
-                break;
-
-            case 6:
-                gc.setFill(Color.BLUE);
-                gc.setStroke(Color.BLUE);
-                gc.setLineWidth(10);
-                gc.strokeLine(5, 40, 215, 40);
-                break;
-
-            default:
-                System.out.println("");
-        }
-
-    }
 
     @FXML
     void closeMainTab(ActionEvent event) {
@@ -360,17 +223,6 @@ public class Controller {
 
         toolBar.getItems().add(buttonReturn);
 
-        toolBar.getItems().add(buttonExport);
-        //toolBar.setMinHeight(50);
-        //htmlEditor.setMinHeight(200);
-        htmlEditor.setMinWidth(desktop.getWidth());
-        //root = new VBox(toolBar, htmlEditor);
-        root = new VBox(htmlEditor);
-        desktopBorderPane.setTop(toolBar);
-        toolBar.setVisible(true);
-
-
-        //Parent root = new HTMLEditor();
         Scene scene =algorithmStation.getScene();
         root.translateYProperty().set(scene.getHeight());
         borderPane.getChildren().add(root);
