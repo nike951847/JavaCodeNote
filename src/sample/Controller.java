@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -32,6 +33,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.BufferedReader;
@@ -40,7 +42,7 @@ import java.io.*;
 
 public class Controller {
     private Parent root;
-    boolean railwayLineEnable = false;
+    private static Vector<ImageView> allStationImageView = new Vector<ImageView>();
 
     @FXML
     private BorderPane borderPane;
@@ -92,133 +94,36 @@ public class Controller {
     private BorderPane desktopBorderPane;
 
     public void initialize() {
+        //set all station to a vector
         {
-            openMPStation.setImage(Main.imageVector.get(0));
-            inheritanceStation.setImage(Main.imageVector.get(1));
-            polymorphismStation.setImage(Main.imageVector.get(2));
-            encapsulationStation.setImage(Main.imageVector.get(3));
-            mPIStation.setImage(Main.imageVector.get(4));
-            classStation.setImage(Main.imageVector.get(5));
-            interfaceStation.setImage(Main.imageVector.get(6));
-            exceptionStation.setImage(Main.imageVector.get(7));
-            threadStation.setImage(Main.imageVector.get(8));
-            centralStation.setImage(Main.imageVector.get(9));
-            dFS_BFSStation.setImage(Main.imageVector.get(10));
-            distributedStation.setImage(Main.imageVector.get(11));
-            gPUStation.setImage(Main.imageVector.get(12));
-            dataTypeStation.setImage(Main.imageVector.get(13));
-            hashStation.setImage(Main.imageVector.get(14));
-            treeStation.setImage(Main.imageVector.get(15));
-            algorithmStation.setImage(Main.imageVector.get(16));
-            graphStation.setImage(Main.imageVector.get(17));
+            allStationImageView.add(openMPStation);//0
+            allStationImageView.add(inheritanceStation);
+            allStationImageView.add(polymorphismStation);
+            allStationImageView.add(encapsulationStation);
+            allStationImageView.add(mPIStation);
+            allStationImageView.add(classStation);//5
+            allStationImageView.add(interfaceStation);
+            allStationImageView.add(exceptionStation);
+            allStationImageView.add(threadStation);
+            allStationImageView.add(centralStation);
+            allStationImageView.add(dFS_BFSStation);//10
+            allStationImageView.add(distributedStation);
+            allStationImageView.add(gPUStation);
+            allStationImageView.add(dataTypeStation);
+            allStationImageView.add(hashStation);
+            allStationImageView.add(treeStation);//15
+            allStationImageView.add(algorithmStation);
+            allStationImageView.add(graphStation);
         }
 
         {
-            openMPStation.setFitHeight(40);
-            inheritanceStation.setFitHeight(40);
-            polymorphismStation.setFitHeight(40);
-            encapsulationStation.setFitHeight(40);
-            mPIStation.setFitHeight(40);
-            classStation.setFitHeight(40);
-            interfaceStation.setFitHeight(40);
-            exceptionStation.setFitHeight(40);
-            threadStation.setFitHeight(40);
-            centralStation.setFitHeight(40);
-            dFS_BFSStation.setFitHeight(40);
-            distributedStation.setFitHeight(40);
-            gPUStation.setFitHeight(40);
-            dataTypeStation.setFitHeight(40);
-            hashStation.setFitHeight(40);
-            treeStation.setFitHeight(40);
-            algorithmStation.setFitHeight(40);
-            graphStation.setFitHeight(40);
-        }
+            for(int i=0; i<Main.stationNum; i++) {
+                allStationImageView.get(i).setImage(Main.imageVector.get(0));
+            }
 
-        if(railwayLineEnable) {
-            Canvas canvas = new Canvas(300, 250);
-            GraphicsContext gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 1);
-            desktop.add(canvas, 7, 4);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 1);
-            desktop.add(canvas, 7, 10);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 1);
-            desktop.add(canvas, 7, 16);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 2);
-            desktop.add(canvas, 1, 10);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 2);
-            desktop.add(canvas, 13, 4);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 2);
-            desktop.add(canvas, 13, 10);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 3);
-            desktop.add(canvas, 13, 16);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 3);
-            desktop.add(canvas, 19, 10);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 3);
-            desktop.add(canvas, 19, 16);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 3);
-            desktop.add(canvas, 13, 22);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 5);
-            desktop.add(canvas, 2, 15);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 4);
-            desktop.add(canvas, 2, 21);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 5);
-            desktop.add(canvas, 8, 15);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 5);
-            desktop.add(canvas, 14, 3);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 6);
-            desktop.add(canvas, 14, 21);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 6);
-            desktop.add(canvas, 20, 21);
-
-            canvas = new Canvas(300, 250);
-            gc = canvas.getGraphicsContext2D();
-            drawShapes(gc, 5);
-            desktop.add(canvas, 20, 3);
+            for(ImageView imageView: allStationImageView) {
+                imageView.setFitHeight(40);
+            }
         }
 
         //check if the file exist, if not, create them
@@ -235,63 +140,23 @@ public class Controller {
                     File fileHTML = new File(tempLocationFile);
                     SaveFile(defaultContet, fileHTML);
                 }
-            } else {
-                System.out.println("exist");
             }
         }
 
-    }
-
-    private void drawShapes(GraphicsContext gc, int type) {
-
-        switch(type) {
-            case 1:
-                gc.setFill(Color.YELLOW);
-                gc.setStroke(Color.YELLOW);
-                gc.setLineWidth(10);
-                gc.strokeLine(20, 15, 20, 235);
-                break;
-
-            case 2:
-                gc.setFill(Color.GREEN);
-                gc.setStroke(Color.GREEN);
-                gc.setLineWidth(10);
-                gc.strokeLine(20, 15, 20, 235);
-                break;
-
-            case 3:
-                gc.setFill(Color.BLUE);
-                gc.setStroke(Color.BLUE);
-                gc.setLineWidth(10);
-                gc.strokeLine(20, 15, 20, 235);
-                break;
-
-            case 4:
-                gc.setFill(Color.YELLOW);
-                gc.setStroke(Color.YELLOW);
-                gc.setLineWidth(10);
-                gc.strokeLine(5, 40, 215, 40);
-                break;
-
-            case 5:
-                gc.setFill(Color.GREEN);
-                gc.setStroke(Color.GREEN);
-                gc.setLineWidth(10);
-                gc.strokeLine(5, 40, 215, 40);
-                break;
-
-            case 6:
-                gc.setFill(Color.BLUE);
-                gc.setStroke(Color.BLUE);
-                gc.setLineWidth(10);
-                gc.strokeLine(5, 40, 215, 40);
-                break;
-
-            default:
-                System.out.println("");
+        //add mouse event handler to all station
+        {
+            for(ImageView imageView: allStationImageView) {
+                imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        System.out.println(event.getSource());
+                        //event.consume(); //stops any further handling of the event
+                    }
+                });
+            }
         }
-
     }
+
 
     @FXML
     void closeMainTab(ActionEvent event) {
@@ -303,6 +168,7 @@ public class Controller {
         ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);
     }
 
+<<<<<<< HEAD
     @FXML
     void StationPressed(MouseEvent event) throws IOException {
         int index = 0;
@@ -310,6 +176,13 @@ public class Controller {
             if(Main.stationName.get(i).equals(((ImageView)event.getSource()).getId())) index = i;
         }
         System.out.println(index);
+=======
+
+
+
+    void openMPStationPressed(MouseEvent event) {
+
+>>>>>>> a357716505aa1f64e9ecd132898aa970a13e7362
 
         HTMLEditor htmlEditor = new HTMLEditor();
         File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/"+Main.stationName.get(index)+".html");
@@ -368,6 +241,7 @@ public class Controller {
 
         toolBar.getItems().add(buttonReturn);
 
+<<<<<<< HEAD
         toolBar.getItems().add(buttonExport);
         //toolBar.setMinHeight(50);
         //htmlEditor.setMinHeight(200);
@@ -381,6 +255,9 @@ public class Controller {
 
         //Parent root = new HTMLEditor();
         //Scene scene =algorithmStation.getScene();
+=======
+        Scene scene =algorithmStation.getScene();
+>>>>>>> a357716505aa1f64e9ecd132898aa970a13e7362
         root.translateYProperty().set(scene.getHeight());
         TerminalController.outside.getChildren().add(root);
         toolBar.setMinHeight(50);
@@ -414,6 +291,11 @@ public class Controller {
         stage.setFullScreen(true);
         stage.showAndWait();*/
     }
+
+    /*@FXML
+    void stationPressed(MouseEvent event) {
+        System.out.println(event.getSource());
+    }*/
 
     private void SaveFile(String content, File file){
         try {
