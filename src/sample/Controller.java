@@ -148,15 +148,18 @@ public class Controller {
             String storageLocationDirectory = "C:/Users/Public/Documents/JavaCodeNote";
             File fileDirectory = new File(storageLocationDirectory);
             if (!fileDirectory.exists()) {
-                //System.out.println("not exist\ncreate directory");
                 fileDirectory.mkdirs();
-                storageLocationDirectory += "/";
-                for (int i = 0; i < Main.stationNum; i++) {
-                    String tempLocationFile = (storageLocationDirectory + Main.stationName.get(i) + ".html");
-                    String defaultContet = "<b>Type here to take notes</b>";
-                    File fileHTML = new File(tempLocationFile);
-                    SaveFile(defaultContet, fileHTML);
+                for(int i=0; i<Main.stationNum; i++) {
+                    File subDirectory = new File(storageLocationDirectory + "/" + Main.stationName.get(i));
+                    subDirectory.mkdirs();
+                    for(int j=0; j<8; j++) {
+                        File fileHTML = new File(storageLocationDirectory + "/" + Main.stationName.get(i) + "/note" + j + ".html");
+                        SaveFile("<b>Type here to take notes</b>", fileHTML, "Add New Note<br>\n");
+                    }
+                    //File saveNoteName = new File(storageLocationDirectory + "/" + Main.stationName.get(i) + "/buttonName.txt");
                 }
+            } else {
+                System.out.println("already exist");
             }
         }
 
@@ -192,58 +195,39 @@ public class Controller {
 
     @FXML
     void StationPressed(MouseEvent event) throws IOException {
-        //System.out.printf("weight%f height%f\n",borderPane.getWidth(),borderPane.getHeight() );
 
         int index = 0;
         for (int i = 0; i < 18; i++) {
             if (Main.stationName.get(i).equals(((ImageView) event.getSource()).getId())) index = i;
         }
-        //System.out.println(index);
         TerminalController.setCurTerminal(Main.allTerminal.get(index));
-        //Parent terminalpage = FXMLLoader.load(getClass().getResource("terminalpage.fxml"));
         root = FXMLLoader.load(getClass().getResource("terminalpage.fxml"));
-        //root.setLayoutX(((Node)(event.getSource())).getScene().getWidth());
-        //root.setLayoutY(((Node)(event.getSource())).getScene().getHeight());
-        //Scene scene = new Scene(terminalpage);
-        //Stage stage = new Stage();
-        //stage.setScene(scene);
-        //stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-        //stage.setFullScreen(true);
-        //stage.show();
-        //stage.showAndWait();
-        //((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-        //((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);
-        //((Stage) ((Node) event.getSource()).getScene().getWindow()).setScene(scene);
-        //((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);
-        //((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 
-
-        //root = new VBox(htmlEditor);
-        //root = terminalpage;
-        //System.out.println(terminalpage.getChildrenUnmodifiable());
-        //TerminalController.outside.getChildren().add(root);
         desktopBorderPane.getChildren().add(root);
-        //desktop.setBackground(new Background());
 
 
-        root.translateYProperty().set(((Node)(event.getSource())).getScene().getHeight());
-        //System.out.println(scene.getHeight());
-        //System.out.println("y property: " + root.translateYProperty());
+        root.translateYProperty().set(((Node)(event.getSource())).getScene().getHeight()-desktopToolBar.getHeight());
+        //System.out.println(desktopToolBar.getHeight());
+        Button terminalPageReturn = new Button();
+        terminalPageReturn.setText("Return");
+        terminalPageReturn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                desktopBorderPane.getChildren().remove(root);
+                desktopBorderPane.setTop(desktopToolBar);
+            }
+        });
 
-        //toolBar.setMinHeight(50);
-        //toolBar.setMaxWidth(scene.getWidth());
-        //htmlEditor.setMinHeight(scene.getHeight() - 50);
-        //htmlEditor.setPrefHeight(scene.getHeight()-50);
         Timeline timeline = new Timeline();
-        KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
+        KeyValue kv = new KeyValue(root.translateYProperty(), desktopToolBar.getHeight(), Interpolator.EASE_IN);
         KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
         timeline.getKeyFrames().add(kf);
         timeline.setOnFinished(t -> {
-            //desktop.getChildren().remove(anchorRoot);
-            //desktopToolBar.setVisible(false);
+            //System.out.println("here");
+            desktopBorderPane.setTop(new ToolBar(terminalPageReturn));
         });
         timeline.play();
-        //System.out.println(scene.getHeight());
+
 
 /*
         HTMLEditor htmlEditor = new HTMLEditor();
@@ -330,27 +314,29 @@ public class Controller {
 
     }
 
-    private void SaveFile(String content, File file) {
+    private void SaveFile(String content, File file, String buttonName) {
         try {
             FileWriter fileWriter = null;
 
             fileWriter = new FileWriter(file);
-            fileWriter.write(content);
+            fileWriter.write(buttonName + "\n" + content);
             fileWriter.close();
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private String readFile(File file) {
+    private String [] readFile(File file) {
         StringBuilder stringBuffer = new StringBuilder();
         BufferedReader bufferedReader = null;
+        String noteName = "";
 
         try {
 
             bufferedReader = new BufferedReader(new FileReader(file));
 
             String text;
+            noteName = bufferedReader.readLine();
             while ((text = bufferedReader.readLine()) != null) {
                 stringBuffer.append(text);
             }
@@ -367,7 +353,11 @@ public class Controller {
             }
         }
 
-        return stringBuffer.toString();
+        String rt [] = new String[2];
+        rt[0] = noteName;
+        rt[1] = stringBuffer.toString();
+
+        return rt;
     }
 
 }
