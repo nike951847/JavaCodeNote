@@ -37,6 +37,7 @@ import java.util.logging.Logger;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.*;
+import javafx.scene.input.KeyCombination;
 
 import javafx.scene.control.ScrollPane;
 
@@ -147,7 +148,7 @@ public class Controller {
             String storageLocationDirectory = "C:/Users/Public/Documents/JavaCodeNote";
             File fileDirectory = new File(storageLocationDirectory);
             if (!fileDirectory.exists()) {
-                System.out.println("not exist\ncreate directory");
+                //System.out.println("not exist\ncreate directory");
                 fileDirectory.mkdirs();
                 storageLocationDirectory += "/";
                 for (int i = 0; i < Main.stationNum; i++) {
@@ -165,7 +166,7 @@ public class Controller {
                 imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        System.out.println("["+event.getX()+", "+event.getY()+"]");
+                        //System.out.println("["+event.getX()+", "+event.getY()+"]");
                         //System.out.println("["+((ImageView) ((Node) event.getSource())).getX()+", "+((ImageView) ((Node) event.getSource())).getY()+"]");;
                         //((ImageView) ((Node) event.getSource())).getX();
                         //System.out.println(event.getSource().);
@@ -181,7 +182,6 @@ public class Controller {
 
     @FXML
     void closeMainTab(ActionEvent event) {
-
         ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
     }
 
@@ -192,21 +192,60 @@ public class Controller {
 
     @FXML
     void StationPressed(MouseEvent event) throws IOException {
-        System.out.printf("weight%f height%f\n",borderPane.getWidth(),borderPane.getHeight() );
+        //System.out.printf("weight%f height%f\n",borderPane.getWidth(),borderPane.getHeight() );
 
         int index = 0;
         for (int i = 0; i < 18; i++) {
             if (Main.stationName.get(i).equals(((ImageView) event.getSource()).getId())) index = i;
         }
-        System.out.println(index);
+        //System.out.println(index);
         TerminalController.setCurTerminal(Main.allTerminal.get(index));
-        Parent terminalpage = FXMLLoader.load(getClass().getResource("terminalpage.fxml"));
-        Scene scene = new Scene(terminalpage);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        //Parent terminalpage = FXMLLoader.load(getClass().getResource("terminalpage.fxml"));
+        root = FXMLLoader.load(getClass().getResource("terminalpage.fxml"));
+        //root.setLayoutX(((Node)(event.getSource())).getScene().getWidth());
+        //root.setLayoutY(((Node)(event.getSource())).getScene().getHeight());
+        //Scene scene = new Scene(terminalpage);
+        //Stage stage = new Stage();
+        //stage.setScene(scene);
+        //stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+        //stage.setFullScreen(true);
+        //stage.show();
+        //stage.showAndWait();
+        //((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+        //((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);
+        //((Stage) ((Node) event.getSource()).getScene().getWindow()).setScene(scene);
+        //((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);
+        //((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 
 
+        //root = new VBox(htmlEditor);
+        //root = terminalpage;
+        //System.out.println(terminalpage.getChildrenUnmodifiable());
+        //TerminalController.outside.getChildren().add(root);
+        desktopBorderPane.getChildren().add(root);
+        //desktop.setBackground(new Background());
+
+
+        root.translateYProperty().set(((Node)(event.getSource())).getScene().getHeight());
+        //System.out.println(scene.getHeight());
+        //System.out.println("y property: " + root.translateYProperty());
+
+        //toolBar.setMinHeight(50);
+        //toolBar.setMaxWidth(scene.getWidth());
+        //htmlEditor.setMinHeight(scene.getHeight() - 50);
+        //htmlEditor.setPrefHeight(scene.getHeight()-50);
+        Timeline timeline = new Timeline();
+        KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
+        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+        timeline.getKeyFrames().add(kf);
+        timeline.setOnFinished(t -> {
+            //desktop.getChildren().remove(anchorRoot);
+            //desktopToolBar.setVisible(false);
+        });
+        timeline.play();
+        //System.out.println(scene.getHeight());
+
+/*
         HTMLEditor htmlEditor = new HTMLEditor();
         File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + Main.stationName.get(index) + ".html");
         if (openFile != null) {
@@ -234,8 +273,6 @@ public class Controller {
                 desktopBorderPane.setTop(desktopToolBar);
                 desktopToolBar.setVisible(true);
                 TerminalController.outside.getChildren().remove(root);
-                /*stage.close();
-                ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);*/
             }
         });
         buttonExport.setOnAction(new EventHandler<ActionEvent>() {
@@ -273,6 +310,7 @@ public class Controller {
 
 
         //Parent root = new HTMLEditor();
+        //Parent root = new VBox(htmlEditor);
         //Scene scene =algorithmStation.getScene();
         root.translateYProperty().set(scene.getHeight());
 
@@ -286,9 +324,10 @@ public class Controller {
         timeline.getKeyFrames().add(kf);
         timeline.setOnFinished(t -> {
             //desktop.getChildren().remove(anchorRoot);
-            desktopToolBar.setVisible(false);
+            //desktopToolBar.setVisible(false);
         });
-        timeline.play();
+        timeline.play();*/
+
     }
 
     private void SaveFile(String content, File file) {

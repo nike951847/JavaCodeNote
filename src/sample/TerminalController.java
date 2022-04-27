@@ -1,12 +1,15 @@
 package sample;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 
 import java.util.Vector;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 public class TerminalController {
     public static BorderPane outside;
@@ -34,6 +37,8 @@ public class TerminalController {
     private Button note6;
     @FXML
     private Button note7;
+    @FXML
+    private Button notePageReturn;
 
     public static void setCurTerminal(){
 
@@ -65,4 +70,10 @@ public class TerminalController {
     public static void setCurTerminal(Terminal curTerminal) {
         TerminalController.curTerminal = curTerminal;
     }
+
+    @FXML
+    void notePageReturnPressed(MouseEvent event) {
+        ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
+    }
+
 }
