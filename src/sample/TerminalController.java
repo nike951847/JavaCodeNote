@@ -86,6 +86,7 @@ public class TerminalController {
                 if(!name.equals("Type here to name the note")) {
                     button.setText(name);
                 }
+
             }
         }
     }
