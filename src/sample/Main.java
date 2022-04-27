@@ -88,7 +88,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("EXAMPLE");
         primaryStage.setScene(new Scene(root, 1250, 600));
-        primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+        //primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         primaryStage.setFullScreen(true);
         primaryStage.initStyle(StageStyle.DECORATED);
 
@@ -103,6 +103,7 @@ public class Main extends Application {
         vBox.setPadding(new Insets(350, 100, 100, 550));
         loadingStage.setScene(scene);
         loadingStage.show();
+        loadingStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         loadingStage.setFullScreen(true);
 
         Thread taskThread = new Thread(new Runnable() {
