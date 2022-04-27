@@ -75,7 +75,7 @@ public class Main extends Application {
     //initialize imageVector
     static {
         for (int i = 0; i < stationNum; i++) {
-            imageVector.add(new Image("file:src/sample/photo/" + stationName.get(i) + ".jpg"));//0
+            imageVector.add(new Image("file:src/sample/photo/" + stationName.get(i) + ".png"));//0
             allTerminal.add(new Terminal(stationName.get(i)));
         }
     }

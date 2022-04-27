@@ -14,7 +14,7 @@
        <ScrollPane fx:id="desktopScrollPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1260.0">
            <BorderPane fx:id="borderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
               <center>
-                  <GridPane fx:id="desktop" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="1260.0" prefHeight="1250.0" BorderPane.alignment="CENTER">
+                  <GridPane fx:id="desktop" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="1260.0" prefHeight="1250.0" styleClass="bodybg" stylesheets="@test.css" BorderPane.alignment="CENTER">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

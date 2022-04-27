@@ -127,7 +127,7 @@ public class Controller {
 
         {
             for (int i = 0; i < Main.stationNum; i++) {
-                allStationImageView.get(i).setImage(Main.imageVector.get(0));
+                allStationImageView.get(i).setImage(Main.imageVector.get(i));
             }
 
             for (ImageView imageView : allStationImageView) {
@@ -181,6 +181,7 @@ public class Controller {
 
     @FXML
     void closeMainTab(ActionEvent event) {
+
         ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
     }
 
@@ -191,6 +192,8 @@ public class Controller {
 
     @FXML
     void StationPressed(MouseEvent event) throws IOException {
+        System.out.printf("weight%f height%f\n",borderPane.getWidth(),borderPane.getHeight() );
+
         int index = 0;
         for (int i = 0; i < 18; i++) {
             if (Main.stationName.get(i).equals(((ImageView) event.getSource()).getId())) index = i;
