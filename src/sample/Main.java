@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 
 import java.awt.*;
 import java.util.*;
+
 import javafx.animation.*;
 import javafx.stage.StageStyle;
 import javafx.scene.control.ProgressBar;
@@ -29,25 +30,25 @@ public class Main extends Application {
     static public CentralTerminal centralTerminal = new CentralTerminal();
 
     /*
-    * 0: OpenMPStation
-    * 1: InheritanceStation
-    * 2: PolymorphismStation
-    * 3: EncapsulationStation
-    * 4: MPIStation
-    * 5: ClassStation
-    * 6: InterfaceStation
-    * 7: ExceptionStation
-    * 8: ThreadStation
-    * 9: CentralStation
-    * 10: DFS_BFSStation
-    * 11: DistributedStation
-    * 12: GPUStation
-    * 13: DataTypeStation
-    * 14: HashStation
-    * 15: TreeStation
-    * 16: AlgorithmStation
-    * 17: GraphStation
-    * */
+     * 0: OpenMPStation
+     * 1: InheritanceStation
+     * 2: PolymorphismStation
+     * 3: EncapsulationStation
+     * 4: MPIStation
+     * 5: ClassStation
+     * 6: InterfaceStation
+     * 7: ExceptionStation
+     * 8: ThreadStation
+     * 9: CentralStation
+     * 10: DFS_BFSStation
+     * 11: DistributedStation
+     * 12: GPUStation
+     * 13: DataTypeStation
+     * 14: HashStation
+     * 15: TreeStation
+     * 16: AlgorithmStation
+     * 17: GraphStation
+     * */
 
     //initialize stationName to avoid typo
     static {
@@ -73,14 +74,14 @@ public class Main extends Application {
 
     //initialize imageVector
     static {
-        for(int i=0; i<stationNum; i++) {
-            imageVector.add(new Image("file:src/sample/photo/"+stationName.get(i)+".jpg"));//0
+        for (int i = 0; i < stationNum; i++) {
+            imageVector.add(new Image("file:src/sample/photo/" + stationName.get(i) + ".jpg"));//0
             allTerminal.add(new Terminal(stationName.get(i)));
         }
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
 
         //primary stage
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
@@ -95,7 +96,7 @@ public class Main extends Application {
         ProgressBar progressBar = new ProgressBar(0);
         VBox vBox = new VBox(progressBar);
 
-        vBox.getChildren().add(new Text( "        LOADING"));
+        vBox.getChildren().add(new Text("        LOADING"));
         Scene scene = new Scene(vBox);
         vBox.setPadding(new Insets(350, 100, 100, 550));
         loadingStage.setScene(scene);
@@ -107,13 +108,12 @@ public class Main extends Application {
             public void run() {
                 double progress = 0;
 
-                for(int i=0; i<100; i++){
+                for (int i = 0; i < 100; i++) {
                     try {
                         Thread.sleep(10);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-
 
 
                     progress += 0.01;
@@ -123,7 +123,7 @@ public class Main extends Application {
                         @Override
                         public void run() {
                             progressBar.setProgress(reportedProgress);
-                            if(progressBar.getProgress() > 1.0) {
+                            if (progressBar.getProgress() > 1.0) {
                                 primaryStage.show();
                                 loadingStage.close();
                             }

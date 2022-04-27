@@ -1,0 +1,289 @@
+Index: src/sample/Controller.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/sample/Controller.java b/src/sample/Controller.java
+--- a/src/sample/Controller.java	(revision da9e841716c123cacaac402cd1675c50cfd597bf)
++++ b/src/sample/Controller.java	(date 1650889932946)
+@@ -39,7 +39,6 @@
+ 
+ public class Controller {
+     private Parent root;
+-    boolean railwayLineEnable = false;
+ 
+     @FXML
+     private BorderPane borderPane;
+@@ -133,93 +132,6 @@
+             graphStation.setFitHeight(40);
+         }
+ 
+-        if(railwayLineEnable) {
+-            Canvas canvas = new Canvas(300, 250);
+-            GraphicsContext gc = canvas.getGraphicsContext2D();
+-            drawShapes(gc, 1);
+-            desktop.add(canvas, 7, 4);
+-
+-            canvas = new Canvas(300, 250);
+-            gc = canvas.getGraphicsContext2D();
+-            drawShapes(gc, 1);
+-            desktop.add(canvas, 7, 10);
+-
+-            canvas = new Canvas(300, 250);
+-            gc = canvas.getGraphicsContext2D();
+-            drawShapes(gc, 1);
+-            desktop.add(canvas, 7, 16);
+-
+-            canvas = new Canvas(300, 250);
+-            gc = canvas.getGraphicsContext2D();
+-            drawShapes(gc, 2);
+-            desktop.add(canvas, 1, 10);
+-
+-            canvas = new Canvas(300, 250);
+-            gc = canvas.getGraphicsContext2D();
+-            drawShapes(gc, 2);
+-            desktop.add(canvas, 13, 4);
+-
+-            canvas = new Canvas(300, 250);
+-            gc = canvas.getGraphicsContext2D();
+-            drawShapes(gc, 2);
+-            desktop.add(canvas, 13, 10);
+-
+-            canvas = new Canvas(300, 250);
+-            gc = canvas.getGraphicsContext2D();
+-            drawShapes(gc, 3);
+-            desktop.add(canvas, 13, 16);
+-
+-            canvas = new Canvas(300, 250);
+-            gc = canvas.getGraphicsContext2D();
+-            drawShapes(gc, 3);
+-            desktop.add(canvas, 19, 10);
+-
+-            canvas = new Canvas(300, 250);
+-            gc = canvas.getGraphicsContext2D();
+-            drawShapes(gc, 3);
+-            desktop.add(canvas, 19, 16);
+-
+-            canvas = new Canvas(300, 250);
+-            gc = canvas.getGraphicsContext2D();
+-            drawShapes(gc, 3);
+-            desktop.add(canvas, 13, 22);
+-
+-            canvas = new Canvas(300, 250);
+-            gc = canvas.getGraphicsContext2D();
+-            drawShapes(gc, 5);
+-            desktop.add(canvas, 2, 15);
+-
+-            canvas = new Canvas(300, 250);
+-            gc = canvas.getGraphicsContext2D();
+-            drawShapes(gc, 4);
+-            desktop.add(canvas, 2, 21);
+-
+-            canvas = new Canvas(300, 250);
+-            gc = canvas.getGraphicsContext2D();
+-            drawShapes(gc, 5);
+-            desktop.add(canvas, 8, 15);
+-
+-            canvas = new Canvas(300, 250);
+-            gc = canvas.getGraphicsContext2D();
+-            drawShapes(gc, 5);
+-            desktop.add(canvas, 14, 3);
+-
+-            canvas = new Canvas(300, 250);
+-            gc = canvas.getGraphicsContext2D();
+-            drawShapes(gc, 6);
+-            desktop.add(canvas, 14, 21);
+-
+-            canvas = new Canvas(300, 250);
+-            gc = canvas.getGraphicsContext2D();
+-            drawShapes(gc, 6);
+-            desktop.add(canvas, 20, 21);
+-
+-            canvas = new Canvas(300, 250);
+-            gc = canvas.getGraphicsContext2D();
+-            drawShapes(gc, 5);
+-            desktop.add(canvas, 20, 3);
+-        }
+-
+         //check if the file exist, if not, create them
+         {
+             String storageLocationDirectory = "C:/Users/Public/Documents/JavaCodeNote";
+@@ -234,61 +146,8 @@
+                     File fileHTML = new File(tempLocationFile);
+                     SaveFile(defaultContet, fileHTML);
+                 }
+-            } else {
+-                System.out.println("exist");
+             }
+         }
+-
+-    }
+-
+-    private void drawShapes(GraphicsContext gc, int type) {
+-
+-        switch(type) {
+-            case 1:
+-                gc.setFill(Color.YELLOW);
+-                gc.setStroke(Color.YELLOW);
+-                gc.setLineWidth(10);
+-                gc.strokeLine(20, 15, 20, 235);
+-                break;
+-
+-            case 2:
+-                gc.setFill(Color.GREEN);
+-                gc.setStroke(Color.GREEN);
+-                gc.setLineWidth(10);
+-                gc.strokeLine(20, 15, 20, 235);
+-                break;
+-
+-            case 3:
+-                gc.setFill(Color.BLUE);
+-                gc.setStroke(Color.BLUE);
+-                gc.setLineWidth(10);
+-                gc.strokeLine(20, 15, 20, 235);
+-                break;
+-
+-            case 4:
+-                gc.setFill(Color.YELLOW);
+-                gc.setStroke(Color.YELLOW);
+-                gc.setLineWidth(10);
+-                gc.strokeLine(5, 40, 215, 40);
+-                break;
+-
+-            case 5:
+-                gc.setFill(Color.GREEN);
+-                gc.setStroke(Color.GREEN);
+-                gc.setLineWidth(10);
+-                gc.strokeLine(5, 40, 215, 40);
+-                break;
+-
+-            case 6:
+-                gc.setFill(Color.BLUE);
+-                gc.setStroke(Color.BLUE);
+-                gc.setLineWidth(10);
+-                gc.strokeLine(5, 40, 215, 40);
+-                break;
+-
+-            default:
+-                System.out.println("");
+-        }
+ 
+     }
+ 
+@@ -423,14 +282,11 @@
+         BufferedReader bufferedReader = null;
+ 
+         try {
+-
+             bufferedReader = new BufferedReader(new FileReader(file));
+-
+             String text;
+             while ((text = bufferedReader.readLine()) != null) {
+                 stringBuffer.append(text);
+             }
+-
+         } catch (FileNotFoundException ex) {
+             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+         } catch (IOException ex) {
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_4_24_2022_6_22_PM__Default_.xml
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_4_24_2022_6_22_PM__Default_.xml b/.idea/shelf/Uncommitted_changes_before_Update_at_4_24_2022_6_22_PM__Default_.xml
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Update_at_4_24_2022_6_22_PM__Default_.xml	(revision da9e841716c123cacaac402cd1675c50cfd597bf)
++++ /dev/null	(revision da9e841716c123cacaac402cd1675c50cfd597bf)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Update_at_4_24_2022_6_22_PM_[Default]" date="1650795745760" recycled="false" toDelete="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_24_2022_6_22_PM_[Default]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 4/24/2022 6:22 PM [Default]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision da9e841716c123cacaac402cd1675c50cfd597bf)
++++ b/.idea/workspace.xml	(date 1650889676001)
+@@ -2,9 +2,9 @@
+ <project version="4">
+   <component name="ChangeListManager">
+     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="-read/autosave file is usable, but only for terminal[0].&#10;-toolbar at desktop panel is fixed at the top fo the panel, not movable.">
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_24_2022_6_22_PM__Default_.xml" beforeDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/sample/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Controller.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/sample/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/sample.fxml" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -51,9 +51,6 @@
+     </breakpoint_any>
+     <ui_properties converted="true" />
+     <breakpoint_rules converted="true" />
+-  </component>
+-  <component name="FavoritesManager">
+-    <favorites_list name="JavaFxApplication" />
+   </component>
+   <component name="FileTemplateManagerImpl">
+     <option name="RECENT_TEMPLATES">
+@@ -144,9 +141,13 @@
+     <option name="showModules" value="false" />
+     <option name="sortByType" value="true" />
+   </component>
+-  <component name="PropertiesComponent">
+-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../參考專案/javafx-examples" />
+-  </component>
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
++  }
++}</component>
+   <component name="RunManager" selected="Application.Main">
+     <configuration default="true" type="Applet" factoryName="Applet">
+       <module name="" />
+@@ -171,10 +172,7 @@
+     </configuration>
+     <configuration default="true" type="TestNG">
+       <option name="TEST_OBJECT" value="CLASS" />
+-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+-      <option name="TEST_SEARCH_SCOPE">
+-        <value defaultName="moduleWithDependencies" />
+-      </option>
++      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+       <properties />
+       <listeners />
+       <method v="2">
+@@ -223,7 +221,10 @@
+     </configuration>
+     <configuration default="true" type="TestNG">
+       <option name="TEST_OBJECT" value="CLASS" />
+-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
++      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
++      <option name="TEST_SEARCH_SCOPE">
++        <value defaultName="moduleWithDependencies" />
++      </option>
+       <properties />
+       <listeners />
+       <method v="2">
+@@ -240,7 +241,7 @@
+       </method>
+     </configuration>
+   </component>
+-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
++  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">
+       <changelist id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="" />
+@@ -465,6 +466,10 @@
+     <MESSAGE value="commit" />
+     <MESSAGE value="-read/autosave file is usable, but only for terminal[0].&#10;-toolbar at desktop panel is fixed at the top fo the panel, not movable." />
+     <option name="LAST_COMMIT_MESSAGE" value="-read/autosave file is usable, but only for terminal[0].&#10;-toolbar at desktop panel is fixed at the top fo the panel, not movable." />
++  </component>
++  <component name="XSLT-Support.FileAssociations.UIState">
++    <expand />
++    <select />
+   </component>
+   <component name="editorHistoryManager">
+     <entry file="file://$PROJECT_DIR$/src/sample/Main.java">

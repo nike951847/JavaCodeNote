@@ -1,0 +1,254 @@
+Index: src/sample/Controller.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/sample/Controller.java b/src/sample/Controller.java
+--- a/src/sample/Controller.java	(revision 88142fa99d9ffc15e5c8e18b87083b5af2d054fb)
++++ b/src/sample/Controller.java	(date 1650901484732)
+@@ -168,7 +168,7 @@
+         ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);
+     }
+ 
+-<<<<<<< HEAD
++//<<<<<<< HEAD
+     @FXML
+     void StationPressed(MouseEvent event) throws IOException {
+         int index = 0;
+@@ -176,13 +176,14 @@
+             if(Main.stationName.get(i).equals(((ImageView)event.getSource()).getId())) index = i;
+         }
+         System.out.println(index);
+-=======
++    }
++//=======
+ 
+ 
+ 
+     void openMPStationPressed(MouseEvent event) {
+ 
+->>>>>>> a357716505aa1f64e9ecd132898aa970a13e7362
++//>>>>>>> a357716505aa1f64e9ecd132898aa970a13e7362
+ 
+         HTMLEditor htmlEditor = new HTMLEditor();
+         File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/"+Main.stationName.get(index)+".html");
+@@ -241,7 +242,7 @@
+ 
+         toolBar.getItems().add(buttonReturn);
+ 
+-<<<<<<< HEAD
++//<<<<<<< HEAD
+         toolBar.getItems().add(buttonExport);
+         //toolBar.setMinHeight(50);
+         //htmlEditor.setMinHeight(200);
+@@ -255,9 +256,9 @@
+ 
+         //Parent root = new HTMLEditor();
+         //Scene scene =algorithmStation.getScene();
+-=======
+-        Scene scene =algorithmStation.getScene();
+->>>>>>> a357716505aa1f64e9ecd132898aa970a13e7362
++//=======
++        //Scene scene =algorithmStation.getScene();
++//>>>>>>> a357716505aa1f64e9ecd132898aa970a13e7362
+         root.translateYProperty().set(scene.getHeight());
+         TerminalController.outside.getChildren().add(root);
+         toolBar.setMinHeight(50);
+Index: src/sample/openMPStationPressed.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/sample/openMPStationPressed.txt b/src/sample/openMPStationPressed.txt
+new file mode 100644
+--- /dev/null	(date 1650901467788)
++++ b/src/sample/openMPStationPressed.txt	(date 1650901467788)
+@@ -0,0 +1,111 @@
++void openMPStationPressed(MouseEvent event) {
++
++//>>>>>>> a357716505aa1f64e9ecd132898aa970a13e7362
++
++        HTMLEditor htmlEditor = new HTMLEditor();
++        File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/"+Main.stationName.get(index)+".html");
++        if(openFile != null){
++            String textRead = readFile(openFile);
++            htmlEditor.setHtmlText(textRead);
++        }
++        Parent terminalpage = FXMLLoader.load(getClass().getResource("terminalpage.fxml"));
++        Scene scene = new Scene(terminalpage);
++        Stage stage = new Stage();
++        stage.setScene(scene);
++        stage.show();
++        ToolBar toolBar = new ToolBar();
++        Button buttonReturn = new Button("Return");
++        Button buttonExport = new Button("Export");
++
++        buttonReturn.setOnAction(new EventHandler<ActionEvent>() {
++            @Override
++            public void handle(ActionEvent actionEvent) {
++
++                //save the current file, then return
++                File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/"+Main.stationName.get(0)+".html");
++                openFile.delete();
++                if(openFile != null){
++                    String stringHtml = htmlEditor.getHtmlText();
++                    SaveFile(stringHtml, openFile);
++                }
++
++                toolBar.setVisible(false);
++                desktopBorderPane.setTop(desktopToolBar);
++                desktopToolBar.setVisible(true);
++                borderPane.getChildren().remove(root);
++                /*stage.close();
++                ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);*/
++            }
++        });
++        buttonExport.setOnAction(new EventHandler<ActionEvent>(){
++            @Override
++            public void handle(ActionEvent t) {
++                String stringHtml = htmlEditor.getHtmlText();
++                //htmlText.setText(stringHtml);
++
++                FileChooser fileChooser = new FileChooser();
++
++                //Set extension filter
++                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("HTML files (*.html)", "*.html");
++                fileChooser.getExtensionFilters().add(extFilter);
++
++                //Show save file dialog
++                File file = fileChooser.showSaveDialog((Stage) ((Node) event.getSource()).getScene().getWindow());
++                if(file != null){
++                    SaveFile(stringHtml, file);
++                }
++            }
++        });
++
++        toolBar.getItems().add(buttonReturn);
++
++//<<<<<<< HEAD
++        toolBar.getItems().add(buttonExport);
++        //toolBar.setMinHeight(50);
++        //htmlEditor.setMinHeight(200);
++        htmlEditor.setMinWidth(desktop.getWidth());
++        //root = new VBox(toolBar, htmlEditor);
++        root = new VBox(htmlEditor);
++        //System.out.println(terminalpage.getChildrenUnmodifiable());
++        TerminalController.outside.setTop(toolBar);
++        toolBar.setVisible(true);
++
++
++        //Parent root = new HTMLEditor();
++        //Scene scene =algorithmStation.getScene();
++//=======
++        //Scene scene =algorithmStation.getScene();
++//>>>>>>> a357716505aa1f64e9ecd132898aa970a13e7362
++        root.translateYProperty().set(scene.getHeight());
++        TerminalController.outside.getChildren().add(root);
++        toolBar.setMinHeight(50);
++        toolBar.setMaxWidth(scene.getWidth());
++        htmlEditor.setMinHeight(scene.getHeight()-50);
++        //htmlEditor.setPrefHeight(scene.getHeight()-50);
++        Timeline timeline = new Timeline();
++        KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
++        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
++        timeline.getKeyFrames().add(kf);
++        timeline.setOnFinished(t -> {
++            //desktop.getChildren().remove(anchorRoot);
++            desktopToolBar.setVisible(false);
++        });
++        timeline.play();
++        /*Scene scene = new Scene(root);
++        root.translateYProperty().set(scene.getHeight());
++        StackPane parentContainer = (StackPane) ((Node) event.getSource()).getScene().getRoot();
++
++        parentContainer.getChildren().add(root);
++
++
++        Timeline timeline = new Timeline();
++        KeyValue kv = new KeyValue(parentContainer.translateYProperty(), 0, Interpolator.EASE_IN);
++        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
++        timeline.getKeyFrames().add(kf);
++
++        timeline.play();*/
++        /*stage.setTitle("Take Notes");
++        stage.setScene(scene);
++        stage.setFullScreen(true);
++        stage.showAndWait();*/
++    }
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 88142fa99d9ffc15e5c8e18b87083b5af2d054fb)
++++ b/.idea/workspace.xml	(date 1650902595724)
+@@ -2,9 +2,10 @@
+ <project version="4">
+   <component name="ChangeListManager">
+     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="add station to vector">
++      <change afterPath="$PROJECT_DIR$/src/sample/openMPStationPressed.txt" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/Controller$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/Controller$1.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/Controller$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/Controller$2.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/Controller$2.class" beforeDir="false" />
+       <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/Controller.class" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/sample/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Controller.java" afterDir="false" />
+     </list>
+@@ -146,11 +147,11 @@
+     <option name="showModules" value="false" />
+     <option name="sortByType" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "settings.editor.selected.configurable": "preferences.keymap"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RunManager" selected="Application.Main">
+     <configuration default="true" type="Applet" factoryName="Applet">
+       <module name="" />
+@@ -175,10 +176,7 @@
+     </configuration>
+     <configuration default="true" type="TestNG">
+       <option name="TEST_OBJECT" value="CLASS" />
+-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+-      <option name="TEST_SEARCH_SCOPE">
+-        <value defaultName="moduleWithDependencies" />
+-      </option>
++      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+       <properties />
+       <listeners />
+       <method v="2">
+@@ -237,7 +235,10 @@
+     </configuration>
+     <configuration default="true" type="TestNG">
+       <option name="TEST_OBJECT" value="CLASS" />
+-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
++      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
++      <option name="TEST_SEARCH_SCOPE">
++        <value defaultName="moduleWithDependencies" />
++      </option>
+       <properties />
+       <listeners />
+       <method v="2">
+@@ -453,7 +454,14 @@
+       <option name="project" value="LOCAL" />
+       <updated>1650893534749</updated>
+     </task>
+-    <option name="localTasksCounter" value="28" />
++    <task id="LOCAL-00028" summary="add station to vector">
++      <created>1650894676060</created>
++      <option name="number" value="00028" />
++      <option name="presentableId" value="LOCAL-00028" />
++      <option name="project" value="LOCAL" />
++      <updated>1650894676060</updated>
++    </task>
++    <option name="localTasksCounter" value="29" />
+     <servers />
+   </component>
+   <component name="TimeTrackingManager">

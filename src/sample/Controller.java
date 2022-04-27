@@ -12,16 +12,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.scene.web.HTMLEditor;
-import javafx.scene.layout.VBox;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
@@ -29,6 +26,7 @@ import javafx.scene.control.ToolBar;
 import javafx.util.*;
 import javafx.scene.Node;
 import javafx.stage.FileChooser;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -39,6 +37,7 @@ import java.util.logging.Logger;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.*;
+
 import javafx.scene.control.ScrollPane;
 
 public class Controller {
@@ -97,6 +96,13 @@ public class Controller {
     private BorderPane desktopBorderPane;
 
     public void initialize() {
+        //set background image
+        Image img = new Image("file:src/sample/photo/" + "DesktopBackground" + ".png");
+        desktop.setBackground(new Background(new BackgroundImage(img, BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT)));
+
         //set all station to a vector
         {
             allStationImageView.add(openMPStation);//0
@@ -120,18 +126,18 @@ public class Controller {
         }
 
         {
-            for(int i=0; i<Main.stationNum; i++) {
+            for (int i = 0; i < Main.stationNum; i++) {
                 allStationImageView.get(i).setImage(Main.imageVector.get(0));
             }
 
-            for(ImageView imageView: allStationImageView) {
+            for (ImageView imageView : allStationImageView) {
                 imageView.setFitHeight(90);
             }
         }
 
         //set the point(x, y) of all terminal
         {
-            for(int i=0; i<Main.stationNum; i++) {
+            for (int i = 0; i < Main.stationNum; i++) {
                 Main.allTerminal.get(i).setPoint(GridPane.getColumnIndex(allStationImageView.get(i)), GridPane.getRowIndex(allStationImageView.get(i)));
             }
         }
@@ -140,12 +146,12 @@ public class Controller {
         {
             String storageLocationDirectory = "C:/Users/Public/Documents/JavaCodeNote";
             File fileDirectory = new File(storageLocationDirectory);
-            if(!fileDirectory.exists()) {
+            if (!fileDirectory.exists()) {
                 System.out.println("not exist\ncreate directory");
                 fileDirectory.mkdirs();
                 storageLocationDirectory += "/";
-                for(int i=0; i<Main.stationNum; i++) {
-                    String tempLocationFile = (storageLocationDirectory + Main.stationName.get(i)+".html");
+                for (int i = 0; i < Main.stationNum; i++) {
+                    String tempLocationFile = (storageLocationDirectory + Main.stationName.get(i) + ".html");
                     String defaultContet = "<b>Type here to take notes</b>";
                     File fileHTML = new File(tempLocationFile);
                     SaveFile(defaultContet, fileHTML);
@@ -155,11 +161,14 @@ public class Controller {
 
         //add mouse event handler to all station
         {
-            for(ImageView imageView: allStationImageView) {
+            for (ImageView imageView : allStationImageView) {
                 imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        System.out.println(event.getSource());
+                        System.out.println("["+event.getX()+", "+event.getY()+"]");
+                        //System.out.println("["+((ImageView) ((Node) event.getSource())).getX()+", "+((ImageView) ((Node) event.getSource())).getY()+"]");;
+                        //((ImageView) ((Node) event.getSource())).getX();
+                        //System.out.println(event.getSource().);
                     }
                 });
             }
@@ -183,8 +192,8 @@ public class Controller {
     @FXML
     void StationPressed(MouseEvent event) throws IOException {
         int index = 0;
-        for(int i =0 ;i<18;i++){
-            if(Main.stationName.get(i).equals(((ImageView)event.getSource()).getId())) index = i;
+        for (int i = 0; i < 18; i++) {
+            if (Main.stationName.get(i).equals(((ImageView) event.getSource()).getId())) index = i;
         }
         System.out.println(index);
         TerminalController.setCurTerminal(Main.allTerminal.get(index));
@@ -196,8 +205,8 @@ public class Controller {
 
 
         HTMLEditor htmlEditor = new HTMLEditor();
-        File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/"+Main.stationName.get(index)+".html");
-        if(openFile != null){
+        File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + Main.stationName.get(index) + ".html");
+        if (openFile != null) {
             String textRead = readFile(openFile);
             htmlEditor.setHtmlText(textRead);
         }
@@ -211,9 +220,9 @@ public class Controller {
             public void handle(ActionEvent actionEvent) {
 
                 //save the current file, then return
-                File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/"+Main.stationName.get(0)+".html");
+                File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + Main.stationName.get(0) + ".html");
                 openFile.delete();
-                if(openFile != null){
+                if (openFile != null) {
                     String stringHtml = htmlEditor.getHtmlText();
                     SaveFile(stringHtml, openFile);
                 }
@@ -226,7 +235,7 @@ public class Controller {
                 ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);*/
             }
         });
-        buttonExport.setOnAction(new EventHandler<ActionEvent>(){
+        buttonExport.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
                 String stringHtml = htmlEditor.getHtmlText();
@@ -240,7 +249,7 @@ public class Controller {
 
                 //Show save file dialog
                 File file = fileChooser.showSaveDialog((Stage) ((Node) event.getSource()).getScene().getWindow());
-                if(file != null){
+                if (file != null) {
                     SaveFile(stringHtml, file);
                 }
             }
@@ -266,7 +275,7 @@ public class Controller {
 
         toolBar.setMinHeight(50);
         toolBar.setMaxWidth(scene.getWidth());
-        htmlEditor.setMinHeight(scene.getHeight()-50);
+        htmlEditor.setMinHeight(scene.getHeight() - 50);
         //htmlEditor.setPrefHeight(scene.getHeight()-50);
         Timeline timeline = new Timeline();
         KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
@@ -279,7 +288,7 @@ public class Controller {
         timeline.play();
     }
 
-    private void SaveFile(String content, File file){
+    private void SaveFile(String content, File file) {
         try {
             FileWriter fileWriter = null;
 
@@ -291,7 +300,7 @@ public class Controller {
         }
     }
 
-    private String readFile(File file){
+    private String readFile(File file) {
         StringBuilder stringBuffer = new StringBuilder();
         BufferedReader bufferedReader = null;
 
