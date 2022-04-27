@@ -93,12 +93,12 @@ public class TerminalController {
 
     //no use?
     public void initNote() {
-        System.out.println("name" + curTerminal.name);
-        for (int i = 0; i < 8; i++) {
-            System.out.println(i + " " + curTerminal.noteName[i]);
-            if (curTerminal.noteName[i] == null)
-                static_button_vec.get(i).setText("INIT");
-            else static_button_vec.get(i).setText(curTerminal.noteName[i]);
+        for(Button button: static_button_vec) {
+            File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + (button.getId() + ".html"));
+            String name = readFile(openFile)[0];
+            if(!name.equals("Type here to name the note")) {
+                button.setText(name);
+            }
         }
     }
 
@@ -134,7 +134,7 @@ public class TerminalController {
         }
 
         String rt [] = new String[2];
-        rt[0] = noteName;
+        rt[0] = DeleteBR(noteName);
         rt[1] = stringBuffer.toString();
 
         return rt;
@@ -159,10 +159,15 @@ public class TerminalController {
                 Button buttonExport = new Button("Export");
                 ToolBar noteToolBar = new ToolBar(buttonReturn, buttonExport);
 
+                initNote();
+
                 TextField noteName = new TextField("Type here to name the note");
+                System.out.println();
                 if(!((Button) event.getSource()).getText().equals("Add New Note")) {
+
                     noteName.setText(((Button) event.getSource()).getText());
                 }
+
 
                 Scene scene = new Scene(new VBox(noteToolBar, noteName, htmlEditor));
                 Stage stage = new Stage();
@@ -180,10 +185,7 @@ public class TerminalController {
                         openFile.delete();
                         if(openFile != null){
                             String stringHtml = htmlEditor.getHtmlText();
-                            if(!noteName.getText().equals("Type here to name the note"))
-                                SaveFile(stringHtml, openFile, "Add New Note<br>\n");
-                            else
-                                SaveFile(stringHtml, openFile, noteName.getText() + "<br>\n");
+                            SaveFile(stringHtml, openFile, noteName.getText() + "<br>\n");
                         }
 
                         if(!noteName.getText().equals("Type here to name the note"))
@@ -251,5 +253,17 @@ public class TerminalController {
                 Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    private String DeleteBR(String input) {
+        String output = "";
+        for(int i=0; i<input.length(); i++) {
+            if(input.charAt(i) != '<') {
+                output += input.charAt(i);
+            } else {
+                break;
+            }
+        }
+        return output;
     }
 }
