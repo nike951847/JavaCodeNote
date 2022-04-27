@@ -21,4 +21,12 @@ public class Segment {
         Node rt = new Node() {};
         return rt;
     }
+
+    public void setPoint(double x, double y) {
+        position = new Point2D(x,y);
+    }
+
+    public Point2D getPosition() {
+        return position;
+    }
 }

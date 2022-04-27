@@ -129,6 +129,13 @@ public class Controller {
             }
         }
 
+        //set the point(x, y) of all terminal
+        {
+            for(int i=0; i<Main.stationNum; i++) {
+                Main.allTerminal.get(i).setPoint(GridPane.getColumnIndex(allStationImageView.get(i)), GridPane.getRowIndex(allStationImageView.get(i)));
+            }
+        }
+
         //check if the file exist, if not, create them
         {
             String storageLocationDirectory = "C:/Users/Public/Documents/JavaCodeNote";
@@ -153,7 +160,6 @@ public class Controller {
                     @Override
                     public void handle(MouseEvent event) {
                         System.out.println(event.getSource());
-                        //event.consume(); //stops any further handling of the event
                     }
                 });
             }
@@ -272,7 +278,6 @@ public class Controller {
         });
         timeline.play();
     }
-
 
     private void SaveFile(String content, File file){
         try {
