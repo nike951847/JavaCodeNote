@@ -125,7 +125,7 @@ public class Controller {
             }
 
             for(ImageView imageView: allStationImageView) {
-                imageView.setFitHeight(40);
+                imageView.setFitHeight(90);
             }
         }
 
