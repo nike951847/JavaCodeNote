@@ -75,8 +75,16 @@ public class Main extends Application {
 
     //initialize imageVector
     static {
+        String s = System.getProperty("user.dir");
         for (int i = 0; i < stationNum; i++) {
-            imageVector.add(new Image("file:src/sample/photo/" + stationName.get(i) + ".png"));//0
+            if(s.charAt(s.length()-1)=='c'){
+                imageVector.add(new Image("file:sample/photo/" + stationName.get(i) + ".png"));//0
+            }
+            else{
+                imageVector.add(new Image("file:src/sample/photo/" + stationName.get(i) + ".png"));//0
+            }
+			//System.out.println(new Image("file:src/sample/photo/" + stationName.get(i) + ".png").getHeight());
+			//imageVector.add(new Image("file:" + stationName.get(i) + ".png"));//0
             allTerminal.add(new Terminal(stationName.get(i)));
         }
     }
