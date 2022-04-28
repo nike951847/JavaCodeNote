@@ -29,6 +29,7 @@ public class Move extends Segment{
         this.pace = pace;
     }
 
+
     public double getPace() {
         return pace;
     }
