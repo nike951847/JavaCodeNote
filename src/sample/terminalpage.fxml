@@ -34,14 +34,14 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Button fx:id="note0" mnemonicParsing="false" text="Add new Note" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                                    <Button fx:id="note1" mnemonicParsing="false" text="Add new Note" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                                    <Button fx:id="note2" mnemonicParsing="false" text="Add new Note" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-                                    <Button fx:id="note3" mnemonicParsing="false" text="Add new Note" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                    <Button fx:id="note5" mnemonicParsing="false" text="Add new Note" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                    <Button fx:id="note6" mnemonicParsing="false" text="Add new Note" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                    <Button fx:id="note7" mnemonicParsing="false" text="Add new Note" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                    <Button fx:id="note4" mnemonicParsing="false" text="Add new Note" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <Button fx:id="note0" mnemonicParsing="false" text="Add New Note" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                    <Button fx:id="note1" mnemonicParsing="false" text="Add New Note" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                    <Button fx:id="note2" mnemonicParsing="false" text="Add New Note" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                                    <Button fx:id="note3" mnemonicParsing="false" text="Add New Note" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <Button fx:id="note5" mnemonicParsing="false" text="Add New Note" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                    <Button fx:id="note6" mnemonicParsing="false" text="Add New Note" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                    <Button fx:id="note7" mnemonicParsing="false" text="Add New Note" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                    <Button fx:id="note4" mnemonicParsing="false" text="Add New Note" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                  </children>
                                  <padding>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

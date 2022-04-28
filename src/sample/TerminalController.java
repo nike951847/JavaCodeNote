@@ -11,18 +11,22 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+
 import java.util.Vector;
 import java.io.File;
 import java.io.BufferedReader;
+
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.web.HTMLEditor;
+
 import java.io.FileReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.IOException;
 import java.io.*;
+
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -31,6 +35,8 @@ import javafx.util.Duration;
 import javafx.event.Event;
 import javafx.stage.FileChooser;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class TerminalController {
     private Parent root;
@@ -77,12 +83,12 @@ public class TerminalController {
         }
         {
             NoteHandler noteHandler = new NoteHandler();
-            for(Button button: static_button_vec) {
+            for (Button button : static_button_vec) {
                 button.addEventHandler(ActionEvent.ACTION, noteHandler);
                 //button.setText("INIT");
                 File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + (button.getId() + ".html"));
                 String name = readFile(openFile)[0];
-                if(!name.equals("Type here to name the note")) {
+                if (!name.equals("Type here to name the note")) {
                     button.setText(name);
                 }
 
@@ -91,10 +97,11 @@ public class TerminalController {
     }
 
     public void initNote() {
-        for(Button button: static_button_vec) {
+        for (Button button : static_button_vec) {
             File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + (button.getId() + ".html"));
             String name = readFile(openFile)[0];
-            if(!name.equals("Type here to name the note")) {
+            if (!name.equals("Type here to name the note")) {
+
                 button.setText(name);
             }
         }
@@ -104,7 +111,7 @@ public class TerminalController {
         TerminalController.curTerminal = curTerminal;
     }
 
-    private String [] readFile(File file) {
+    private String[] readFile(File file) {
         StringBuilder stringBuffer = new StringBuilder();
         BufferedReader bufferedReader = null;
         String noteName = "";
@@ -131,7 +138,7 @@ public class TerminalController {
             }
         }
 
-        String rt [] = new String[2];
+        String rt[] = new String[2];
         rt[0] = DeleteBR(noteName);
         rt[1] = stringBuffer.toString();
 
@@ -142,16 +149,57 @@ public class TerminalController {
         @Override
         public void handle(Event event) {
             //System.out.println("My Very Own Private Handler For All Kind Of Events");
-            System.out.println(curTerminal.name);
-            System.out.println(((Button)event.getSource()).getId());
-            System.out.println("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + ((Button) event.getSource()).getId() + ".html");
+            System.out.println("get terminal name: " + curTerminal.name);
+            //System.out.println(((Button) event.getSource()).getId());
+            //System.out.println("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + ((Button) event.getSource()).getId() + ".html");
 
             HTMLEditor htmlEditor = new HTMLEditor();
+            htmlEditor.setPrefHeight(500);
+
+            ToolBar bar = null;
+            Node editorToolBarNode = htmlEditor.lookup(".top-toolbar");
+
+            if (editorToolBarNode instanceof ToolBar) {
+                bar = (ToolBar) editorToolBarNode;
+                //System.out.println("Size before layout pass: " + bar.getItems().size());
+            }
+
+            if (bar != null) {
+                //System.out.println("Size after layout pass: " + bar.getItems().size());
+                Button importButton = new Button();
+
+                importButton.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        FileChooser fileChooser = new FileChooser();
+                        fileChooser.setTitle("Open Image");
+                        File importPath = fileChooser.showOpenDialog(new Stage());
+                        //String string = fileChooser.
+                        //System.out.println(importPath.toString());
+
+                        htmlEditor.setHtmlText(htmlEditor.getHtmlText() + "<img src=\"" + importPath.toString() + "\">");
+                        System.out.println("<img src=\"" + importPath.toString() + "\">");
+                        //htmlEditor.setHtmlText(htmlEditor.getHtmlText()+"&lt;img src='file:\\"+importButton.toString()+"' >" );
+                    }
+                });
+
+                Image importButtonPath = new Image("file:src/sample/photo/" + "CompressedImportButtonLogo.jpg");
+                importButton.setGraphic(new ImageView(importButtonPath));
+                bar.getItems().add(0, importButton);
+                ((Button) bar.getItems().get(0)).setMinWidth(25);
+                ((Button) bar.getItems().get(0)).setMaxWidth(25);
+                ((Button) bar.getItems().get(0)).setMinHeight(25);
+                ((Button) bar.getItems().get(0)).setMaxHeight(25);
+            }
+
+
             File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + ((Button) event.getSource()).getId() + ".html");
-            if(openFile != null){
+            if (openFile != null) {
                 String textRead = readFile(openFile)[1];
                 htmlEditor.setHtmlText(textRead);
-                System.out.println("the files exists");
+                //System.out.println("the files exists");
+
+                System.out.println(textRead);
 
                 Button buttonReturn = new Button("Return");
                 Button buttonExport = new Button("Export");
@@ -160,9 +208,8 @@ public class TerminalController {
                 initNote();
 
                 TextField noteName = new TextField("Type here to name the note");
-                System.out.println();
-                if(!((Button) event.getSource()).getText().equals("Add New Note")) {
-
+                //System.out.println();
+                if (!((Button) event.getSource()).getText().equals("Add New Note")) {
                     noteName.setText(((Button) event.getSource()).getText());
                 }
 
@@ -171,7 +218,7 @@ public class TerminalController {
                 Stage stage = new Stage();
                 stage.setScene(scene);
                 stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-                stage.setFullScreen(true);
+                stage.setFullScreen(false);
                 stage.show();
 
                 buttonReturn.setOnAction(new EventHandler<ActionEvent>() {
@@ -181,12 +228,12 @@ public class TerminalController {
                         //save the current file, then return
                         File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + ((Button) event.getSource()).getId() + ".html");
                         openFile.delete();
-                        if(openFile != null){
+                        if (openFile != null) {
                             String stringHtml = htmlEditor.getHtmlText();
                             SaveFile(stringHtml, openFile, noteName.getText() + "<br>\n");
                         }
 
-                        if(!noteName.getText().equals("Type here to name the note"))
+                        if (!noteName.getText().equals("Type here to name the note"))
                             static_button_vec.get(static_button_vec.indexOf((Button) event.getSource())).setText(noteName.getText());
                         //toolBar.setVisible(false);
                         //desktopBorderPane.setTop(desktopToolBar);
@@ -196,11 +243,11 @@ public class TerminalController {
                         //((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
                         ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);
 
-                        System.out.println("here");
+                        //System.out.println("here");
                     }
                 });
 
-                buttonExport.setOnAction(new EventHandler<ActionEvent>(){
+                buttonExport.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent t) {
                         String stringHtml = htmlEditor.getHtmlText();
@@ -214,7 +261,7 @@ public class TerminalController {
 
                         //Show save file dialog
                         File file = fileChooser.showSaveDialog((Stage) ((Node) event.getSource()).getScene().getWindow());
-                        if(file != null){
+                        if (file != null) {
                             SaveFile(stringHtml, file, "<br>\n");
                         }
                     }
@@ -236,7 +283,7 @@ public class TerminalController {
                 });
                 timeline.play();*/
             } else {
-                System.out.println("cannot find file");
+                //System.out.println("cannot find file");
             }
         }
 
@@ -255,8 +302,8 @@ public class TerminalController {
 
     private String DeleteBR(String input) {
         String output = "";
-        for(int i=0; i<input.length(); i++) {
-            if(input.charAt(i) != '<') {
+        for (int i = 0; i < input.length(); i++) {
+            if (input.charAt(i) != '<') {
                 output += input.charAt(i);
             } else {
                 break;

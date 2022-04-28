@@ -164,7 +164,7 @@ public class Controller {
                     //File saveNoteName = new File(storageLocationDirectory + "/" + Main.stationName.get(i) + "/buttonName.txt");
                 }
             } else {
-                System.out.println("already exist");
+                //System.out.println("already exist");
             }
         }
 
@@ -201,11 +201,10 @@ public class Controller {
     @FXML
     void StationPressed(MouseEvent event) throws IOException {
 
-        int index = 0;
-        for (int i = 0; i < 18; i++) {
-            if (Main.stationName.get(i).equals(((ImageView) event.getSource()).getId())) index = i;
-        }
+        int index = allStationImageView.indexOf((ImageView) event.getSource());
+        System.out.println(((ImageView) event.getSource()).getId());
         TerminalController.setCurTerminal(Main.allTerminal.get(index));
+        System.out.println("curterminal: " + Main.allTerminal.get(index).getName());
         root = FXMLLoader.load(getClass().getResource("terminalpage.fxml"));
 
         desktopBorderPane.getChildren().add(root);
