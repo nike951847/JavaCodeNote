@@ -36,10 +36,9 @@ public class TerminalController {
     private Parent root;
     public static BorderPane outside;
     public static BorderPane static_outside_pane;
-    public static Vector<Button> static_button_vec = new Vector<>();
+    public static Vector<Button> static_button_vec = new Vector<Button>();
     public static Terminal curTerminal = new Terminal();
 
-    public static String curFolder = "";
     @FXML
     private BorderPane mainPane;
     @FXML
@@ -91,7 +90,6 @@ public class TerminalController {
         }
     }
 
-    //no use?
     public void initNote() {
         for(Button button: static_button_vec) {
             File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + (button.getId() + ".html"));
