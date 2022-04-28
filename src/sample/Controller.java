@@ -38,6 +38,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.*;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.control.Tooltip;
 
 import javafx.scene.control.ScrollPane;
 
@@ -133,6 +134,10 @@ public class Controller {
 
             for (ImageView imageView : allStationImageView) {
                 imageView.setFitHeight(90);
+            }
+
+            for(int i=0; i<Main.stationNum; i++) {
+                Tooltip.install(allStationImageView.get(i), new Tooltip(Main.stationName.get(i)));
             }
         }
 
