@@ -1,0 +1,48 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 8d910aa70e619be2cba212158cfcc428b4b9ce6b)
++++ b/.idea/workspace.xml	(date 1651071581546)
+@@ -164,10 +164,7 @@
+     </configuration>
+     <configuration default="true" type="TestNG">
+       <option name="TEST_OBJECT" value="CLASS" />
+-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+-      <option name="TEST_SEARCH_SCOPE">
+-        <value defaultName="moduleWithDependencies" />
+-      </option>
++      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+       <properties />
+       <listeners />
+       <method v="2">
+@@ -226,7 +223,10 @@
+     </configuration>
+     <configuration default="true" type="TestNG">
+       <option name="TEST_OBJECT" value="CLASS" />
+-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
++      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
++      <option name="TEST_SEARCH_SCOPE">
++        <value defaultName="moduleWithDependencies" />
++      </option>
+       <properties />
+       <listeners />
+       <method v="2">
+@@ -484,7 +484,14 @@
+       <option name="project" value="LOCAL" />
+       <updated>1651055282316</updated>
+     </task>
+-    <option name="localTasksCounter" value="34" />
++    <task id="LOCAL-00034" summary="add position to vector&lt;Terminal&gt;">
++      <created>1651055611701</created>
++      <option name="number" value="00034" />
++      <option name="presentableId" value="LOCAL-00034" />
++      <option name="project" value="LOCAL" />
++      <updated>1651055611702</updated>
++    </task>
++    <option name="localTasksCounter" value="35" />
+     <servers />
+   </component>
+   <component name="TimeTrackingManager">

@@ -37,6 +37,7 @@ import java.util.logging.Logger;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.*;
+import javafx.scene.input.KeyCombination;
 
 import javafx.scene.control.ScrollPane;
 
@@ -147,15 +148,18 @@ public class Controller {
             String storageLocationDirectory = "C:/Users/Public/Documents/JavaCodeNote";
             File fileDirectory = new File(storageLocationDirectory);
             if (!fileDirectory.exists()) {
-                System.out.println("not exist\ncreate directory");
                 fileDirectory.mkdirs();
-                storageLocationDirectory += "/";
-                for (int i = 0; i < Main.stationNum; i++) {
-                    String tempLocationFile = (storageLocationDirectory + Main.stationName.get(i) + ".html");
-                    String defaultContet = "<b>Type here to take notes</b>";
-                    File fileHTML = new File(tempLocationFile);
-                    SaveFile(defaultContet, fileHTML);
+                for(int i=0; i<Main.stationNum; i++) {
+                    File subDirectory = new File(storageLocationDirectory + "/" + Main.stationName.get(i));
+                    subDirectory.mkdirs();
+                    for(int j=0; j<8; j++) {
+                        File fileHTML = new File(storageLocationDirectory + "/" + Main.stationName.get(i) + "/note" + j + ".html");
+                        SaveFile("<b>Type here to take notes</b>", fileHTML, "Add New Note<br>\n");
+                    }
+                    //File saveNoteName = new File(storageLocationDirectory + "/" + Main.stationName.get(i) + "/buttonName.txt");
                 }
+            } else {
+                System.out.println("already exist");
             }
         }
 
@@ -165,7 +169,7 @@ public class Controller {
                 imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        System.out.println("["+event.getX()+", "+event.getY()+"]");
+                        //System.out.println("["+event.getX()+", "+event.getY()+"]");
                         //System.out.println("["+((ImageView) ((Node) event.getSource())).getX()+", "+((ImageView) ((Node) event.getSource())).getY()+"]");;
                         //((ImageView) ((Node) event.getSource())).getX();
                         //System.out.println(event.getSource().);
@@ -181,7 +185,6 @@ public class Controller {
 
     @FXML
     void closeMainTab(ActionEvent event) {
-
         ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
     }
 
@@ -192,21 +195,41 @@ public class Controller {
 
     @FXML
     void StationPressed(MouseEvent event) throws IOException {
-        System.out.printf("weight%f height%f\n",borderPane.getWidth(),borderPane.getHeight() );
 
         int index = 0;
         for (int i = 0; i < 18; i++) {
             if (Main.stationName.get(i).equals(((ImageView) event.getSource()).getId())) index = i;
         }
-        System.out.println(index);
         TerminalController.setCurTerminal(Main.allTerminal.get(index));
-        Parent terminalpage = FXMLLoader.load(getClass().getResource("terminalpage.fxml"));
-        Scene scene = new Scene(terminalpage);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        root = FXMLLoader.load(getClass().getResource("terminalpage.fxml"));
+
+        desktopBorderPane.getChildren().add(root);
 
 
+        root.translateYProperty().set(((Node)(event.getSource())).getScene().getHeight()-desktopToolBar.getHeight());
+        //System.out.println(desktopToolBar.getHeight());
+        Button terminalPageReturn = new Button();
+        terminalPageReturn.setText("Return");
+        terminalPageReturn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                desktopBorderPane.getChildren().remove(root);
+                desktopBorderPane.setTop(desktopToolBar);
+            }
+        });
+
+        Timeline timeline = new Timeline();
+        KeyValue kv = new KeyValue(root.translateYProperty(), desktopToolBar.getHeight(), Interpolator.EASE_IN);
+        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+        timeline.getKeyFrames().add(kf);
+        timeline.setOnFinished(t -> {
+            //System.out.println("here");
+            desktopBorderPane.setTop(new ToolBar(terminalPageReturn));
+        });
+        timeline.play();
+
+
+/*
         HTMLEditor htmlEditor = new HTMLEditor();
         File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + Main.stationName.get(index) + ".html");
         if (openFile != null) {
@@ -234,8 +257,6 @@ public class Controller {
                 desktopBorderPane.setTop(desktopToolBar);
                 desktopToolBar.setVisible(true);
                 TerminalController.outside.getChildren().remove(root);
-                /*stage.close();
-                ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);*/
             }
         });
         buttonExport.setOnAction(new EventHandler<ActionEvent>() {
@@ -273,6 +294,7 @@ public class Controller {
 
 
         //Parent root = new HTMLEditor();
+        //Parent root = new VBox(htmlEditor);
         //Scene scene =algorithmStation.getScene();
         root.translateYProperty().set(scene.getHeight());
 
@@ -286,32 +308,35 @@ public class Controller {
         timeline.getKeyFrames().add(kf);
         timeline.setOnFinished(t -> {
             //desktop.getChildren().remove(anchorRoot);
-            desktopToolBar.setVisible(false);
+            //desktopToolBar.setVisible(false);
         });
-        timeline.play();
+        timeline.play();*/
+
     }
 
-    private void SaveFile(String content, File file) {
+    private void SaveFile(String content, File file, String buttonName) {
         try {
             FileWriter fileWriter = null;
 
             fileWriter = new FileWriter(file);
-            fileWriter.write(content);
+            fileWriter.write(buttonName + "\n" + content);
             fileWriter.close();
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private String readFile(File file) {
+    private String [] readFile(File file) {
         StringBuilder stringBuffer = new StringBuilder();
         BufferedReader bufferedReader = null;
+        String noteName = "";
 
         try {
 
             bufferedReader = new BufferedReader(new FileReader(file));
 
             String text;
+            noteName = bufferedReader.readLine();
             while ((text = bufferedReader.readLine()) != null) {
                 stringBuffer.append(text);
             }
@@ -328,7 +353,10 @@ public class Controller {
             }
         }
 
-        return stringBuffer.toString();
-    }
+        String rt [] = new String[2];
+        rt[0] = noteName;
+        rt[1] = stringBuffer.toString();
 
+        return rt;
+    }
 }
