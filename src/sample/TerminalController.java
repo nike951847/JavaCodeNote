@@ -190,6 +190,9 @@ public class TerminalController {
                 ((Button) bar.getItems().get(0)).setMaxWidth(25);
                 ((Button) bar.getItems().get(0)).setMinHeight(25);
                 ((Button) bar.getItems().get(0)).setMaxHeight(25);
+
+                Button addCote = new Button("PG");//PG for programming
+                bar.getItems().add(1, addCote);
             }
 
 
