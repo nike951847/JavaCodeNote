@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -20,9 +21,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.scene.web.HTMLEditor;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Separator;
-import javafx.scene.control.ToolBar;
 import javafx.util.*;
 import javafx.scene.Node;
 import javafx.stage.FileChooser;
@@ -37,10 +35,10 @@ import java.util.logging.Logger;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.*;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.control.Tooltip;
 
-import javafx.scene.control.ScrollPane;
+import javafx.scene.input.KeyCombination;
+
+import javax.swing.*;
 
 public class Controller {
     private Parent root;
@@ -48,6 +46,8 @@ public class Controller {
 
     @FXML
     private BorderPane borderPane;
+    @FXML
+    private TextField searchTerminalTextField;
     @FXML
     private ScrollPane desktopScrollPane;
     @FXML
@@ -136,7 +136,7 @@ public class Controller {
                 imageView.setFitHeight(90);
             }
 
-            for(int i=0; i<Main.stationNum; i++) {
+            for (int i = 0; i < Main.stationNum; i++) {
                 Tooltip.install(allStationImageView.get(i), new Tooltip(Main.stationName.get(i)));
             }
         }
@@ -154,10 +154,10 @@ public class Controller {
             File fileDirectory = new File(storageLocationDirectory);
             if (!fileDirectory.exists()) {
                 fileDirectory.mkdirs();
-                for(int i=0; i<Main.stationNum; i++) {
+                for (int i = 0; i < Main.stationNum; i++) {
                     File subDirectory = new File(storageLocationDirectory + "/" + Main.stationName.get(i));
                     subDirectory.mkdirs();
-                    for(int j=0; j<8; j++) {
+                    for (int j = 0; j < 8; j++) {
                         File fileHTML = new File(storageLocationDirectory + "/" + Main.stationName.get(i) + "/note" + j + ".html");
                         SaveFile("<b>Type here to take notes</b>", fileHTML, "Add New Note<br>\n");
                     }
@@ -185,6 +185,32 @@ public class Controller {
 
         //set desktopScrollPane drag
         desktopScrollPane.setPannable(true);
+
+        searchTerminalTextField.setText("Type to search the station");
+    }
+
+    @FXML
+    void searchTerminalTextFieldListener(ActionEvent event) {
+        String target = searchTerminalTextField.getText();
+        searchTerminalTextField.clear();
+
+        Boolean blFind = false;
+        for (String str : Main.stationName) {
+            if (target.equals(str)) {
+                System.out.println("find station");
+                blFind = true;
+
+                centerNodeInScrollPane(desktopScrollPane, allStationImageView.get(Main.stationName.indexOf(target)));
+            }
+        }
+
+        if (!blFind) {
+            ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(false);
+            int rt = JOptionPane.showOptionDialog(null, "Unable to find terminal!", "Error!", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, null, null);
+            if (rt == 0 | rt == -1) {
+                ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);
+            }
+        }
     }
 
 
@@ -210,7 +236,7 @@ public class Controller {
         desktopBorderPane.getChildren().add(root);
 
 
-        root.translateYProperty().set(((Node)(event.getSource())).getScene().getHeight()-desktopToolBar.getHeight());
+        root.translateYProperty().set(((Node) (event.getSource())).getScene().getHeight() - desktopToolBar.getHeight());
         //System.out.println(desktopToolBar.getHeight());
         Button terminalPageReturn = new Button();
         terminalPageReturn.setText("Return");
@@ -218,7 +244,8 @@ public class Controller {
             @Override
             public void handle(ActionEvent actionEvent) {
                 desktopBorderPane.getChildren().remove(root);
-                desktopBorderPane.setTop(desktopToolBar);
+                desktopBorderPane.setTop(new VBox(desktopToolBar, searchTerminalTextField));
+                searchTerminalTextField.setText("Type to search the station");
             }
         });
 
@@ -231,7 +258,6 @@ public class Controller {
             desktopBorderPane.setTop(new ToolBar(terminalPageReturn));
         });
         timeline.play();
-
 
 /*
         HTMLEditor htmlEditor = new HTMLEditor();
@@ -330,7 +356,7 @@ public class Controller {
         }
     }
 
-    private String [] readFile(File file) {
+    private String[] readFile(File file) {
         StringBuilder stringBuffer = new StringBuilder();
         BufferedReader bufferedReader = null;
         String noteName = "";
@@ -357,10 +383,26 @@ public class Controller {
             }
         }
 
-        String rt [] = new String[2];
+        String rt[] = new String[2];
         rt[0] = noteName;
         rt[1] = stringBuffer.toString();
 
         return rt;
     }
+
+    private void centerNodeInScrollPane(ScrollPane scrollPane, Node node) {
+
+        double h1 = scrollPane.getContent().getBoundsInLocal().getHeight();
+        double y = (node.getBoundsInParent().getMaxY() + node.getBoundsInParent().getMinY()) / 2.0;
+        double v1 = scrollPane.getViewportBounds().getHeight();
+
+
+        double h2 = scrollPane.getContent().getBoundsInLocal().getWidth();
+        double x = (node.getBoundsInParent().getMaxX() + node.getBoundsInParent().getMinX()) / 2.0;
+        double v2 = scrollPane.getViewportBounds().getWidth();
+
+        scrollPane.setVvalue(scrollPane.getVmax() * ((y - 0.5 * v1) / (h1 - v1)));
+        scrollPane.setHvalue(scrollPane.getHmax() * ((x - 0.5 * v2) / (h2 - v2)));
+    }
+
 }

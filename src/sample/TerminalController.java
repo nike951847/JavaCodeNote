@@ -255,6 +255,7 @@ public class TerminalController {
                 ((Button) bar.getItems().get(0)).setMaxHeight(25);
 
                 Button addCote = new Button("PG");//PG for programming
+                /*
                 bar.getItems().add(1, addCote);
                 addCote.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
@@ -276,8 +277,7 @@ public class TerminalController {
                         //checkKeyword(returnStr);
                         htmlEditor.setHtmlText(htmlEditor.getHtmlText() + checkKeyword(returnStr));
                     }
-                });
-
+                });*/
             }
 
             File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + ((Button) event.getSource()).getId() + ".html");
@@ -409,8 +409,7 @@ public class TerminalController {
         }
 
         //output += "<hr> </div> <style> .div-1 { background-color: #FAFAFA; font-family:Consolas;}</style> <br>";
-        //output += "<hr> </div> <style> .div-1 { background-color: #FAFAFA; font-family:Consolas;}</style> <br>";
-        //System.out.println(output);
+
         return output;
     }
 
@@ -436,7 +435,6 @@ public class TerminalController {
             }
 
             if (!used) {
-                //System.out.println(target);
                 output += (target + " ");
             }
         }
