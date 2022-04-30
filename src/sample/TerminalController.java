@@ -336,17 +336,7 @@ public class TerminalController {
             }
         }
 
-        private void SaveFile(String content, File file, String buttonName) {
-            try {
-                FileWriter fileWriter = null;
 
-                fileWriter = new FileWriter(file);
-                fileWriter.write(buttonName + "\n" + content);
-                fileWriter.close();
-            } catch (IOException ex) {
-                Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
-            }
-        }
     }
 
     private String DeleteBR(String input) {
@@ -422,5 +412,16 @@ public class TerminalController {
         rt[1] = stringBuffer.toString();
 
         return rt;
+    }
+    private void SaveFile(String content, File file, String buttonName) {
+        try {
+            FileWriter fileWriter = null;
+
+            fileWriter = new FileWriter(file);
+            fileWriter.write(buttonName + "\n" + content);
+            fileWriter.close();
+        } catch (IOException ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
