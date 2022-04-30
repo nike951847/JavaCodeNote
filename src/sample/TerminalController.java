@@ -1,5 +1,6 @@
 package sample;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -11,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.input.KeyEvent;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -41,6 +43,8 @@ import javafx.stage.FileChooser;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class TerminalController {
     private Parent root;
@@ -199,12 +203,23 @@ public class TerminalController {
         @Override
         public void handle(Event event) {
             //System.out.println("My Very Own Private Handler For All Kind Of Events");
-            System.out.println("get terminal name: " + curTerminal.name);
+            //System.out.println("get terminal name: " + curTerminal.name);
             //System.out.println(((Button) event.getSource()).getId());
             //System.out.println("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + ((Button) event.getSource()).getId() + ".html");
 
             HTMLEditor htmlEditor = new HTMLEditor();
             htmlEditor.setPrefHeight(500);
+            htmlEditor.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                //when pressed update
+                @Override
+                public void handle(KeyEvent event) {
+                    //System.out.println("here");
+                    //htmlEditor.setHtmlText(htmlEditor.getHtmlText() + checkKeyword(returnStr));
+                    htmlEditor.setHtmlText(updateKeyword(htmlEditor.getHtmlText()));
+                    //System.out.println("test:");
+                    //System.out.println(htmlEditor.getAccessibleText());
+                }
+            });
 
             ToolBar bar = null;
             Node editorToolBarNode = htmlEditor.lookup(".top-toolbar");
@@ -226,7 +241,7 @@ public class TerminalController {
                         File importPath = fileChooser.showOpenDialog(new Stage());
 
                         htmlEditor.setHtmlText(htmlEditor.getHtmlText() + "<img src=\"" + importPath.toString() + "\">");
-                        System.out.println("<img src=\"" + importPath.toString() + "\">");
+                        //System.out.println("<img src=\"" + importPath.toString() + "\">");
                         //htmlEditor.setHtmlText(htmlEditor.getHtmlText()+"&lt;img src='file:\\"+importButton.toString()+"' >" );
                     }
                 });
@@ -264,7 +279,6 @@ public class TerminalController {
                 });
 
             }
-
 
             File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + ((Button) event.getSource()).getId() + ".html");
             if (openFile != null) {
@@ -335,8 +349,6 @@ public class TerminalController {
                 //System.out.println("cannot find file");
             }
         }
-
-
     }
 
     private String DeleteBR(String input) {
@@ -351,13 +363,66 @@ public class TerminalController {
         return output;
     }
 
+    private String updateKeyword(String input) {
+        String output = "";
+        String markTOCode = "```";
+        int curMarkIndex = 0;
+
+        //output += "<div class=\"div-1\"> <hr>";
+
+        Vector<Integer> markIndex = new Vector<Integer>();
+
+        if(input.contains(markTOCode)) {
+            Pattern p = Pattern.compile(markTOCode);
+            Matcher m = p.matcher(input);
+            while(m.find()) {
+                //System.out.println(m.start());
+                markIndex.add(m.start());
+            }
+        }
+
+
+        int i = 0;
+        while (i < input.length()) {
+
+            if(i==markIndex.get(curMarkIndex)) {
+
+                if(curMarkIndex%2==0) {
+                    //System.out.println("here");
+                    String temp = "";
+                    for(int j=markIndex.get(curMarkIndex)+markTOCode.length(); j<markIndex.get(curMarkIndex+1); j++) {
+                        temp += input.charAt(j);
+                    }
+
+                    System.out.println(temp);
+                    //output += "<b><font color='" + "red" + "'>" + temp + " " + "</font><b/>";
+                    output += checkKeyword(temp);
+                    i = markIndex.get(curMarkIndex+1)+markTOCode.length();
+                    curMarkIndex+=2;
+                }
+            } else {
+                output += input.charAt(i);
+            }
+
+            if(curMarkIndex > markIndex.size()-1) break;
+            i++;
+        }
+
+        //output += "<hr> </div> <style> .div-1 { background-color: #FAFAFA; font-family:Consolas;}</style> <br>";
+        //output += "<hr> </div> <style> .div-1 { background-color: #FAFAFA; font-family:Consolas;}</style> <br>";
+        //System.out.println(output);
+        return output;
+    }
+
 
     private String checkKeyword(String input) {
         String output = "";
         String[] tokens = input.split(" ");
         //"<div class=\"div-1\"> <hr>" + returnStr + "<hr> </div> <style> .div-1 { background-color: #ABBAEA; font-family:Consolas;}</style> <br>"
-        output += "<div class=\"div-1\"> <hr>";
-
+        //output += "<div class=\"div-1\"> <hr>";
+        //<div style="background-color: #FAFAFA; font-family:Consolas;">hello world</div>
+        output += "<div style=\"background-color: #FAFAFA; font-family:Consolas;\">";
+        output += "<hr>";
         for (String target : tokens) {
             Boolean used = false;
             for (int i = 0; i < 8; i++) {
@@ -375,8 +440,12 @@ public class TerminalController {
                 output += (target + " ");
             }
         }
+        //<div style="background-color:aliceblue;padding:25px;">
+        //output += "<hr> </div> <style> .div-1 { background-color: #FAFAFA; font-family:Consolas;}</style> <br>";
 
-        output += "<hr> </div> <style> .div-1 { background-color: #ABBAEA; font-family:Consolas;}</style> <br>";
+        output += "<hr>";
+        output += "</div><br>";
+        System.out.println(output);
         return output;
     }
 
