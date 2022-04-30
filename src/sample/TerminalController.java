@@ -61,7 +61,6 @@ public class TerminalController {
     private BorderPane mainPane;
     @FXML
     private BorderPane outsidePane;
-
     @FXML
     private Button note0;
     @FXML
