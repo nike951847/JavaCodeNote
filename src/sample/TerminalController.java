@@ -416,26 +416,9 @@ public class TerminalController {
     private String checkKeyword(String input) {
         String output = "";
         String[] tokens = input.split(" ");
-        //"<div class=\"div-1\"> <hr>" + returnStr + "<hr> </div> <style> .div-1 { background-color: #ABBAEA; font-family:Consolas;}</style> <br>"
-        //output += "<div class=\"div-1\"> <hr>";
-        //<div style="background-color: #FAFAFA; font-family:Consolas;">hello world</div>
         output += "<div style=\"background-color: #FAFAFA; font-family:Consolas;\">";
         output += "<hr>";
-        //output += "<button>Preview</button>";
-        /*output += "<script type=\"text/javascript\">\n" +
-                "    function SaveFile() {\n" +
-                "　      var fileContent = \"class HelloWorld {public static void main(String[]args) {System.out.println(\\\"Hello, World!\\\"); }}\";\n" +
-                "    var bb = new Blob([fileContent ], { type: 'text/plain' });\n" +
-                "    var a = document.createElement('a');\n" +
-                "    a.download = 'run.java';\n" +
-                "    a.href = href=\"file:///C:/Users/Public/Documents/ok.txt\"\n" +
-                "    a.click();\n" +
-                "    }\n" +
-                "</script>\n" +
-                "<button onclick=\"SaveFile()\">Preview</button>";*/
-        //file://C|/path/to/file/file.html
-        //C:/Users/Public/Documents
-        //<a href="file:///C:/Videos/lecture.mp4">Link 2</a>
+
         for (String target : tokens) {
             Boolean used = false;
             for (int i = 0; i < 8; i++) {
@@ -452,8 +435,6 @@ public class TerminalController {
                 output += (target + " ");
             }
         }
-        //<div style="background-color:aliceblue;padding:25px;">
-        //output += "<hr> </div> <style> .div-1 { background-color: #FAFAFA; font-family:Consolas;}</style> <br>";
 
         output += "<hr>";
         output += "</div><br>";
