@@ -421,7 +421,7 @@ public class TerminalController {
         //<div style="background-color: #FAFAFA; font-family:Consolas;">hello world</div>
         output += "<div style=\"background-color: #FAFAFA; font-family:Consolas;\">";
         output += "<hr>";
-        output += "<button>Preview</button>";
+        //output += "<button>Preview</button>";
         /*output += "<script type=\"text/javascript\">\n" +
                 "    function SaveFile() {\n" +
                 "　      var fileContent = \"class HelloWorld {public static void main(String[]args) {System.out.println(\\\"Hello, World!\\\"); }}\";\n" +

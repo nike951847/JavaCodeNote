@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="```標示筆記功能完成">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/TerminalController$NoteHandler$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/TerminalController$NoteHandler$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/TerminalController$NoteHandler$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/TerminalController$NoteHandler$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/TerminalController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/TerminalController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/TerminalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/TerminalController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -171,10 +170,7 @@
     </configuration>
     <configuration default="true" type="TestNG">
       <option name="TEST_OBJECT" value="CLASS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <properties />
       <listeners />
       <method v="2">
@@ -233,7 +229,10 @@
     </configuration>
     <configuration default="true" type="TestNG">
       <option name="TEST_OBJECT" value="CLASS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
       <properties />
       <listeners />
       <method v="2">
