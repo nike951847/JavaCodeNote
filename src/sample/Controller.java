@@ -39,6 +39,7 @@ import java.io.*;
 import javafx.scene.input.KeyCombination;
 
 import javax.swing.*;
+import javafx.scene.shape.Circle;
 
 public class Controller {
     private Parent root;
@@ -187,6 +188,8 @@ public class Controller {
         desktopScrollPane.setPannable(true);
 
         searchTerminalTextField.setText("Type to search the station");
+
+
     }
 
     @FXML
