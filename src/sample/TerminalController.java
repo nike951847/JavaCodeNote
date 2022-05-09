@@ -206,6 +206,8 @@ public class TerminalController {
             //System.out.println(((Button) event.getSource()).getId());
             //System.out.println("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + ((Button) event.getSource()).getId() + ".html");
 
+            TextField noteName = new TextField("");
+
             HTMLEditor htmlEditor = new HTMLEditor();
             htmlEditor.setPrefHeight(500);
             htmlEditor.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -231,6 +233,15 @@ public class TerminalController {
             if (bar != null) {
                 //System.out.println("Size after layout pass: " + bar.getItems().size());
                 Button importButton = new Button();
+                Button convertToMDButton = new Button("MD");
+
+                convertToMDButton.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        Controller.saveMD("# " + noteName.getText() + "\n" + Controller.hTMLtoMDConverter(htmlEditor.getHtmlText()));
+                    }
+                });
+
 
                 importButton.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
@@ -252,6 +263,8 @@ public class TerminalController {
                 ((Button) bar.getItems().get(0)).setMaxWidth(25);
                 ((Button) bar.getItems().get(0)).setMinHeight(25);
                 ((Button) bar.getItems().get(0)).setMaxHeight(25);
+
+                bar.getItems().add(1, convertToMDButton);
 
                 Button addCote = new Button("PG");//PG for programming
                 /*
@@ -293,7 +306,7 @@ public class TerminalController {
 
                 initNote();
 
-                TextField noteName = new TextField("Type here to name the note");
+                noteName.setText("Type here to name the note");
                 //System.out.println();
                 if (!((Button) event.getSource()).getText().equals("Add New Note")) {
                     noteName.setText(((Button) event.getSource()).getText());

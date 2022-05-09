@@ -167,6 +167,7 @@ public class Controller {
             } else {
                 //System.out.println("already exist");
             }
+
         }
 
         //add mouse event handler to all station
@@ -261,90 +262,6 @@ public class Controller {
             desktopBorderPane.setTop(new ToolBar(terminalPageReturn));
         });
         timeline.play();
-
-/*
-        HTMLEditor htmlEditor = new HTMLEditor();
-        File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + Main.stationName.get(index) + ".html");
-        if (openFile != null) {
-            String textRead = readFile(openFile);
-            htmlEditor.setHtmlText(textRead);
-        }
-
-        ToolBar toolBar = new ToolBar();
-        Button buttonReturn = new Button("Return");
-        Button buttonExport = new Button("Export");
-        TerminalController.initNote();
-        buttonReturn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-
-                //save the current file, then return
-                File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + Main.stationName.get(0) + ".html");
-                openFile.delete();
-                if (openFile != null) {
-                    String stringHtml = htmlEditor.getHtmlText();
-                    SaveFile(stringHtml, openFile);
-                }
-
-                toolBar.setVisible(false);
-                desktopBorderPane.setTop(desktopToolBar);
-                desktopToolBar.setVisible(true);
-                TerminalController.outside.getChildren().remove(root);
-            }
-        });
-        buttonExport.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent t) {
-                String stringHtml = htmlEditor.getHtmlText();
-                //htmlText.setText(stringHtml);
-
-                FileChooser fileChooser = new FileChooser();
-
-                //Set extension filter
-                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("HTML files (*.html)", "*.html");
-                fileChooser.getExtensionFilters().add(extFilter);
-
-                //Show save file dialog
-                File file = fileChooser.showSaveDialog((Stage) ((Node) event.getSource()).getScene().getWindow());
-                if (file != null) {
-                    SaveFile(stringHtml, file);
-                }
-            }
-        });
-
-        toolBar.getItems().add(buttonReturn);
-
-        toolBar.getItems().add(buttonExport);
-        //toolBar.setMinHeight(50);
-        //htmlEditor.setMinHeight(200);
-        htmlEditor.setMinWidth(desktop.getWidth());
-        //root = new VBox(toolBar, htmlEditor);
-        root = new VBox(htmlEditor);
-        //System.out.println(terminalpage.getChildrenUnmodifiable());
-        TerminalController.outside.getChildren().add(root);
-        TerminalController.static_outside_pane.setTop(toolBar);
-        toolBar.setVisible(true);
-
-
-        //Parent root = new HTMLEditor();
-        //Parent root = new VBox(htmlEditor);
-        //Scene scene =algorithmStation.getScene();
-        root.translateYProperty().set(scene.getHeight());
-
-        toolBar.setMinHeight(50);
-        toolBar.setMaxWidth(scene.getWidth());
-        htmlEditor.setMinHeight(scene.getHeight() - 50);
-        //htmlEditor.setPrefHeight(scene.getHeight()-50);
-        Timeline timeline = new Timeline();
-        KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
-        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
-        timeline.getKeyFrames().add(kf);
-        timeline.setOnFinished(t -> {
-            //desktop.getChildren().remove(anchorRoot);
-            //desktopToolBar.setVisible(false);
-        });
-        timeline.play();*/
-
     }
 
     private void SaveFile(String content, File file, String buttonName) {
@@ -406,6 +323,91 @@ public class Controller {
 
         scrollPane.setVvalue(scrollPane.getVmax() * ((y - 0.5 * v1) / (h1 - v1)));
         scrollPane.setHvalue(scrollPane.getHmax() * ((x - 0.5 * v2) / (h2 - v2)));
+    }
+
+    static public String hTMLtoMDConverter(String input) {
+        String output = "";
+
+        int index = 0;
+        Boolean save = false;
+        while(index < input.length()) {
+
+            if(index+3 < input.length()) {
+               if(input.substring(index, index+4).equals("<br>")) {
+                   output += "  \n";
+                   index += 4;
+                   continue;
+               }
+            }
+
+            if(index+3 < input.length()) {
+                if(input.substring(index, index+4).equals("</p>")) {
+                    output += "  \n";
+                    index += 4;
+                    save = false;
+                    continue;
+                }
+            }
+
+            if(index+3 < input.length()) {
+                if(input.substring(index, index+4).equals("<hr>")) {
+                    output += "\n```";
+                    index += 4;
+                    save = false;
+                    continue;
+                }
+            }
+
+
+            if(input.charAt(index) == '>') {
+                if(index-2 >= 0) {
+                    if(input.charAt(index-2) == '/') {
+                        save = false;
+                    } else {
+                        save = true;
+                    }
+                }
+
+                index++;
+                continue;
+            }
+
+            if(input.charAt(index) == '<') {
+                save = false;
+            }
+
+            if(save) {
+                output += (input.charAt(index));
+            }
+
+            index++;
+        }
+
+        return output;
+    }
+
+    static public void saveMD(String saveContent) {
+        FileChooser fileChooser = new FileChooser();
+
+        //Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("MD files (*.md)", "*.md");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        //Show save file dialog
+        Stage stage = new Stage();
+        File file = fileChooser.showSaveDialog(stage);
+
+        try {
+            FileWriter fileWriter = null;
+
+            fileWriter = new FileWriter(file);
+            fileWriter.write(saveContent);
+            fileWriter.close();
+        } catch (IOException ex) {
+            System.out.println("error in save to MD file");
+        }
+
+        stage.close();
     }
 
 }
