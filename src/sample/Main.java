@@ -29,6 +29,7 @@ public class Main extends Application {
     static final int stationNum = 18;//0~17
     static public Vector<Terminal> allTerminal = new Vector<Terminal>();
     static public CentralTerminal centralTerminal = new CentralTerminal();
+    static public Vector<Double> skillProficiencyDeTerminal = new Vector<Double>();
 
     /*
      * 0: OpenMPStation
@@ -86,6 +87,13 @@ public class Main extends Application {
 			//System.out.println(new Image("file:src/sample/photo/" + stationName.get(i) + ".png").getHeight());
 			//imageVector.add(new Image("file:" + stationName.get(i) + ".png"));//0
             allTerminal.add(new Terminal(stationName.get(i)));
+        }
+    }
+
+    //initialize proficiency percentage
+    static {
+        for(int i=0; i<16; i++) {
+            skillProficiencyDeTerminal.add(0.0);
         }
     }
 
