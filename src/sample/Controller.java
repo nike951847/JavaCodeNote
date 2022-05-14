@@ -9,42 +9,29 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
-import javafx.scene.web.HTMLEditor;
-import javafx.scene.Scene;
-import javafx.util.*;
-import javafx.scene.Node;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
+import javax.swing.*;
+import java.io.*;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.*;
-
-import javafx.scene.input.KeyCombination;
-
-import javax.swing.*;
-import javafx.scene.shape.Circle;
 
 public class Controller {
     private Parent root;
-    private static Vector<ImageView> allStationImageView = new Vector<ImageView>();
-
+    private static final Vector<ImageView> allStationImageView = new Vector<>();
+    public static ScrollPane scrollPane;
     @FXML
     private BorderPane borderPane;
     @FXML
@@ -98,6 +85,7 @@ public class Controller {
     @FXML
     private BorderPane desktopBorderPane;
 
+
     public void initialize() {
         //set background image
         Image img = new Image("file:src/sample/photo/" + "DesktopBackground" + ".png");
@@ -127,7 +115,6 @@ public class Controller {
             allStationImageView.add(algorithmStation);
             allStationImageView.add(graphStation);
         }
-
         {
             for (int i = 0; i < Main.stationNum; i++) {
                 allStationImageView.get(i).setImage(Main.imageVector.get(i));
@@ -187,18 +174,29 @@ public class Controller {
 
         //set desktopScrollPane drag
         desktopScrollPane.setPannable(true);
+        Pane pane = new Pane();
+
+        pane.setPrefSize(2700,1260);
+        pane.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+
+        /*borderPane.getChildren().add(pane);
+        pane.toFront();*/
+        System.out.println(borderPane.getChildren());
 
         searchTerminalTextField.setText("Type to search the station");
-
+        scrollPane = desktopScrollPane;
 
     }
 
     @FXML
     void searchTerminalTextFieldListener(ActionEvent event) {
+        System.out.println(desktop.getHeight()+"　"+desktop.getWidth());
         String target = searchTerminalTextField.getText();
         searchTerminalTextField.clear();
 
-        Boolean blFind = false;
+        boolean blFind = false;
+
+
         for (String str : Main.stationName) {
             if (target.equals(str)) {
                 System.out.println("find station");
