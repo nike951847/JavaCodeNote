@@ -1,10 +1,7 @@
 package sample;
 //package javafx.scene.web;
 
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,6 +15,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.CubicCurveTo;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -32,8 +33,9 @@ public class Controller {
     private Parent root;
     private static final Vector<ImageView> allStationImageView = new Vector<>();
     public static ScrollPane scrollPane;
+    public Pane carPane;
     @FXML
-    private BorderPane borderPane;
+    private Pane pane;
     @FXML
     private TextField searchTerminalTextField;
     @FXML
@@ -89,10 +91,6 @@ public class Controller {
     public void initialize() {
         //set background image
         Image img = new Image("file:src/sample/photo/" + "DesktopBackground" + ".png");
-        desktop.setBackground(new Background(new BackgroundImage(img, BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT)));
 
         //set all station to a vector
         {
@@ -174,15 +172,22 @@ public class Controller {
 
         //set desktopScrollPane drag
         desktopScrollPane.setPannable(true);
-        Pane pane = new Pane();
+        carPane = new Pane();
 
-        pane.setPrefSize(2700,1260);
-        pane.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+        carPane.setPrefSize(2700,1260);
+        carPane.setBackground(new Background(new BackgroundImage(img, BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT)));
+        //carPane.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+        pane.getChildren().add(carPane);
+        carPane.toBack();
 
+        System.out.println("wwwww");
+        System.out.println(pane.getChildren());
         /*borderPane.getChildren().add(pane);
         pane.toFront();*/
-        System.out.println(borderPane.getChildren());
-
+        initMRT();
         searchTerminalTextField.setText("Type to search the station");
         scrollPane = desktopScrollPane;
 
@@ -228,7 +233,8 @@ public class Controller {
 
     @FXML
     void StationPressed(MouseEvent event) throws IOException {
-
+//        System.out.println(threadStation.getLayoutX()+" "+threadStation.getLayoutY());
+//        System.out.println(interfaceStation.getLayoutX()+" "+interfaceStation.getLayoutY());
         int index = allStationImageView.indexOf((ImageView) event.getSource());
         System.out.println(((ImageView) event.getSource()).getId());
         TerminalController.setCurTerminal(Main.allTerminal.get(index));
@@ -407,5 +413,30 @@ public class Controller {
 
         stage.close();
     }
+    void initMRT(){
+        Image img = new Image("file:src/sample/photo/MRT.png");
+        System.out.println(img.getHeight());
+        ImageView MRT1 = new ImageView(new Image("file:src/sample/photo/MRT.png"));
+
+        System.out.println(MRT1);
+        MRT1.setLayoutX(100);
+        MRT1.setLayoutY(100);
+        MRT1.setVisible(true);
+        Path path = new Path();
+        path.getElements().add (new MoveTo(1200f, 358f));
+        path.getElements().add (new LineTo(1600,310));
+        carPane.getChildren().add(MRT1);
+        PathTransition pathTransition= new PathTransition();
+        pathTransition.setDuration(Duration.millis(5000));
+        pathTransition.setNode(MRT1);
+        pathTransition.setPath(path);
+        pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        pathTransition.setCycleCount(40);
+        pathTransition.setAutoReverse(true);
+        pathTransition.play();
+
+
+    }
 
 }
+
