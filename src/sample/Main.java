@@ -92,7 +92,7 @@ public class Main extends Application {
 
     //initialize proficiency percentage
     static {
-        for(int i=0; i<16; i++) {
+        for(int i=0; i<stationNum; i++) {
             skillProficiencyDeTerminal.add(0.0);
         }
     }

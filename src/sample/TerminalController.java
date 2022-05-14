@@ -2,6 +2,7 @@ package sample;
 
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import javafx.fxml.FXML;
+import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -45,6 +46,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 
 public class TerminalController {
     private Parent root;
@@ -56,6 +61,12 @@ public class TerminalController {
     public Vector<String>[] javaKeyword = new Vector[8];
     //Vector<String>[][] s = new Vector<String>[;
     public Vector<String> javaKeywordColor = new Vector<String>();
+
+    public CategoryAxis terminalBarChartXAxis = new CategoryAxis();
+    public NumberAxis terminalBarChartYAxis = new NumberAxis();
+    public BarChart<String, Number> terminalBarChart = new BarChart<String, Number>(terminalBarChartXAxis, terminalBarChartYAxis);
+
+    static public String [] capabilityType = new String[] {"one", "two", "three", "four", "five"};
 
     @FXML
     private BorderPane mainPane;
@@ -77,6 +88,7 @@ public class TerminalController {
     private Button note6;
     @FXML
     private Button note7;
+
 
     //initizlize javaKeyword
     {
@@ -153,6 +165,7 @@ public class TerminalController {
         javaKeywordColor.add("lime");
     }
 
+
     @FXML
     public void initialize() {
         {
@@ -181,6 +194,15 @@ public class TerminalController {
 
             }
         }
+
+        //initialize barchart on pane
+        {
+            mainPane.setCenter(terminalBarChart);
+            terminalBarChart.setMinWidth(620);
+            terminalBarChart.setMinHeight(670);
+            updateTerminalBarChart();
+        }
+
     }
 
     public void initNote() {
@@ -425,7 +447,6 @@ public class TerminalController {
         return output;
     }
 
-
     private String checkKeyword(String input) {
         String output = "";
         String[] tokens = input.split(" ");
@@ -498,5 +519,37 @@ public class TerminalController {
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void updateTerminalBarChart() {
+
+        terminalBarChart.setTitle("車站完成度");
+        terminalBarChartXAxis.setLabel("Type of Proficiency");
+        terminalBarChartYAxis.setLabel("Proficiency Percentage");
+
+        XYChart.Series [] series = new XYChart.Series[3];
+        for(int i=0; i<3; i++) {
+            series[i] = new XYChart.Series();
+
+            switch (i) {
+                case 0 -> {series[i].setName("Previous"); break;}
+                case 1 -> {series[i].setName("Current"); break;}
+                case 2 -> {series[i].setName("Next"); break;}
+                default -> {break;}
+            }
+
+            //prevTerminal, curTerminal, nextTerminal
+            for(int j=0; j<5; j++) {
+                series[i].getData().add(new XYChart.Data(capabilityType[j], calculateProficiency(curTerminal)[j]));
+            }
+        }
+
+        terminalBarChart.getData().addAll(series[0], series[1], series[2]);
+        terminalBarChart.setLegendSide(Side.TOP);
+        terminalBarChart.setLegendVisible(true);
+    }
+
+    static double [] calculateProficiency(Terminal terminal) {
+        return new double[] {50.0,50.0,50.0,50.0,50.0};
     }
 }
