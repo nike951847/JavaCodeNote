@@ -1,40 +1,61 @@
 package sample;
 
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyEvent;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Vector;
+import java.io.File;
+import java.io.BufferedReader;
+
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.scene.web.HTMLEditor;
+
+import java.io.FileReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.io.IOException;
+import java.io.*;
+import java.util.stream.Stream;
+
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+import javafx.event.Event;
+import javafx.stage.FileChooser;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToolBar;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.web.HTMLEditor;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-
-import java.io.*;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class TerminalController {
+    private Parent root;
     public static BorderPane outside;
     public static BorderPane static_outside_pane;
-    public static Vector<Button> static_button_vec = new Vector<>();
+    public static Vector<Button> static_button_vec = new Vector<Button>();
     public static Terminal curTerminal = new Terminal();
     public String returnStr = "";
     public Vector<String>[] javaKeyword = new Vector[8];
@@ -72,7 +93,7 @@ public class TerminalController {
     //initizlize javaKeyword
     {
         for (int i = 0; i < 8; i++) {
-            javaKeyword[i] = new Vector<>();
+            javaKeyword[i] = new Vector<String>();
         }
 
         javaKeyword[0].add("private");
@@ -144,9 +165,6 @@ public class TerminalController {
         javaKeywordColor.add("lime");
     }
 
-    public TerminalController(Parent root) {
-    }
-
 
     @FXML
     public void initialize() {
@@ -214,13 +232,16 @@ public class TerminalController {
 
             HTMLEditor htmlEditor = new HTMLEditor();
             htmlEditor.setPrefHeight(500);
-            //when pressed update
-            htmlEditor.setOnKeyPressed(event1 -> {
-                //System.out.println("here");
-                //htmlEditor.setHtmlText(htmlEditor.getHtmlText() + checkKeyword(returnStr));
-                htmlEditor.setHtmlText(updateKeyword(htmlEditor.getHtmlText()));
-                //System.out.println("test:");
-                //System.out.println(htmlEditor.getAccessibleText());
+            htmlEditor.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                //when pressed update
+                @Override
+                public void handle(KeyEvent event) {
+                    //System.out.println("here");
+                    //htmlEditor.setHtmlText(htmlEditor.getHtmlText() + checkKeyword(returnStr));
+                    htmlEditor.setHtmlText(updateKeyword(htmlEditor.getHtmlText()));
+                    //System.out.println("test:");
+                    //System.out.println(htmlEditor.getAccessibleText());
+                }
             });
 
             ToolBar bar = null;
@@ -236,18 +257,25 @@ public class TerminalController {
                 Button importButton = new Button();
                 Button convertToMDButton = new Button("MD");
 
-                convertToMDButton.setOnAction(actionEvent ->
-                        Controller.saveMD("# " + noteName.getText() + "\n" + Controller.hTMLtoMDConverter(htmlEditor.getHtmlText())));
+                convertToMDButton.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        Controller.saveMD("# " + noteName.getText() + "\n" + Controller.hTMLtoMDConverter(htmlEditor.getHtmlText()));
+                    }
+                });
 
 
-                importButton.setOnAction(actionEvent -> {
-                    FileChooser fileChooser = new FileChooser();
-                    fileChooser.setTitle("Open Image");
-                    File importPath = fileChooser.showOpenDialog(new Stage());
+                importButton.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        FileChooser fileChooser = new FileChooser();
+                        fileChooser.setTitle("Open Image");
+                        File importPath = fileChooser.showOpenDialog(new Stage());
 
-                    htmlEditor.setHtmlText(htmlEditor.getHtmlText() + "<img src=\"" + importPath.toString() + "\">");
-                    //System.out.println("<img src=\"" + importPath.toString() + "\">");
-                    //htmlEditor.setHtmlText(htmlEditor.getHtmlText()+"&lt;img src='file:\\"+importButton.toString()+"' >" );
+                        htmlEditor.setHtmlText(htmlEditor.getHtmlText() + "<img src=\"" + importPath.toString() + "\">");
+                        //System.out.println("<img src=\"" + importPath.toString() + "\">");
+                        //htmlEditor.setHtmlText(htmlEditor.getHtmlText()+"&lt;img src='file:\\"+importButton.toString()+"' >" );
+                    }
                 });
 
                 Image importButtonPath = new Image("file:src/sample/photo/" + "CompressedImportButtonLogo.jpg");
@@ -270,7 +298,6 @@ public class TerminalController {
                         Stage stage = new Stage();
                         TextField inputCodeArea = new TextField("Enter your code here");
                         Button confirmButton = new Button("Confirm");
-
                         confirmButton.setOnAction(new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent actionEvent) {
@@ -313,40 +340,47 @@ public class TerminalController {
                 stage.setFullScreen(false);
                 stage.show();
 
-                buttonReturn.setOnAction(actionEvent -> {
+                buttonReturn.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
 
-                    //save the current file, then return
-                    File openFile1 = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + ((Button) event.getSource()).getId() + ".html");
-                    openFile1.delete();
-                    if (openFile1 != null) {
+                        //save the current file, then return
+                        File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + ((Button) event.getSource()).getId() + ".html");
+                        openFile.delete();
+                        if (openFile != null) {
+                            String stringHtml = htmlEditor.getHtmlText();
+                            SaveFile(stringHtml, openFile, noteName.getText() + "<br>\n");
+                        }
+
+                        if (!noteName.getText().equals("Type here to name the note"))
+                            static_button_vec.get(static_button_vec.indexOf((Button) event.getSource())).setText(noteName.getText());
+                        stage.close();
+                        ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);
+                    }
+                });
+
+                buttonExport.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent t) {
                         String stringHtml = htmlEditor.getHtmlText();
-                        SaveFile(stringHtml, openFile1, noteName.getText() + "<br>\n");
-                    }
+                        //htmlText.setText(stringHtml);
 
-                    if (!noteName.getText().equals("Type here to name the note"))
-                        static_button_vec.get(static_button_vec.indexOf((Button) event.getSource())).setText(noteName.getText());
-                    stage.close();
-                    ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);
-                });
+                        FileChooser fileChooser = new FileChooser();
 
-                buttonExport.setOnAction(t -> {
-                    String stringHtml = htmlEditor.getHtmlText();
-                    //htmlText.setText(stringHtml);
+                        //Set extension filter
+                        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("HTML files (*.html)", "*.html");
+                        fileChooser.getExtensionFilters().add(extFilter);
 
-                    FileChooser fileChooser = new FileChooser();
-
-                    //Set extension filter
-                    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("HTML files (*.html)", "*.html");
-                    fileChooser.getExtensionFilters().add(extFilter);
-
-                    //Show save file dialog
-                    File file = fileChooser.showSaveDialog((Stage) ((Node) event.getSource()).getScene().getWindow());
-                    if (file != null) {
-                        SaveFile(stringHtml, file, "<br>\n");
+                        //Show save file dialog
+                        File file = fileChooser.showSaveDialog((Stage) ((Node) event.getSource()).getScene().getWindow());
+                        if (file != null) {
+                            SaveFile(stringHtml, file, "<br>\n");
+                        }
                     }
                 });
-            }  //System.out.println("cannot find file");
-
+            } else {
+                //System.out.println("cannot find file");
+            }
         }
     }
 

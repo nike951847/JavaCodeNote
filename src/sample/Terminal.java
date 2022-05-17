@@ -1,12 +1,8 @@
 package sample;
 
 import javafx.scene.chart.BarChart;
-import sample.Change;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-
-import java.util.ArrayList;
 
 public class Terminal extends Change {
     protected String name;

@@ -6,7 +6,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -294,7 +293,7 @@ public class Controller {
             }
         }
 
-        String rt[] = new String[2];
+        String[] rt = new String[2];
         rt[0] = noteName;
         rt[1] = stringBuffer.toString();
 
