@@ -1,35 +1,29 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
-import java.awt.*;
-import java.util.*;
-
-import javafx.animation.*;
-import javafx.stage.StageStyle;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.Image;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.VBox;
-import javafx.application.Platform;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
+import java.util.Vector;
 
 public class Main extends Application {
 
-    static public Vector<Image> imageVector = new Vector<Image>();
-    static public Vector<String> stationName = new Vector<String>();
+    static public Vector<Image> imageVector = new Vector<>();
+    static public Vector<String> stationName = new Vector<>();
     static final int stationNum = 18;//0~17
-    static public Vector<Terminal> allTerminal = new Vector<Terminal>();
+    static public Vector<Terminal> allTerminal = new Vector<>();
     static public CentralTerminal centralTerminal = new CentralTerminal();
-    static public Vector<Double> skillProficiencyDeTerminal = new Vector<Double>();
+    static public Vector<Double> skillProficiencyDeTerminal = new Vector<>();
 
     /*
      * 0: OpenMPStation
@@ -84,8 +78,6 @@ public class Main extends Application {
             else{
                 imageVector.add(new Image("file:src/sample/photo/" + stationName.get(i) + ".png"));//0
             }
-			//System.out.println(new Image("file:src/sample/photo/" + stationName.get(i) + ".png").getHeight());
-			//imageVector.add(new Image("file:" + stationName.get(i) + ".png"));//0
             allTerminal.add(new Terminal(stationName.get(i)));
         }
     }
@@ -122,35 +114,29 @@ public class Main extends Application {
         loadingStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         loadingStage.setFullScreen(true);
 
-        Thread taskThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                double progress = 0;
+        Thread taskThread = new Thread(() -> {
+            double progress = 0;
 
-                for (int i = 0; i < 100; i++) {
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-
-                    progress += 0.01;
-
-                    double reportedProgress = progress;
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            progressBar.setProgress(reportedProgress);
-                            if (progressBar.getProgress() > 1.0) {
-                                primaryStage.show();
-                                loadingStage.close();
-                            }
-                        }
-                    });
+            for (int i = 0; i < 100; i++) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
 
+
+                progress += 0.01;
+
+                double reportedProgress = progress;
+                Platform.runLater(() -> {
+                    progressBar.setProgress(reportedProgress);
+                    if (progressBar.getProgress() > 1.0) {
+                        primaryStage.show();
+                        loadingStage.close();
+                    }
+                });
             }
+
         });
         taskThread.start();
     }

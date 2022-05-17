@@ -1,12 +1,14 @@
 package sample;
 //package javafx.scene.web;
 
-import javafx.animation.*;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
@@ -14,11 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.CubicCurveTo;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -34,6 +31,7 @@ public class Controller {
     private static final Vector<ImageView> allStationImageView = new Vector<>();
     public static ScrollPane scrollPane;
     public Pane carPane;
+    private boolean fullScene = true;
     @FXML
     private Pane pane;
     @FXML
@@ -87,6 +85,7 @@ public class Controller {
     @FXML
     private BorderPane desktopBorderPane;
 
+    Vector<ImageView> vehicleImages = new Vector<>();
 
     public void initialize() {
         //set background image
@@ -149,23 +148,19 @@ public class Controller {
                     }
                     //File saveNoteName = new File(storageLocationDirectory + "/" + Main.stationName.get(i) + "/buttonName.txt");
                 }
-            } else {
-                //System.out.println("already exist");
-            }
+            }  //System.out.println("already exist");
+
 
         }
 
         //add mouse event handler to all station
         {
             for (ImageView imageView : allStationImageView) {
-                imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        //System.out.println("["+event.getX()+", "+event.getY()+"]");
-                        //System.out.println("["+((ImageView) ((Node) event.getSource())).getX()+", "+((ImageView) ((Node) event.getSource())).getY()+"]");;
-                        //((ImageView) ((Node) event.getSource())).getX();
-                        //System.out.println(event.getSource().);
-                    }
+                imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    //System.out.println("["+event.getX()+", "+event.getY()+"]");
+                    //System.out.println("["+((ImageView) ((Node) event.getSource())).getX()+", "+((ImageView) ((Node) event.getSource())).getY()+"]");;
+                    //((ImageView) ((Node) event.getSource())).getX();
+                    //System.out.println(event.getSource().);
                 });
             }
         }
@@ -179,14 +174,11 @@ public class Controller {
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT)));
-        //carPane.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
         pane.getChildren().add(carPane);
         carPane.toBack();
 
         System.out.println("wwwww");
         System.out.println(pane.getChildren());
-        /*borderPane.getChildren().add(pane);
-        pane.toFront();*/
         initMRT();
         searchTerminalTextField.setText("Type to search the station");
         scrollPane = desktopScrollPane;
@@ -228,13 +220,13 @@ public class Controller {
 
     @FXML
     void fullScreenMainTab(ActionEvent event) {
-        ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);
+
+        ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(!fullScene);
+        fullScene = !fullScene;
     }
 
     @FXML
     void StationPressed(MouseEvent event) throws IOException {
-//        System.out.println(threadStation.getLayoutX()+" "+threadStation.getLayoutY());
-//        System.out.println(interfaceStation.getLayoutX()+" "+interfaceStation.getLayoutY());
         int index = allStationImageView.indexOf((ImageView) event.getSource());
         System.out.println(((ImageView) event.getSource()).getId());
         TerminalController.setCurTerminal(Main.allTerminal.get(index));
@@ -248,13 +240,10 @@ public class Controller {
         //System.out.println(desktopToolBar.getHeight());
         Button terminalPageReturn = new Button();
         terminalPageReturn.setText("Return");
-        terminalPageReturn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                desktopBorderPane.getChildren().remove(root);
-                desktopBorderPane.setTop(new VBox(desktopToolBar, searchTerminalTextField));
-                searchTerminalTextField.setText("Type to search the station");
-            }
+        terminalPageReturn.setOnAction(actionEvent -> {
+            desktopBorderPane.getChildren().remove(root);
+            desktopBorderPane.setTop(new VBox(desktopToolBar, searchTerminalTextField));
+            searchTerminalTextField.setText("Type to search the station");
         });
 
         Timeline timeline = new Timeline();
@@ -295,8 +284,6 @@ public class Controller {
                 stringBuffer.append(text);
             }
 
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -330,23 +317,23 @@ public class Controller {
     }
 
     static public String hTMLtoMDConverter(String input) {
-        String output = "";
+        StringBuilder output = new StringBuilder();
 
         int index = 0;
-        Boolean save = false;
+        boolean save = false;
         while(index < input.length()) {
 
             if(index+3 < input.length()) {
-               if(input.substring(index, index+4).equals("<br>")) {
-                   output += "  \n";
+               if(input.startsWith("<br>", index)) {
+                   output.append("  \n");
                    index += 4;
                    continue;
                }
             }
 
             if(index+3 < input.length()) {
-                if(input.substring(index, index+4).equals("</p>")) {
-                    output += "  \n";
+                if(input.startsWith("</p>", index)) {
+                    output.append("  \n");
                     index += 4;
                     save = false;
                     continue;
@@ -354,8 +341,8 @@ public class Controller {
             }
 
             if(index+3 < input.length()) {
-                if(input.substring(index, index+4).equals("<hr>")) {
-                    output += "\n```";
+                if(input.startsWith("<hr>", index)) {
+                    output.append("\n```");
                     index += 4;
                     save = false;
                     continue;
@@ -365,11 +352,7 @@ public class Controller {
 
             if(input.charAt(index) == '>') {
                 if(index-2 >= 0) {
-                    if(input.charAt(index-2) == '/') {
-                        save = false;
-                    } else {
-                        save = true;
-                    }
+                    save = input.charAt(index - 2) != '/';
                 }
 
                 index++;
@@ -381,13 +364,13 @@ public class Controller {
             }
 
             if(save) {
-                output += (input.charAt(index));
+                output.append(input.charAt(index));
             }
 
             index++;
         }
 
-        return output;
+        return output.toString();
     }
 
     static public void saveMD(String saveContent) {
@@ -402,7 +385,7 @@ public class Controller {
         File file = fileChooser.showSaveDialog(stage);
 
         try {
-            FileWriter fileWriter = null;
+            FileWriter fileWriter;
 
             fileWriter = new FileWriter(file);
             fileWriter.write(saveContent);
@@ -414,27 +397,18 @@ public class Controller {
         stage.close();
     }
     void initMRT(){
-        Image img = new Image("file:src/sample/photo/MRT.png");
-        System.out.println(img.getHeight());
-        ImageView MRT1 = new ImageView(new Image("file:src/sample/photo/MRT.png"));
 
-        System.out.println(MRT1);
-        MRT1.setLayoutX(100);
-        MRT1.setLayoutY(100);
-        MRT1.setVisible(true);
-        Path path = new Path();
-        path.getElements().add (new MoveTo(1200f, 358f));
-        path.getElements().add (new LineTo(1600,310));
-        carPane.getChildren().add(MRT1);
-        PathTransition pathTransition= new PathTransition();
-        pathTransition.setDuration(Duration.millis(5000));
-        pathTransition.setNode(MRT1);
-        pathTransition.setPath(path);
-        pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-        pathTransition.setCycleCount(40);
-        pathTransition.setAutoReverse(true);
-        pathTransition.play();
+        Vehicle.init();
+        for(Vehicle vehicle: Vehicle.vehicles){
+            vehicleImages.add(vehicle.imageView);
+            vehicle.imageView.setVisible(true);
+            vehicle.pathTransition.play();
+            System.out.println(vehicle.imageView.getFitHeight());
 
+        }
+        for(ImageView imageView: vehicleImages){
+            carPane.getChildren().add(imageView);
+        }
 
     }
 
