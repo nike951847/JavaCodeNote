@@ -25,6 +25,7 @@ import javafx.util.Pair;
 
 import javax.swing.*;
 import java.io.*;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -225,11 +226,11 @@ public class Controller {
 
 
         for (String str : Main.stationName) {
-            if (target.equals(str)) {
+            if (str.toLowerCase().contains(target.toLowerCase())) {
                 System.out.println("find station");
                 blFind = true;
 
-                centerNodeInScrollPane(desktopScrollPane, allStationImageView.get(Main.stationName.indexOf(target)));
+                centerNodeInScrollPane(desktopScrollPane, allStationImageView.get(Main.stationName.indexOf(str)));
             }
         }
 

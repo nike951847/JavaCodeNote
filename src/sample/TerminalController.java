@@ -58,9 +58,10 @@ public class TerminalController {
     public static Vector<Button> static_button_vec = new Vector<Button>();
     public static Terminal curTerminal = new Terminal();
     public String returnStr = "";
-    public Vector<String>[] javaKeyword = new Vector[8];
+    @SuppressWarnings("unchecked")
+    Vector<String>[] javaKeyword = (Vector<String>[]) new Vector[8];
     //Vector<String>[][] s = new Vector<String>[;
-    public Vector<String> javaKeywordColor = new Vector<String>();
+    public Vector<String> javaKeywordColor = new Vector<>();
 
     public CategoryAxis terminalBarChartXAxis = new CategoryAxis();
     public NumberAxis terminalBarChartYAxis = new NumberAxis();
@@ -95,7 +96,7 @@ public class TerminalController {
     //initizlize javaKeyword
     {
         for (int i = 0; i < 8; i++) {
-            javaKeyword[i] = new Vector<String>();
+            javaKeyword[i] = new Vector<>();
         }
 
         javaKeyword[0].add("private");
@@ -103,7 +104,7 @@ public class TerminalController {
         javaKeyword[0].add("public");
 
         javaKeyword[1].add("abstract");
-        javaKeyword[1].add("class");
+        //javaKeyword[1].add("class");
         javaKeyword[1].add("extends");
         javaKeyword[1].add("final");
         javaKeyword[1].add("implements");
@@ -454,32 +455,39 @@ public class TerminalController {
     }
 
     private String checkKeyword(String input) {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         String[] tokens = input.split(" ");
-        output += "<div style=\"background-color: #FAFAFA; font-family:Consolas;\">";
-        output += "<hr>";
+        output.append("<div style=\"background-color: #FAFAFA; font-family:Consolas;\">");
+        output.append("<hr>");
 
         for (String target : tokens) {
-            Boolean used = false;
+            System.out.println(target);
+            System.out.println(target);
+            System.out.println(target);
+            System.out.println(target);
+            System.out.println(target);
+            System.out.println(target);
+            boolean used = false;
             for (int i = 0; i < 8; i++) {
                 for (String kw : javaKeyword[i]) {
-                    if (target.equals(kw)) {
+                    if (target.contains(kw)) {
+                        int ind = target.indexOf(kw);
                         //<b><font color='red'>Pratik</font><b/>
-                        output += "<b><font color='" + javaKeywordColor.get(i) + "'>" + target + " " + "</font><b/>";
+                        output.append(target.substring(0, ind)).append("<b><font color='").append(javaKeywordColor.get(i)).append("'>").append(kw).append(" ").append("</font><b/>").append(target.substring(ind + kw.length()));
                         used = true;
                     }
                 }
             }
 
             if (!used) {
-                output += (target + " ");
+                output.append(target).append(" ");
             }
         }
 
-        output += "<hr>";
-        output += "</div><br>";
+        output.append("<hr>");
+        output.append("</div><br>");
         System.out.println(output);
-        return output;
+        return output.toString();
     }
 
     private String[] readFile(File file) {
