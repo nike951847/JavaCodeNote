@@ -14,6 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.util.Objects;
 import java.util.Vector;
 
 public class Main extends Application {
@@ -93,7 +94,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         //primary stage
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("sample.fxml")));
         primaryStage.setTitle("EXAMPLE");
         primaryStage.setScene(new Scene(root, 1250, 600));
         primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
