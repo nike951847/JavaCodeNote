@@ -208,22 +208,13 @@ public class TerminalController {
     class NoteHandler implements EventHandler<Event> {
         @Override
         public void handle(Event event) {
-            //System.out.println("My Very Own Private Handler For All Kind Of Events");
-            //System.out.println("get terminal name: " + curTerminal.name);
-            //System.out.println(((Button) event.getSource()).getId());
-            //System.out.println("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + ((Button) event.getSource()).getId() + ".html");
-
             TextField noteName = new TextField("");
 
             HTMLEditor htmlEditor = new HTMLEditor();
             //htmlEditor.setPrefHeight(500);
             //when pressed update
             htmlEditor.setOnKeyPressed(event1 -> {
-                //System.out.println("here");
-                //htmlEditor.setHtmlText(htmlEditor.getHtmlText() + checkKeyword(returnStr));
                 htmlEditor.setHtmlText(updateKeyword(htmlEditor.getHtmlText()));
-                //System.out.println("test:");
-                //System.out.println(htmlEditor.getAccessibleText());
             });
 
             ToolBar bar = null;
@@ -263,28 +254,7 @@ public class TerminalController {
                 bar.getItems().add(1, convertToMDButton);
 
                 Button addCote = new Button("PG");//PG for programming
-                /*
-                bar.getItems().add(1, addCote);
-                addCote.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        //System.out.println("here");
-                        Stage stage = new Stage();
-                        TextField inputCodeArea = new TextField("Enter your code here");
-                        Button confirmButton = new Button("Confirm");
-                        confirmButton.setOnAction(new EventHandler<ActionEvent>() {
-                            @Override
-                            public void handle(ActionEvent actionEvent) {
-                                TerminalController.this.returnStr = inputCodeArea.getText();
-                                stage.close();
-                            }
-                        });
-                        stage.setScene(new Scene(new VBox(confirmButton, inputCodeArea)));
-                        stage.showAndWait();
-                        //checkKeyword(returnStr);
-                        htmlEditor.setHtmlText(htmlEditor.getHtmlText() + checkKeyword(returnStr));
-                    }
-                });*/
+
             }
 
             File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + ((Button) event.getSource()).getId() + ".html");

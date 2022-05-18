@@ -107,7 +107,7 @@ public class Building extends Change {
 
     public void setHeight(int height) {
         this.height = height;
-        int i = 1+Math.abs(random.nextInt())%5;
+        int i = 1+Math.abs(random.nextInt())%6;
         String s = System.getProperty("user.dir");
 
         if(s.charAt(s.length()-1)=='c'){
