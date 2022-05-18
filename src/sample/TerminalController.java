@@ -71,6 +71,8 @@ public class TerminalController {
     @FXML
     private BorderPane mainPane;
     @FXML
+    private AnchorPane baseAnchorPane;
+    @FXML
     private BorderPane outsidePane;
     @FXML
     private Button note0;
@@ -197,9 +199,14 @@ public class TerminalController {
 
         //initialize barchart on pane
         {
+            outsidePane.setMinWidth(baseAnchorPane.getWidth());
+            outsidePane.setMinHeight(baseAnchorPane.getHeight());
+            mainPane.setMinWidth(baseAnchorPane.getWidth());
+            mainPane.setMinHeight(baseAnchorPane.getHeight());
             mainPane.setCenter(terminalBarChart);
-            terminalBarChart.setMinWidth(620);
-            terminalBarChart.setMinHeight(670);
+            terminalBarChart.setMinWidth(baseAnchorPane.getWidth());
+            terminalBarChart.setMinHeight(baseAnchorPane.getHeight());
+
             updateTerminalBarChart();
         }
 
@@ -231,7 +238,7 @@ public class TerminalController {
             TextField noteName = new TextField("");
 
             HTMLEditor htmlEditor = new HTMLEditor();
-            htmlEditor.setPrefHeight(500);
+            //htmlEditor.setPrefHeight(500);
             htmlEditor.setOnKeyPressed(new EventHandler<KeyEvent>() {
                 //when pressed update
                 @Override
