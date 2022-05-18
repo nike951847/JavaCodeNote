@@ -8,6 +8,9 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
@@ -18,9 +21,11 @@ import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.util.Pair;
 
 import javax.swing.*;
 import java.io.*;
+import java.util.Random;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -181,6 +186,32 @@ public class Controller {
         initMRT();
         searchTerminalTextField.setText("Type to search the station");
         scrollPane = desktopScrollPane;
+        Building.init();
+        for(int i =0;i<27;i++){
+            for (int j =0; j<27; j++) {
+                boolean flag = false;
+                for(ImageView imgv :allStationImageView){
+                    if(j == GridPane.getColumnIndex(imgv)&&(i-GridPane.getRowIndex(imgv)>=-1&&i-GridPane.getRowIndex(imgv)<=1)) {
+                        //System.out.println("station at I:"+i+" J:"+j);
+                        flag = true;
+                        break;
+                    }
+                }
+                for(Pair<Integer,Integer> pair : Building.Road){
+                    if(j== pair.getKey()&&i== pair.getValue()){
+                        flag = true;
+                        break;
+                    }
+                }
+                Building.buildingMat[i][j] = new Building(1);
+                ImageView temp = new ImageView(Building.buildingMat[i][j].img);
+                temp.setFitHeight(60);
+                temp.setFitWidth(60);
+                if(!flag) desktop.add(temp,j,i);
+
+            }
+
+        }
 
     }
 
