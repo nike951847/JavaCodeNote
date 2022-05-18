@@ -409,6 +409,7 @@ public class TerminalController {
 
     private String checkKeyword(String input) {
         countKeyword = 0;
+        boolean ifClassName = false;
 
         StringBuilder output = new StringBuilder();
         String[] tokens = input.split(" ");
@@ -433,6 +434,15 @@ public class TerminalController {
                         countKeyword++;
                     }
                 }
+            }
+
+            if(target.contains("public")) {
+                ifClassName = true;
+            }
+            if(ifClassName) {
+                ifClassName = false;
+                String classNameColor = "gray";
+                //output.append(" <font color=\"").append(classNameColor).append("\">").append(target).append("</font><b><b>");
             }
 
             if (!used) {
