@@ -46,6 +46,8 @@ public class TerminalController {
 
     static public String [] capabilityType = new String[] {"綜合熟練程度", "開發品質", "創意思考能力", "數據分析能力", "聯想力"};
 
+    private int countKeyword = 0;
+
     @FXML
     private BorderPane mainPane;
     @FXML
@@ -242,15 +244,12 @@ public class TerminalController {
 
                 convertToMDButton.setOnAction(actionEvent -> Controller.saveMD("# " + noteName.getText() + "\n" + Controller.hTMLtoMDConverter(htmlEditor.getHtmlText())));
 
-
                 importButton.setOnAction(actionEvent -> {
                     FileChooser fileChooser = new FileChooser();
                     fileChooser.setTitle("Open Image");
                     File importPath = fileChooser.showOpenDialog(new Stage());
 
                     htmlEditor.setHtmlText(htmlEditor.getHtmlText() + "<img src=\"" + importPath.toString() + "\">");
-                    //System.out.println("<img src=\"" + importPath.toString() + "\">");
-                    //htmlEditor.setHtmlText(htmlEditor.getHtmlText()+"&lt;img src='file:\\"+importButton.toString()+"' >" );
                 });
 
                 Image importButtonPath = new Image("file:src/sample/photo/" + "CompressedImportButtonLogo.jpg");
@@ -264,28 +263,6 @@ public class TerminalController {
                 bar.getItems().add(1, convertToMDButton);
 
                 Button addCote = new Button("PG");//PG for programming
-                /*
-                bar.getItems().add(1, addCote);
-                addCote.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        //System.out.println("here");
-                        Stage stage = new Stage();
-                        TextField inputCodeArea = new TextField("Enter your code here");
-                        Button confirmButton = new Button("Confirm");
-                        confirmButton.setOnAction(new EventHandler<ActionEvent>() {
-                            @Override
-                            public void handle(ActionEvent actionEvent) {
-                                TerminalController.this.returnStr = inputCodeArea.getText();
-                                stage.close();
-                            }
-                        });
-                        stage.setScene(new Scene(new VBox(confirmButton, inputCodeArea)));
-                        stage.showAndWait();
-                        //checkKeyword(returnStr);
-                        htmlEditor.setHtmlText(htmlEditor.getHtmlText() + checkKeyword(returnStr));
-                    }
-                });*/
             }
 
             File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + ((Button) event.getSource()).getId() + ".html");
@@ -402,12 +379,37 @@ public class TerminalController {
             i++;
         }
 
+        //output.append("</b></b></b>");
+
+        //output.append("<p><span style=\"font-weight: normal;\">");
+
+        StringBuilder temp = new StringBuilder();
+
+        //i to length-1
+        for(; i<input.length(); i++) {
+            temp.append(input.charAt(i));
+        }
+
+        output.append("</b>");
+        while(countKeyword > 0) {
+            output.append("</b>");
+            countKeyword--;
+        }
+        output.append(Controller.hTMLtoMDConverter(temp.toString()));
+        output.append("<b>");
+        while(countKeyword > 0) {
+            output.append("<b>");
+            countKeyword--;
+        }
+
         //output += "<hr> </div> <style> .div-1 { background-color: #FAFAFA; font-family:Consolas;}</style> <br>";
 
         return output.toString();
     }
 
     private String checkKeyword(String input) {
+        countKeyword = 0;
+
         StringBuilder output = new StringBuilder();
         String[] tokens = input.split(" ");
         output.append("<div style=\"background-color: #FAFAFA; font-family:Consolas;\">");
@@ -428,6 +430,7 @@ public class TerminalController {
                         //<b><font color='red'>Pratik</font><b/>
                         output.append(target, 0, ind).append("<b><font color='").append(javaKeywordColor.get(i)).append("'>").append(kw).append(" ").append("</font><b/>").append(target.substring(ind + kw.length()));
                         used = true;
+                        countKeyword++;
                     }
                 }
             }
@@ -440,6 +443,7 @@ public class TerminalController {
         output.append("<hr>");
         output.append("</div><br>");
         System.out.println(output);
+        System.out.println("count keyword: " + countKeyword);
         return output.toString();
     }
 
@@ -534,7 +538,6 @@ public class TerminalController {
         returnValue[2] = 50.0;
         returnValue[3] = 50.0;
         returnValue[4] = 50.0;
-
 
         returnValue[0] = (returnValue[1] + returnValue[2] + returnValue[3] + returnValue[4])/4.0;
 
