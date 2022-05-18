@@ -44,7 +44,7 @@ public class TerminalController {
     public NumberAxis terminalBarChartYAxis = new NumberAxis();
     public BarChart<String, Number> terminalBarChart = new BarChart<>(terminalBarChartXAxis, terminalBarChartYAxis);
 
-    static public String [] capabilityType = new String[] {"綜合熟練程度", "開發品質", "創意思考能力", "數據分析能力", "聯想力"};
+    static public String [] capabilityType = new String[] {"綜合熟練程度", "開發品質", "創意思考能力", "數據分析能力"};
 
     private int countKeyword = 0;
 
@@ -531,7 +531,7 @@ public class TerminalController {
                 default -> {}
             }
 
-            for(int j=0; j<5; j++) {
+            for(int j=0; j<4; j++) {
                 series[i].getData().add(new XYChart.Data(capabilityType[j], calculateProficiency(Main.allTerminal.get(curIndex))[j]));
             }
         }
