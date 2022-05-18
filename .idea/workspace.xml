@@ -294,7 +294,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/sample/Controller.java</url>
-          <line>264</line>
+          <line>260</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

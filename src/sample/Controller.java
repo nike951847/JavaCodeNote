@@ -8,9 +8,6 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.HPos;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
@@ -25,8 +22,7 @@ import javafx.util.Pair;
 
 import javax.swing.*;
 import java.io.*;
-import java.util.Locale;
-import java.util.Random;
+import java.util.Objects;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -262,7 +258,7 @@ public class Controller {
         System.out.println(((ImageView) event.getSource()).getId());
         TerminalController.setCurTerminal(Main.allTerminal.get(index));
         System.out.println("curterminal: " + Main.allTerminal.get(index).getName());
-        root = FXMLLoader.load(getClass().getResource("terminalpage.fxml"));
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("terminalpage.fxml")));
 
         desktopBorderPane.getChildren().add(root);
 
@@ -319,6 +315,7 @@ public class Controller {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
+                assert bufferedReader != null;
                 bufferedReader.close();
             } catch (IOException ex) {
                 Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);

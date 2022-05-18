@@ -6,21 +6,20 @@ import javafx.scene.chart.NumberAxis;
 
 public class Terminal extends Change {
     protected String name;
-    protected int whichLine;
     protected int score;
     protected String[] noteName = new String[8];
 
     public Terminal() {
         name = "";
-        for(String s:noteName){
-            s = "Add New Note";
+        for(int i=0;i<7;i++){
+            noteName[i] = "Add New Note";
         }
     }
 
     public Terminal(String name) {
         this.name = name;
-        for(String s:noteName){
-            s = "Add New Note";
+        for(int i=0;i<7;i++){
+            noteName[i] = "Add New Note";
         }
     }
 

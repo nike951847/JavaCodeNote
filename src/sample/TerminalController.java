@@ -1,71 +1,48 @@
 package sample;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToolBar;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.input.KeyEvent;
-
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Vector;
-import java.io.File;
-import java.io.BufferedReader;
-
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.scene.web.HTMLEditor;
-
-import java.io.FileReader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.io.IOException;
-import java.io.*;
-import java.util.stream.Stream;
-
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
-import javafx.event.Event;
-import javafx.stage.FileChooser;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.web.HTMLEditor;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+import java.io.*;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TerminalController {
-    private Parent root;
     public static BorderPane outside;
     public static BorderPane static_outside_pane;
     public static Vector<Button> static_button_vec = new Vector<Button>();
     public static Terminal curTerminal = new Terminal();
-    public String returnStr = "";
     @SuppressWarnings("unchecked")
     Vector<String>[] javaKeyword = (Vector<String>[]) new Vector[8];
-    //Vector<String>[][] s = new Vector<String>[;
     public Vector<String> javaKeywordColor = new Vector<>();
 
     public CategoryAxis terminalBarChartXAxis = new CategoryAxis();
     public NumberAxis terminalBarChartYAxis = new NumberAxis();
-    public BarChart<String, Number> terminalBarChart = new BarChart<String, Number>(terminalBarChartXAxis, terminalBarChartYAxis);
+    public BarChart<String, Number> terminalBarChart = new BarChart<>(terminalBarChartXAxis, terminalBarChartYAxis);
 
     static public String [] capabilityType = new String[] {"one", "two", "three", "four", "five"};
 
@@ -240,16 +217,13 @@ public class TerminalController {
 
             HTMLEditor htmlEditor = new HTMLEditor();
             //htmlEditor.setPrefHeight(500);
-            htmlEditor.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                //when pressed update
-                @Override
-                public void handle(KeyEvent event) {
-                    //System.out.println("here");
-                    //htmlEditor.setHtmlText(htmlEditor.getHtmlText() + checkKeyword(returnStr));
-                    htmlEditor.setHtmlText(updateKeyword(htmlEditor.getHtmlText()));
-                    //System.out.println("test:");
-                    //System.out.println(htmlEditor.getAccessibleText());
-                }
+            //when pressed update
+            htmlEditor.setOnKeyPressed(event1 -> {
+                //System.out.println("here");
+                //htmlEditor.setHtmlText(htmlEditor.getHtmlText() + checkKeyword(returnStr));
+                htmlEditor.setHtmlText(updateKeyword(htmlEditor.getHtmlText()));
+                //System.out.println("test:");
+                //System.out.println(htmlEditor.getAccessibleText());
             });
 
             ToolBar bar = null;
@@ -265,25 +239,17 @@ public class TerminalController {
                 Button importButton = new Button();
                 Button convertToMDButton = new Button("MD");
 
-                convertToMDButton.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        Controller.saveMD("# " + noteName.getText() + "\n" + Controller.hTMLtoMDConverter(htmlEditor.getHtmlText()));
-                    }
-                });
+                convertToMDButton.setOnAction(actionEvent -> Controller.saveMD("# " + noteName.getText() + "\n" + Controller.hTMLtoMDConverter(htmlEditor.getHtmlText())));
 
 
-                importButton.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        FileChooser fileChooser = new FileChooser();
-                        fileChooser.setTitle("Open Image");
-                        File importPath = fileChooser.showOpenDialog(new Stage());
+                importButton.setOnAction(actionEvent -> {
+                    FileChooser fileChooser = new FileChooser();
+                    fileChooser.setTitle("Open Image");
+                    File importPath = fileChooser.showOpenDialog(new Stage());
 
-                        htmlEditor.setHtmlText(htmlEditor.getHtmlText() + "<img src=\"" + importPath.toString() + "\">");
-                        //System.out.println("<img src=\"" + importPath.toString() + "\">");
-                        //htmlEditor.setHtmlText(htmlEditor.getHtmlText()+"&lt;img src='file:\\"+importButton.toString()+"' >" );
-                    }
+                    htmlEditor.setHtmlText(htmlEditor.getHtmlText() + "<img src=\"" + importPath.toString() + "\">");
+                    //System.out.println("<img src=\"" + importPath.toString() + "\">");
+                    //htmlEditor.setHtmlText(htmlEditor.getHtmlText()+"&lt;img src='file:\\"+importButton.toString()+"' >" );
                 });
 
                 Image importButtonPath = new Image("file:src/sample/photo/" + "CompressedImportButtonLogo.jpg");
@@ -322,73 +288,61 @@ public class TerminalController {
             }
 
             File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + ((Button) event.getSource()).getId() + ".html");
-            if (openFile != null) {
-                String textRead = readFile(openFile)[1];
-                htmlEditor.setHtmlText(textRead);
-                //System.out.println("the files exists");
+            String textRead = readFile(openFile)[1];
+            htmlEditor.setHtmlText(textRead);
+            //System.out.println("the files exists");
 
-                System.out.println(textRead);
+            System.out.println(textRead);
 
-                Button buttonReturn = new Button("Return");
-                Button buttonExport = new Button("Export");
-                ToolBar noteToolBar = new ToolBar(buttonReturn, buttonExport);
+            Button buttonReturn = new Button("Return");
+            Button buttonExport = new Button("Export");
+            ToolBar noteToolBar = new ToolBar(buttonReturn, buttonExport);
 
-                initNote();
+            initNote();
 
-                noteName.setText("Type here to name the note");
-                //System.out.println();
-                if (!((Button) event.getSource()).getText().equals("Add New Note")) {
-                    noteName.setText(((Button) event.getSource()).getText());
-                }
-
-                Scene scene = new Scene(new VBox(noteToolBar, noteName, htmlEditor));
-                Stage stage = new Stage();
-                stage.setScene(scene);
-                stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-                stage.setFullScreen(false);
-                stage.show();
-
-                buttonReturn.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-
-                        //save the current file, then return
-                        File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + ((Button) event.getSource()).getId() + ".html");
-                        openFile.delete();
-                        if (openFile != null) {
-                            String stringHtml = htmlEditor.getHtmlText();
-                            SaveFile(stringHtml, openFile, noteName.getText() + "<br>\n");
-                        }
-
-                        if (!noteName.getText().equals("Type here to name the note"))
-                            static_button_vec.get(static_button_vec.indexOf((Button) event.getSource())).setText(noteName.getText());
-                        stage.close();
-                        ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);
-                    }
-                });
-
-                buttonExport.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent t) {
-                        String stringHtml = htmlEditor.getHtmlText();
-                        //htmlText.setText(stringHtml);
-
-                        FileChooser fileChooser = new FileChooser();
-
-                        //Set extension filter
-                        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("HTML files (*.html)", "*.html");
-                        fileChooser.getExtensionFilters().add(extFilter);
-
-                        //Show save file dialog
-                        File file = fileChooser.showSaveDialog((Stage) ((Node) event.getSource()).getScene().getWindow());
-                        if (file != null) {
-                            SaveFile(stringHtml, file, "<br>\n");
-                        }
-                    }
-                });
-            } else {
-                //System.out.println("cannot find file");
+            noteName.setText("Type here to name the note");
+            //System.out.println();
+            if (!((Button) event.getSource()).getText().equals("Add New Note")) {
+                noteName.setText(((Button) event.getSource()).getText());
             }
+
+            Scene scene = new Scene(new VBox(noteToolBar, noteName, htmlEditor));
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+            stage.setFullScreen(false);
+            stage.show();
+
+            buttonReturn.setOnAction(actionEvent -> {
+
+                //save the current file, then return
+                File openFile1 = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + ((Button) event.getSource()).getId() + ".html");
+                openFile1.delete();
+                String stringHtml = htmlEditor.getHtmlText();
+                SaveFile(stringHtml, openFile1, noteName.getText() + "<br>\n");
+
+                if (!noteName.getText().equals("Type here to name the note"))
+                    static_button_vec.get(static_button_vec.indexOf((Button) event.getSource())).setText(noteName.getText());
+                stage.close();
+                ((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);
+            });
+
+            buttonExport.setOnAction(t -> {
+                String stringHtml = htmlEditor.getHtmlText();
+                //htmlText.setText(stringHtml);
+
+                FileChooser fileChooser = new FileChooser();
+
+                //Set extension filter
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("HTML files (*.html)", "*.html");
+                fileChooser.getExtensionFilters().add(extFilter);
+
+                //Show save file dialog
+                File file = fileChooser.showSaveDialog(((Node) event.getSource()).getScene().getWindow());
+                if (file != null) {
+                    SaveFile(stringHtml, file, "<br>\n");
+                }
+            });
         }
     }
 
@@ -405,13 +359,13 @@ public class TerminalController {
     }
 
     private String updateKeyword(String input) {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         String markTOCode = "```";
         int curMarkIndex = 0;
 
         //output += "<div class=\"div-1\"> <hr>";
 
-        Vector<Integer> markIndex = new Vector<Integer>();
+        Vector<Integer> markIndex = new Vector<>();
 
         if(input.contains(markTOCode)) {
             Pattern p = Pattern.compile(markTOCode);
@@ -428,21 +382,19 @@ public class TerminalController {
 
             if(i==markIndex.get(curMarkIndex)) {
 
-                if(curMarkIndex%2==0) {
-                    //System.out.println("here");
-                    String temp = "";
-                    for(int j=markIndex.get(curMarkIndex)+markTOCode.length(); j<markIndex.get(curMarkIndex+1); j++) {
-                        temp += input.charAt(j);
-                    }
-
-                    System.out.println(temp);
-                    //output += "<b><font color='" + "red" + "'>" + temp + " " + "</font><b/>";
-                    output += checkKeyword(temp);
-                    i = markIndex.get(curMarkIndex+1)+markTOCode.length();
-                    curMarkIndex+=2;
+                //System.out.println("here");
+                StringBuilder temp = new StringBuilder();
+                for(int j=markIndex.get(curMarkIndex)+markTOCode.length(); j<markIndex.get(curMarkIndex+1); j++) {
+                    temp.append(input.charAt(j));
                 }
+
+                System.out.println(temp);
+                //output += "<b><font color='" + "red" + "'>" + temp + " " + "</font><b/>";
+                output.append(checkKeyword(temp.toString()));
+                i = markIndex.get(curMarkIndex+1)+markTOCode.length();
+                curMarkIndex+=2;
             } else {
-                output += input.charAt(i);
+                output.append(input.charAt(i));
             }
 
             if(curMarkIndex > markIndex.size()-1) break;
@@ -451,7 +403,7 @@ public class TerminalController {
 
         //output += "<hr> </div> <style> .div-1 { background-color: #FAFAFA; font-family:Consolas;}</style> <br>";
 
-        return output;
+        return output.toString();
     }
 
     private String checkKeyword(String input) {
@@ -473,7 +425,7 @@ public class TerminalController {
                     if (target.contains(kw)) {
                         int ind = target.indexOf(kw);
                         //<b><font color='red'>Pratik</font><b/>
-                        output.append(target.substring(0, ind)).append("<b><font color='").append(javaKeywordColor.get(i)).append("'>").append(kw).append(" ").append("</font><b/>").append(target.substring(ind + kw.length()));
+                        output.append(target, 0, ind).append("<b><font color='").append(javaKeywordColor.get(i)).append("'>").append(kw).append(" ").append("</font><b/>").append(target.substring(ind + kw.length()));
                         used = true;
                     }
                 }
@@ -505,19 +457,18 @@ public class TerminalController {
                 stringBuffer.append(text);
             }
 
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
+                assert bufferedReader != null;
                 bufferedReader.close();
             } catch (IOException ex) {
                 Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
             }
         }
 
-        String rt[] = new String[2];
+        String[] rt = new String[2];
         rt[0] = DeleteBR(noteName);
         rt[1] = stringBuffer.toString();
 
@@ -525,7 +476,7 @@ public class TerminalController {
     }
     private void SaveFile(String content, File file, String buttonName) {
         try {
-            FileWriter fileWriter = null;
+            FileWriter fileWriter;
 
             fileWriter = new FileWriter(file);
             fileWriter.write(buttonName + "\n" + content);
@@ -546,10 +497,13 @@ public class TerminalController {
             series[i] = new XYChart.Series();
 
             switch (i) {
-                case 0 -> {series[i].setName("Previous"); break;}
-                case 1 -> {series[i].setName("Current"); break;}
-                case 2 -> {series[i].setName("Next"); break;}
-                default -> {break;}
+                case 0 -> {series[i].setName("Previous");
+                }
+                case 1 -> series[i].setName("Current");
+                case 2 -> {series[i].setName("Next");
+                }
+                default -> {
+                }
             }
 
             //prevTerminal, curTerminal, nextTerminal
