@@ -43,10 +43,9 @@ public class TerminalController {
     public CategoryAxis terminalBarChartXAxis = new CategoryAxis();
     public NumberAxis terminalBarChartYAxis = new NumberAxis();
     public BarChart<String, Number> terminalBarChart = new BarChart<>(terminalBarChartXAxis, terminalBarChartYAxis);
-
     static public String [] capabilityType = new String[] {"綜合熟練程度", "開發品質", "創意思考能力", "數據分析能力"};
-
     private int countKeyword = 0;
+
 
     @FXML
     private BorderPane mainPane;
@@ -146,7 +145,6 @@ public class TerminalController {
         javaKeywordColor.add("green");
         javaKeywordColor.add("lime");
     }
-
 
     @FXML
     public void initialize() {
