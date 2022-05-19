@@ -40,6 +40,5 @@ public class KeyWordAtStation {
         keyWord[8].add(".start()");
         keyWord[8].add("synchronization");
         keyWord[8].add("synchronized");
-
     }
 }
