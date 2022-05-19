@@ -558,16 +558,28 @@ public class TerminalController {
 
         //2
         returnValue[2] = textTotal.toString().length();
+        returnValue[2] = returnValue[2] % 100;
+        returnValue[2] *= Math.random();
 
         //1
         for(int i=0; i<KeyWordAtStation.keyWord[Main.allTerminal.indexOf(terminal)].size(); i++) {
             if(textTotal.toString().contains(KeyWordAtStation.keyWord[Main.allTerminal.indexOf(terminal)].get(i))) {
                 returnValue[1]++;
-                System.out.println("contain: " + KeyWordAtStation.keyWord[Main.allTerminal.indexOf(terminal)].get(i));
+                //System.out.println("contain: " + KeyWordAtStation.keyWord[Main.allTerminal.indexOf(terminal)].get(i));
             }
         }
+        returnValue[1] *= Math.random();
 
         //3
+        for(int i=0; i<Main.stationNum; i++) {
+            for(int j=0; j<KeyWordAtStation.keyWord[i].size(); j++) {
+                if(textTotal.toString().contains(KeyWordAtStation.keyWord[i].get(j))) {
+                    returnValue[3]++;
+                    //System.out.println("contain: " + KeyWordAtStation.keyWord[Main.allTerminal.indexOf(terminal)].get(i));
+                }
+            }
+        }
+        returnValue[3] *= Math.random();
 
         //use security random here
         SecureRandom sr = new SecureRandom();
