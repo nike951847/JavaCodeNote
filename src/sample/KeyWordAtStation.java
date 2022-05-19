@@ -11,6 +11,15 @@ public class KeyWordAtStation {
             keyWord[i] = new Vector<>();
         }
 
+
+        //ref
+        keyWord[6].add("interface");
+        keyWord[6].add("final");
+        keyWord[6].add("abstract");
+        keyWord[6].add("public");
+        keyWord[6].add("implements");
+        keyWord[6].add("implementation");
+
         //reference https://kent010341.github.io/java-tutorial/exception.html
         keyWord[7].add("try");
         keyWord[7].add("catch");
@@ -22,6 +31,15 @@ public class KeyWordAtStation {
         keyWord[7].add("ArrayStoreException");
         keyWord[7].add("IllegalArgumentException");
         keyWord[7].add("NullPointerException");
+
+        //ref
+        keyWord[8].add("Thread");
+        keyWord[8].add("thread");
+        keyWord[8].add("Runnable");
+        keyWord[8].add("void run()");
+        keyWord[8].add(".start()");
+        keyWord[8].add("synchronization");
+        keyWord[8].add("synchronized");
 
     }
 }

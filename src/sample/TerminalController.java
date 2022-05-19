@@ -30,6 +30,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.security.SecureRandom;
 
 public class TerminalController {
     public static BorderPane outside;
@@ -539,16 +540,39 @@ public class TerminalController {
         terminalBarChart.setLegendVisible(true);
     }
 
-    static double [] calculateProficiency(Terminal terminal) {
+    private double [] calculateProficiency(Terminal terminal) {
         double returnValue [] = new double[5];
-        returnValue[0] = 50.0;//average
-        returnValue[1] = 50.0;
-        returnValue[2] = 50.0;
-        returnValue[3] = 50.0;
-        returnValue[4] = 50.0;
+        returnValue[0] = 0.0;//average
+        returnValue[1] = 0.0;
+        returnValue[2] = 0.0;
+        returnValue[3] = 0.0;
 
-        returnValue[0] = (returnValue[1] + returnValue[2] + returnValue[3] + returnValue[4])/4.0;
+        //File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + ((Button) event.getSource()).getId() + ".html");
+        //            String textRead = readFile(openFile)[1];
 
+        StringBuilder textTotal = new StringBuilder();
+        for(int i=0; i<8; i++) {
+            File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + terminal.name + "/" + "note" + i + ".html");
+            textTotal.append(readFile(openFile)[1]);
+        }
+
+        //2
+        returnValue[2] = textTotal.toString().length();
+
+        //1
+        for(int i=0; i<KeyWordAtStation.keyWord[Main.allTerminal.indexOf(terminal)].size(); i++) {
+            if(textTotal.toString().contains(KeyWordAtStation.keyWord[Main.allTerminal.indexOf(terminal)].get(i))) {
+                returnValue[1]++;
+                System.out.println("contain: " + KeyWordAtStation.keyWord[Main.allTerminal.indexOf(terminal)].get(i));
+            }
+        }
+
+        //3
+
+        //use security random here
+        SecureRandom sr = new SecureRandom();
+
+        returnValue[0] = (returnValue[1] + returnValue[2] + returnValue[3])/3.0;
         return returnValue;
     }
 }
