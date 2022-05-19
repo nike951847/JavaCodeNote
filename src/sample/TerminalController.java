@@ -44,7 +44,7 @@ public class TerminalController {
     public NumberAxis terminalBarChartYAxis = new NumberAxis();
     public BarChart<String, Number> terminalBarChart = new BarChart<>(terminalBarChartXAxis, terminalBarChartYAxis);
 
-    static public String [] capabilityType = new String[] {"one", "two", "three", "four", "five"};
+    static public String [] capabilityType = new String[] {"綜合熟練程度", "開發品質", "創意思考能力", "數據分析能力", "聯想力"};
 
     @FXML
     private BorderPane mainPane;
@@ -183,7 +183,8 @@ public class TerminalController {
             mainPane.setMinHeight(baseAnchorPane.getHeight());
             mainPane.setCenter(terminalBarChart);
             terminalBarChart.setMinWidth(baseAnchorPane.getWidth());
-            terminalBarChart.setMinHeight(baseAnchorPane.getHeight());
+            //terminalBarChart.setMinHeight(baseAnchorPane.getHeight());
+            terminalBarChart.setMaxHeight(700);
 
             updateTerminalBarChart();
         }
@@ -383,12 +384,6 @@ public class TerminalController {
         output.append("<hr>");
 
         for (String target : tokens) {
-            System.out.println(target);
-            System.out.println(target);
-            System.out.println(target);
-            System.out.println(target);
-            System.out.println(target);
-            System.out.println(target);
             boolean used = false;
             for (int i = 0; i < 8; i++) {
                 for (String kw : javaKeyword[i]) {
@@ -466,19 +461,28 @@ public class TerminalController {
         for(int i=0; i<3; i++) {
             series[i] = new XYChart.Series();
 
-            switch (i) {
-                case 0 -> {series[i].setName("Previous");
-                }
-                case 1 -> series[i].setName("Current");
-                case 2 -> {series[i].setName("Next");
-                }
-                default -> {
-                }
-            }
+            int curIndex = Main.allTerminal.indexOf(curTerminal);
 
             //prevTerminal, curTerminal, nextTerminal
+            switch (i) {
+                case 0 -> {
+                    series[i].setName("Previous");
+                    if(curIndex == 0) {
+                        curIndex=Main.stationNum-1;
+                    } else curIndex--;;
+                }
+                case 1 -> {series[i].setName("Current");}
+                case 2 -> {
+                    series[i].setName("Next");
+                    if(curIndex == (Main.stationNum-1)) {
+                        curIndex=0;
+                    } else curIndex++;
+                }
+                default -> {}
+            }
+
             for(int j=0; j<5; j++) {
-                series[i].getData().add(new XYChart.Data(capabilityType[j], calculateProficiency(curTerminal)[j]));
+                series[i].getData().add(new XYChart.Data(capabilityType[j], calculateProficiency(Main.allTerminal.get(curIndex))[j]));
             }
         }
 
@@ -488,6 +492,16 @@ public class TerminalController {
     }
 
     static double [] calculateProficiency(Terminal terminal) {
-        return new double[] {50.0,50.0,50.0,50.0,50.0};
+        double returnValue [] = new double[5];
+        returnValue[0] = 50.0;//average
+        returnValue[1] = 50.0;
+        returnValue[2] = 50.0;
+        returnValue[3] = 50.0;
+        returnValue[4] = 50.0;
+
+
+        returnValue[0] = (returnValue[1] + returnValue[2] + returnValue[3] + returnValue[4])/4.0;
+
+        return returnValue;
     }
 }

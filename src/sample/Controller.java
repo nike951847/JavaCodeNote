@@ -90,8 +90,14 @@ public class Controller {
 
     public void initialize() {
         //set background image
-        Image img = new Image("file:src/sample/photo/" + "DesktopBackground" + ".png");
-
+        String s = System.getProperty("user.dir");
+        Image img;
+        if(s.charAt(s.length()-1)=='c'){
+            img = new Image("file:sample/photo/" + "DesktopBackground" + ".png");
+        }
+        else{
+            img = new Image("file:src/sample/photo/" + "DesktopBackground" + ".png");
+        }
         //set all station to a vector
         {
             allStationImageView.add(openMPStation);//0
