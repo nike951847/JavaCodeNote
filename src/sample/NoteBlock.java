@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 public class NoteBlock extends HBox {
 
     HBox hBox = new HBox();
-    Button deleteButton = new Button("delete");
+    Button deleteButton = new Button("X");
     ComboBox<String> comboBox = new ComboBox<>();
     public static Vector<String> optionOfNoteBlock = new Vector<>();
     private int bulletedListRowCount = 0;

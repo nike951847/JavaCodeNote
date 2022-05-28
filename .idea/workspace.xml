@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="可以新增block與刪除">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="add link-to-page, bulleted list, numbered list">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/NoteBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/NoteBlock.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/NoteBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/NoteBlock.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -388,7 +387,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653742594137</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="add link-to-page, bulleted list, numbered list">
+      <created>1653753172381</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1653753172381</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -408,6 +414,7 @@
     <MESSAGE value="html editor更新" />
     <MESSAGE value="算法更新" />
     <MESSAGE value="可以新增block與刪除" />
-    <option name="LAST_COMMIT_MESSAGE" value="可以新增block與刪除" />
+    <MESSAGE value="add link-to-page, bulleted list, numbered list" />
+    <option name="LAST_COMMIT_MESSAGE" value="add link-to-page, bulleted list, numbered list" />
   </component>
 </project>
