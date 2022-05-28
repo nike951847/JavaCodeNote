@@ -1,5 +1,8 @@
 package sample;
 
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -23,6 +26,7 @@ public class NoteBlock extends HBox {
 
     //set up optionOfNoteBlock
     {
+        optionOfNoteBlock.add("Markdown");
         optionOfNoteBlock.add("Text");
         optionOfNoteBlock.add("Page");
         optionOfNoteBlock.add("To-do list");
@@ -47,12 +51,23 @@ public class NoteBlock extends HBox {
 
         comboBox.setOnAction(e -> {
             switch (comboBox.getValue()) {
+                case "Markdown" -> {
+                    this.getChildren().remove(hBox);
+                    TextArea lTextArea = new TextArea("Input Markdown");
+                    TextArea rTextArea = new TextArea("Preview Markdown");
+                    rTextArea.setEditable(false);
+                    lTextArea.setPrefSize(400,100);
+                    rTextArea.setPrefSize(400,100);
+                    hBox = new HBox(lTextArea,rTextArea);
+                    this.getChildren().add(hBox);
+                    break;
+                }
                 case "Text" -> {
                     this.getChildren().remove(hBox);
-                    TextField textField = new TextField();
-                    textField.setPrefSize(500,100);
-                    textField.setText("input something here");
-                    hBox = new HBox(textField);
+                    //TextField textField = new TextField();
+                    TextArea textArea = new TextArea("input something here");
+                    textArea.setPrefSize(500,100);
+                    hBox = new HBox(textArea);
                     hBox.setSpacing(10);
                     this.getChildren().add(hBox);
                     break;
