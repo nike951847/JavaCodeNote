@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="不會露出下面那層">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="算法更新">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/TerminalController$NoteHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/TerminalController$NoteHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/TerminalController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/TerminalController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/TerminalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/TerminalController.java" afterDir="false" />
     </list>
@@ -279,7 +277,49 @@
       <option name="project" value="LOCAL" />
       <updated>1652798878090</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="算法更新一點點">
+      <created>1652851927593</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1652851927593</updated>
+    </task>
+    <task id="LOCAL-00003" summary="html editor更新">
+      <created>1652873138218</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1652873138218</updated>
+    </task>
+    <task id="LOCAL-00004" summary="html editor更新">
+      <created>1652873938345</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1652873938345</updated>
+    </task>
+    <task id="LOCAL-00005" summary="html editor更新">
+      <created>1652874128303</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1652874128303</updated>
+    </task>
+    <task id="LOCAL-00006" summary="html editor更新">
+      <created>1652881937627</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1652881937627</updated>
+    </task>
+    <task id="LOCAL-00007" summary="算法更新">
+      <created>1652937572958</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1652937572958</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -296,14 +336,21 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="不會露出下面那層" />
-    <option name="LAST_COMMIT_MESSAGE" value="不會露出下面那層" />
+    <MESSAGE value="算法更新一點點" />
+    <MESSAGE value="html editor更新" />
+    <MESSAGE value="算法更新" />
+    <option name="LAST_COMMIT_MESSAGE" value="算法更新" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/sample/Controller.java</url>
+<<<<<<< HEAD
           <line>266</line>
+=======
+          <line>256</line>
+>>>>>>> aaad91ac03413e8abd7ac203e06b7a8510359226
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">

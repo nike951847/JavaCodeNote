@@ -30,6 +30,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.security.SecureRandom;
 
 public class TerminalController {
     public static BorderPane outside;
@@ -43,8 +44,9 @@ public class TerminalController {
     public CategoryAxis terminalBarChartXAxis = new CategoryAxis();
     public NumberAxis terminalBarChartYAxis = new NumberAxis();
     public BarChart<String, Number> terminalBarChart = new BarChart<>(terminalBarChartXAxis, terminalBarChartYAxis);
+    static public String [] capabilityType = new String[] {"綜合熟練程度", "開發品質", "創意思考能力", "數據分析能力"};
+    private int countKeyword = 0;
 
-    static public String [] capabilityType = new String[] {"綜合熟練程度", "開發品質", "創意思考能力", "數據分析能力", "聯想力"};
 
     @FXML
     private BorderPane mainPane;
@@ -145,7 +147,6 @@ public class TerminalController {
         javaKeywordColor.add("lime");
     }
 
-
     @FXML
     public void initialize() {
         {
@@ -233,15 +234,12 @@ public class TerminalController {
 
                 convertToMDButton.setOnAction(actionEvent -> Controller.saveMD("# " + noteName.getText() + "\n" + Controller.hTMLtoMDConverter(htmlEditor.getHtmlText())));
 
-
                 importButton.setOnAction(actionEvent -> {
                     FileChooser fileChooser = new FileChooser();
                     fileChooser.setTitle("Open Image");
                     File importPath = fileChooser.showOpenDialog(new Stage());
 
                     htmlEditor.setHtmlText(htmlEditor.getHtmlText() + "<img src=\"" + importPath.toString() + "\">");
-                    //System.out.println("<img src=\"" + importPath.toString() + "\">");
-                    //htmlEditor.setHtmlText(htmlEditor.getHtmlText()+"&lt;img src='file:\\"+importButton.toString()+"' >" );
                 });
 
                 Image importButtonPath = new Image("file:src/sample/photo/" + "CompressedImportButtonLogo.jpg");
@@ -255,7 +253,6 @@ public class TerminalController {
                 bar.getItems().add(1, convertToMDButton);
 
                 Button addCote = new Button("PG");//PG for programming
-
             }
 
             File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + ((Button) event.getSource()).getId() + ".html");
@@ -372,12 +369,38 @@ public class TerminalController {
             i++;
         }
 
+        //output.append("</b></b></b>");
+
+        //output.append("<p><span style=\"font-weight: normal;\">");
+
+        StringBuilder temp = new StringBuilder();
+
+        //i to length-1
+        for(; i<input.length(); i++) {
+            temp.append(input.charAt(i));
+        }
+
+        output.append("</b>");
+        while(countKeyword > 0) {
+            output.append("</b>");
+            countKeyword--;
+        }
+        output.append(Controller.hTMLtoMDConverter(temp.toString()));
+        output.append("<b>");
+        while(countKeyword > 0) {
+            output.append("<b>");
+            countKeyword--;
+        }
+
         //output += "<hr> </div> <style> .div-1 { background-color: #FAFAFA; font-family:Consolas;}</style> <br>";
 
         return output.toString();
     }
 
     private String checkKeyword(String input) {
+        countKeyword = 0;
+        boolean ifClassName = false;
+
         StringBuilder output = new StringBuilder();
         String[] tokens = input.split(" ");
         output.append("<div style=\"background-color: #FAFAFA; font-family:Consolas;\">");
@@ -392,8 +415,18 @@ public class TerminalController {
                         //<b><font color='red'>Pratik</font><b/>
                         output.append(target, 0, ind).append("<b><font color='").append(javaKeywordColor.get(i)).append("'>").append(kw).append(" ").append("</font><b/>").append(target.substring(ind + kw.length()));
                         used = true;
+                        countKeyword++;
                     }
                 }
+            }
+
+            if(target.contains("public")) {
+                ifClassName = true;
+            }
+            if(ifClassName) {
+                ifClassName = false;
+                String classNameColor = "gray";
+                //output.append(" <font color=\"").append(classNameColor).append("\">").append(target).append("</font><b><b>");
             }
 
             if (!used) {
@@ -404,6 +437,7 @@ public class TerminalController {
         output.append("<hr>");
         output.append("</div><br>");
         System.out.println(output);
+        System.out.println("count keyword: " + countKeyword);
         return output.toString();
     }
 
@@ -481,7 +515,7 @@ public class TerminalController {
                 default -> {}
             }
 
-            for(int j=0; j<5; j++) {
+            for(int j=0; j<4; j++) {
                 series[i].getData().add(new XYChart.Data(capabilityType[j], calculateProficiency(Main.allTerminal.get(curIndex))[j]));
             }
         }
@@ -491,17 +525,51 @@ public class TerminalController {
         terminalBarChart.setLegendVisible(true);
     }
 
-    static double [] calculateProficiency(Terminal terminal) {
+    private double [] calculateProficiency(Terminal terminal) {
         double returnValue [] = new double[5];
-        returnValue[0] = 50.0;//average
-        returnValue[1] = 50.0;
-        returnValue[2] = 50.0;
-        returnValue[3] = 50.0;
-        returnValue[4] = 50.0;
+        returnValue[0] = 0.0;//average
+        returnValue[1] = 0.0;
+        returnValue[2] = 0.0;
+        returnValue[3] = 0.0;
 
+        //File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/" + ((Button) event.getSource()).getId() + ".html");
+        //            String textRead = readFile(openFile)[1];
 
-        returnValue[0] = (returnValue[1] + returnValue[2] + returnValue[3] + returnValue[4])/4.0;
+        StringBuilder textTotal = new StringBuilder();
+        for(int i=0; i<8; i++) {
+            File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + terminal.name + "/" + "note" + i + ".html");
+            textTotal.append(readFile(openFile)[1]);
+        }
 
+        //2
+        returnValue[2] = textTotal.toString().length();
+        returnValue[2] = returnValue[2] % 100;
+        returnValue[2] *= Math.random();
+
+        //1
+        for(int i=0; i<KeyWordAtStation.keyWord[Main.allTerminal.indexOf(terminal)].size(); i++) {
+            if(textTotal.toString().contains(KeyWordAtStation.keyWord[Main.allTerminal.indexOf(terminal)].get(i))) {
+                returnValue[1]++;
+                //System.out.println("contain: " + KeyWordAtStation.keyWord[Main.allTerminal.indexOf(terminal)].get(i));
+            }
+        }
+        returnValue[1] *= Math.random();
+
+        //3
+        for(int i=0; i<Main.stationNum; i++) {
+            for(int j=0; j<KeyWordAtStation.keyWord[i].size(); j++) {
+                if(textTotal.toString().contains(KeyWordAtStation.keyWord[i].get(j))) {
+                    returnValue[3]++;
+                    //System.out.println("contain: " + KeyWordAtStation.keyWord[Main.allTerminal.indexOf(terminal)].get(i));
+                }
+            }
+        }
+        returnValue[3] *= Math.random();
+
+        //use security random here
+        SecureRandom sr = new SecureRandom();
+
+        returnValue[0] = (returnValue[1] + returnValue[2] + returnValue[3])/3.0;
         return returnValue;
     }
 }

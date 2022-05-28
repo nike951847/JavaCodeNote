@@ -164,10 +164,6 @@ public class Controller {
         {
             for (ImageView imageView : allStationImageView) {
                 imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    //System.out.println("["+event.getX()+", "+event.getY()+"]");
-                    //System.out.println("["+((ImageView) ((Node) event.getSource())).getX()+", "+((ImageView) ((Node) event.getSource())).getY()+"]");;
-                    //((ImageView) ((Node) event.getSource())).getX();
-                    //System.out.println(event.getSource().);
                 });
             }
         }
@@ -355,6 +351,7 @@ public class Controller {
 
         int index = 0;
         boolean save = false;
+        boolean addJavaOrNot = true;
         while(index < input.length()) {
 
             if(index+3 < input.length()) {
@@ -377,6 +374,14 @@ public class Controller {
             if(index+3 < input.length()) {
                 if(input.startsWith("<hr>", index)) {
                     output.append("\n```");
+
+                    if(addJavaOrNot) {
+                        output.append("java");
+                        addJavaOrNot = false;
+                    } else {
+                        addJavaOrNot = true;
+                    }
+
                     index += 4;
                     save = false;
                     continue;
