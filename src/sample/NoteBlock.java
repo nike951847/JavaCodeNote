@@ -1,6 +1,7 @@
 package sample;
 
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.*;
@@ -11,10 +12,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import java.util.Vector;
-import javafx.scene.control.cell.TextFieldTableCell;
-
-
-import java.awt.event.ItemEvent;
+import java.util.concurrent.TimeUnit;
 
 public class NoteBlock extends HBox {
 
@@ -73,13 +71,14 @@ public class NoteBlock extends HBox {
                     break;
                 }
                 case "To-do list" -> {
+                    //add an toggle switch here
                     TextField textField = new TextField("To-do");
                     textField.setPrefSize(50,20);//should be revised
                     textField.setOnAction(e2 -> {
                         Text textForCount = new Text(textField.getText());
                         textForCount.setFont(textField.getFont());
                         textField.setPrefSize(textForCount.getBoundsInLocal().getWidth()*1.05+15,20);});
-                    hBox = new HBox(new CheckBox(),textField);
+                    hBox = new HBox(new SwitchButton(), textField);
                     break;
                 }
                 case "Heading 1" ,"Heading 2", "Heading 3" -> {
@@ -100,9 +99,7 @@ public class NoteBlock extends HBox {
                     TableView tableView = new TableView();
                     tableView.setEditable(true);
                     tableView.getColumns().addAll(new TableColumn<>("A"), new TableColumn<>("B"), new TableColumn<>("C"), new TableColumn<>("D"), new TableColumn<>("E"));
-                    //tableView.getColumns().get(0);
-                    //new TableColumn<>("ok").setCellFactory(new TableCell<String, String>());
-                    //new TableColumn<>("OK").setCellFactory(TextFieldTableCell.<String>forTableColumn());
+
                     hBox = new HBox(tableView);
                 }
                 default -> {break;}
