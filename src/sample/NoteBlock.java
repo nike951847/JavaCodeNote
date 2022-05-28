@@ -101,6 +101,7 @@ public class NoteBlock extends HBox {
                     tableView.setEditable(true);
                     tableView.getColumns().addAll(new TableColumn<>("A"), new TableColumn<>("B"), new TableColumn<>("C"), new TableColumn<>("D"), new TableColumn<>("E"));
                     //tableView.getColumns().get(0);
+                    //new TableColumn<>("ok").setCellFactory(new TableCell<String, String>());
                     //new TableColumn<>("OK").setCellFactory(TextFieldTableCell.<String>forTableColumn());
                     hBox = new HBox(tableView);
                 }
