@@ -163,7 +163,7 @@ public class NoteBlock extends HBox {
                 }
 
                 case "Link to page" -> {
-                    TextArea textArea = new TextArea("Inout an URL");
+                    TextArea textArea = new TextArea("Input URL");
                     textArea.setEditable(true);
                     textArea.setPrefSize(300,23);
                     textArea.setOnMouseClicked(e2 -> {
