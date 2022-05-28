@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 
@@ -35,8 +36,8 @@ public class mdPageController {
     @FXML
     public void initialize() {
         fileList.setMinWidth(150);
-        Button newBlock = new Button("New Block");
-        newBlock.setOnAction(e -> {this.blockDisplayVBox.getChildren().add(new NoteBlock());});
+        //Button newBlock = new Button("New Block");
+        //newBlock.setOnAction(e -> {this.blockDisplayVBox.getChildren().add(new NoteBlock());});
         this.blockDisplayVBox.getChildren().add(proficiencyHBox);
 
 
@@ -81,6 +82,10 @@ public class mdPageController {
         fileMenu.getItems().add(exportMenu);
 
         editMenu = new Menu("Edit");//insert
+        MenuItem insertMenuItem = new MenuItem("Insert Block");
+        insertMenuItem.setOnAction(e -> {this.blockDisplayVBox.getChildren().add(new NoteBlock());});
+        editMenu.getItems().add(insertMenuItem);
+
         viewMenu = new Menu("View");
         helpMenu = new Menu("Help");
     }

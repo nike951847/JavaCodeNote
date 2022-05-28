@@ -11,6 +11,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import java.util.Vector;
+import javafx.scene.control.cell.TextFieldTableCell;
 
 
 import java.awt.event.ItemEvent;
@@ -50,33 +51,28 @@ public class NoteBlock extends HBox {
         for(String str: optionOfNoteBlock) comboBox.getItems().add(str);
 
         comboBox.setOnAction(e -> {
+            this.getChildren().remove(hBox);
+
             switch (comboBox.getValue()) {
                 case "Markdown" -> {
-                    this.getChildren().remove(hBox);
                     TextArea lTextArea = new TextArea("Input Markdown");
                     TextArea rTextArea = new TextArea("Preview Markdown");
                     rTextArea.setEditable(false);
                     lTextArea.setPrefSize(400,100);
                     rTextArea.setPrefSize(400,100);
                     hBox = new HBox(lTextArea,rTextArea);
-                    this.getChildren().add(hBox);
                     break;
                 }
                 case "Text" -> {
-                    this.getChildren().remove(hBox);
-                    //TextField textField = new TextField();
                     TextArea textArea = new TextArea("input something here");
                     textArea.setPrefSize(500,100);
                     hBox = new HBox(textArea);
-                    hBox.setSpacing(10);
-                    this.getChildren().add(hBox);
                     break;
                 }
                 case "Page" -> {
                     break;
                 }
                 case "To-do list" -> {
-                    this.getChildren().remove(hBox);
                     TextField textField = new TextField("To-do");
                     textField.setPrefSize(50,20);//should be revised
                     textField.setOnAction(e2 -> {
@@ -84,13 +80,9 @@ public class NoteBlock extends HBox {
                         textForCount.setFont(textField.getFont());
                         textField.setPrefSize(textForCount.getBoundsInLocal().getWidth()*1.05+15,20);});
                     hBox = new HBox(new CheckBox(),textField);
-                    hBox.setSpacing(10);
-                    this.getChildren().add(hBox);
                     break;
                 }
                 case "Heading 1" ,"Heading 2", "Heading 3" -> {
-                    this.getChildren().remove(hBox);
-                    //setFont(Font.font("Verdana", FontWeight.BOLD, 70));
                     TextField textField = new TextField();
                     switch (comboBox.getValue()) {
                         case "Heading 1" -> {textField.setText("Heading 1"); textField.setFont(Font.font("Verdana", FontWeight.BOLD, 30));}
@@ -102,12 +94,21 @@ public class NoteBlock extends HBox {
                         textForCount.setFont(textField.getFont());
                         textField.setPrefSize(textForCount.getBoundsInLocal().getWidth()*1.05+25,30);});
                     hBox = new HBox(textField);
-                    hBox.setSpacing(10);
-                    this.getChildren().add(hBox);
                     break;
+                }
+                case "Table" -> {
+                    TableView tableView = new TableView();
+                    tableView.setEditable(true);
+                    tableView.getColumns().addAll(new TableColumn<>("A"), new TableColumn<>("B"), new TableColumn<>("C"), new TableColumn<>("D"), new TableColumn<>("E"));
+                    //tableView.getColumns().get(0);
+                    new TableColumn<>("OK").setCellFactory(TextFieldTableCell.<String>forTableColumn());
+                    hBox = new HBox(tableView);
                 }
                 default -> {break;}
             }
+
+            hBox.setSpacing(10);
+            this.getChildren().add(hBox);
         });
 
         deleteButton.setOnAction(e -> {
