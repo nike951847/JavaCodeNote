@@ -1,0 +1,95 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 9991cce28dd554d29f49a8475513ab0e9f3a484d)
++++ b/.idea/workspace.xml	(date 1652667795568)
+@@ -1,21 +1,8 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ChangeListManager">
+-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="commit">
++    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="評估熟練度算法還沒好Q">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/Main$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/Main$1$1.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/Main$1.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/Main.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/TerminalController$NoteHandler$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/TerminalController$NoteHandler$1.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/TerminalController$NoteHandler$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/TerminalController$NoteHandler$2.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/TerminalController$NoteHandler$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/TerminalController$NoteHandler$3.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/TerminalController$NoteHandler$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/TerminalController$NoteHandler$4.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/TerminalController$NoteHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/TerminalController$NoteHandler.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/TerminalController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/TerminalController.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/terminalpage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaCodeNote/sample/terminalpage.fxml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/sample/TerminalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/TerminalController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/sample/terminalpage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/terminalpage.fxml" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -181,10 +168,7 @@
+     </configuration>
+     <configuration default="true" type="TestNG">
+       <option name="TEST_OBJECT" value="CLASS" />
+-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+-      <option name="TEST_SEARCH_SCOPE">
+-        <value defaultName="moduleWithDependencies" />
+-      </option>
++      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+       <properties />
+       <listeners />
+       <method v="2">
+@@ -243,7 +227,10 @@
+     </configuration>
+     <configuration default="true" type="TestNG">
+       <option name="TEST_OBJECT" value="CLASS" />
+-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
++      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
++      <option name="TEST_SEARCH_SCOPE">
++        <value defaultName="moduleWithDependencies" />
++      </option>
+       <properties />
+       <listeners />
+       <method v="2">
+@@ -270,13 +257,6 @@
+       <updated>1359379246138</updated>
+       <workItem from="1359379250712" duration="1302000" />
+     </task>
+-    <task id="LOCAL-00006" summary="commit">
+-      <created>1650635347513</created>
+-      <option name="number" value="00006" />
+-      <option name="presentableId" value="LOCAL-00006" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1650635347513</updated>
+-    </task>
+     <task id="LOCAL-00007" summary="commit">
+       <created>1650645342190</created>
+       <option name="number" value="00007" />
+@@ -613,7 +593,14 @@
+       <option name="project" value="LOCAL" />
+       <updated>1652093327848</updated>
+     </task>
+-    <option name="localTasksCounter" value="55" />
++    <task id="LOCAL-00055" summary="評估熟練度算法還沒好Q">
++      <created>1652422233299</created>
++      <option name="number" value="00055" />
++      <option name="presentableId" value="LOCAL-00055" />
++      <option name="project" value="LOCAL" />
++      <updated>1652422233299</updated>
++    </task>
++    <option name="localTasksCounter" value="56" />
+     <servers />
+   </component>
+   <component name="TimeTrackingManager">
+@@ -677,7 +664,8 @@
+     <MESSAGE value="add code area" />
+     <MESSAGE value="```標示筆記功能完成" />
+     <MESSAGE value="commit" />
+-    <option name="LAST_COMMIT_MESSAGE" value="commit" />
++    <MESSAGE value="評估熟練度算法還沒好Q" />
++    <option name="LAST_COMMIT_MESSAGE" value="評估熟練度算法還沒好Q" />
+   </component>
+   <component name="editorHistoryManager">
+     <entry file="file://$PROJECT_DIR$/src/sample/Main.java">

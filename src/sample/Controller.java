@@ -260,7 +260,8 @@ public class Controller {
         System.out.println(((ImageView) event.getSource()).getId());
         TerminalController.setCurTerminal(Main.allTerminal.get(index));
         System.out.println("curterminal: " + Main.allTerminal.get(index).getName());
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("terminalpage.fxml")));
+        //root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("terminalpage.fxml")));
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("mdPage.fxml")));
 
         desktopBorderPane.getChildren().add(root);
 
