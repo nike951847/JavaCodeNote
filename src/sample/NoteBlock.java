@@ -16,10 +16,12 @@ import javafx.scene.Node;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
+import java.nio.charset.Charset;
 import java.util.Stack;
 import java.util.Vector;
 import java.util.concurrent.TimeUnit;
@@ -47,8 +49,8 @@ public class NoteBlock extends HBox {
         optionOfNoteBlock.add("Toggle list");
         optionOfNoteBlock.add("Quote");
         optionOfNoteBlock.add("Divider");
-        optionOfNoteBlock.add( "Link to page");
-        optionOfNoteBlock.add( "Callout");
+        optionOfNoteBlock.add("Link to page");
+        optionOfNoteBlock.add("Callout");
     }
 
     {
@@ -175,13 +177,33 @@ public class NoteBlock extends HBox {
                                 Stage stage = new Stage();
                                 stage.setScene(new Scene(webView, webView.getPrefWidth(), webView.getPrefWidth()-150));
                                 stage.show();
-                                //new Stage(new Scene(webView)).show();
                             } catch (Exception exception) {System.out.println("error");}
                         }
                     });
                     hBox = new HBox(textArea);
                     break;
                 }
+
+                case "Callout" -> {
+                    TextArea textArea = new TextArea();
+                    textArea.setText("Type something...");
+                    textArea.setFont(Font.font("Verdana", FontWeight.BOLD, 25));
+
+                    Text textForCount = new Text(textArea.getText());
+                    textForCount.setFont(textArea.getFont());
+                    textArea.setPrefSize(textForCount.getBoundsInLocal().getWidth()*1.05+25, textForCount.getBoundsInLocal().getHeight()*1.05+25);
+                    textArea.setOnKeyPressed( e2 -> {
+                        textForCount.setText(textArea.getText());
+                        textForCount.setFont(textArea.getFont());
+                        textArea.setPrefSize(textForCount.getBoundsInLocal().getWidth()*1.05+25, textForCount.getBoundsInLocal().getHeight()*1.05+25);
+                    });
+
+                    Label label = new Label( new String(new byte[]{(byte)0xF0, (byte)0x9F, (byte)0x92, (byte)0xA1}, Charset.forName("UTF-8")));
+                    label.setFont(Font.font("Verdana", FontWeight.BOLD, 25));
+                    hBox = new HBox(label, textArea);
+                    break;
+                }
+
                 default -> {break;}
             }
 
