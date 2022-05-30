@@ -8,6 +8,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -26,7 +28,8 @@ public class mdPageController {
     private ListView<?> fileList;
     @FXML
     private ScrollPane noteBlockScrollPane;
-
+    @FXML
+    private ImageView imageView;
     private MenuBar mdPageMenuBar = new MenuBar();
     private HBox proficiencyHBox;
     private ProgressBar proficiencyProgressBar;
@@ -44,17 +47,33 @@ public class mdPageController {
     public void initialize() {
         fileList.setMinWidth(150);
         this.blockDisplayVBox.getChildren().add(proficiencyHBox);
+        fileMenu.setStyle("-fx-text-fill: #45587a;");
+        fileMenu.ge
+        editMenu.setStyle("-fx-text-fill: white;");
+        viewMenu.setStyle("-fx-text-fill: white;");
+        helpMenu.setStyle("-fx-text-fill: white;");
 
         mdPageMenuBar.getMenus().add(fileMenu);
         mdPageMenuBar.getMenus().add(editMenu);
         mdPageMenuBar.getMenus().add(viewMenu);
         mdPageMenuBar.getMenus().add(helpMenu);
+        mdPageMenuBar.setStyle("-fx-background-color:  #45587a;");
         this.blockDisplayVBox.getChildren().add(mdPageMenuBar);
 
         this.blockDisplayVBox.getChildren().add(new NoteBlock());
         this.blockDisplayVBox.setSpacing(8);
 
         proficiencyProgressBarTimelineAnimation.play();
+        String s = System.getProperty("user.dir");
+        Image img;
+        if(s.charAt(s.length()-1)=='c'){
+            img = new Image("file:sample/photo/cover/" + "temp" + ".jpg");
+        }
+        else{
+            img = new Image("file:src/sample/photo/cover/" + "temp" + ".jpg");
+        }
+        imageView.setImage(img);
+        System.out.println(imageView.getFitHeight());
     }
 
     //initialize proficiency

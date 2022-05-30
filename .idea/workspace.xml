@@ -211,7 +211,6 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="sample.Main" />
       <module name="JavaCodeNote" />
-      <option name="PROGRAM_PARAMETERS" value="." />
       <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-17.0.2\lib&quot; --add-modules=javafx.controls,javafx.web,javafx.fxml" />
       <extension name="coverage">
         <pattern>
@@ -239,6 +238,11 @@
       <module name="JavaCodeNote" />
       <method v="2" />
     </configuration>
+    <configuration name="sample.NoteBlock" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="sample.NoteBlock" />
+      <module name="JavaCodeNote" />
+      <method v="2" />
+    </configuration>
     <configuration name="sample.TerminalController" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="sample.TerminalController" />
       <module name="JavaCodeNote" />
@@ -246,6 +250,11 @@
     </configuration>
     <configuration name="sample.Vehicle" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="sample.Vehicle" />
+      <module name="JavaCodeNote" />
+      <method v="2" />
+    </configuration>
+    <configuration name="sample.mdPageController" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="sample.mdPageController" />
       <module name="JavaCodeNote" />
       <method v="2" />
     </configuration>
@@ -265,6 +274,8 @@
       <item itemvalue="Application.sample.Move" />
       <item itemvalue="Application.sample.TerminalController" />
       <item itemvalue="Application.sample.Vehicle" />
+      <item itemvalue="Application.sample.NoteBlock" />
+      <item itemvalue="Application.sample.mdPageController" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -460,6 +471,11 @@
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/sample/Controller.java</url>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/sample/NoteBlock.java</url>
+          <line>85</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/sample/Building.java</url>

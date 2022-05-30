@@ -8,11 +8,13 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
+import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.Node;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -65,12 +67,43 @@ public class NoteBlock extends HBox {
             switch (comboBox.getValue()) {
                 case "Markdown" -> {
                     TextArea lTextArea = new TextArea("Input Markdown");
-                    TextArea rTextArea = new TextArea("Preview Markdown");
-                    rTextArea.setEditable(false);
+                    //TextArea rTextArea = new TextArea("Preview Markdown");
+                    TextFlow rTextFlow = new TextFlow();
+                    //rTextFlow.setEditable(false);
                     lTextArea.setPrefSize(400,100);
-                    rTextArea.setPrefSize(400,100);
-                    hBox = new HBox(lTextArea,rTextArea);
+                    rTextFlow.setPrefSize(400,100);
+                    hBox = new HBox(lTextArea,rTextFlow);
+                    lTextArea.addEventHandler(InputEvent.ANY,(event)->{
+
+                        String[] lines = lTextArea.getText().split("\n");
+
+                        rTextFlow.getChildren().clear();
+                        for(String line:lines){
+                            line +="\n";
+                            Text text = new Text("");
+                            if(line.startsWith("#")) {
+                                if (line.startsWith("###")) {
+                                    text.setText(line.substring(3));
+                                    text.setFont(Font.font("",FontWeight.BOLD, 15));
+
+                                } else if (line.startsWith("##")) {
+                                    text.setText(line.substring(2));
+                                    text.setFont(Font.font("",FontWeight.BOLD, 20));
+                                } else {
+                                    text.setText(line.substring(1));
+                                    text.setFont(Font.font("",FontWeight.BOLD, 30));
+                                }
+
+                            }
+                            else {
+                                text.setText(line);
+                            }
+                            text.setFill(Color.WHITE);
+                            rTextFlow.getChildren().add(text);
+                        }
+                    });
                     break;
+
                 }
 
                 case "Text" -> {
