@@ -1,12 +1,19 @@
 package sample;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
+
+import java.sql.Time;
 
 
 public class mdPageController {
@@ -30,16 +37,13 @@ public class mdPageController {
     private Menu editMenu;
     private Menu viewMenu;
     private Menu helpMenu;
-
+    private Timeline proficiencyProgressBarTimelineAnimation;
 
 
     @FXML
     public void initialize() {
         fileList.setMinWidth(150);
-        //Button newBlock = new Button("New Block");
-        //newBlock.setOnAction(e -> {this.blockDisplayVBox.getChildren().add(new NoteBlock());});
         this.blockDisplayVBox.getChildren().add(proficiencyHBox);
-
 
         mdPageMenuBar.getMenus().add(fileMenu);
         mdPageMenuBar.getMenus().add(editMenu);
@@ -49,16 +53,31 @@ public class mdPageController {
 
         this.blockDisplayVBox.getChildren().add(new NoteBlock());
         this.blockDisplayVBox.setSpacing(8);
+
+        proficiencyProgressBarTimelineAnimation.play();
     }
 
     //initialize proficiency
     {
-        double proficiencyPercentage = 0.7;
-        proficiencyProgressBar = new ProgressBar(proficiencyPercentage);
+        proficiencyProgressBar = new ProgressBar(0);
         proficiencyProgressBar.setPrefSize(1000,20);
-        proficiencyProgressIndicator = new ProgressIndicator(proficiencyPercentage);
+        proficiencyProgressIndicator = new ProgressIndicator(0);
         proficiencyHBox = new HBox(proficiencyProgressBar, proficiencyProgressIndicator);
         proficiencyHBox.setPrefHeight(22);
+        proficiencyProgressBarTimelineAnimation = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
+            int delayTimeTimelineAnimation = 0;
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if(delayTimeTimelineAnimation < 120) delayTimeTimelineAnimation++;
+                else {
+                    if(proficiencyProgressBar.getProgress() < calculateProficiencyPercentage()) {
+                        proficiencyProgressBar.setProgress(proficiencyProgressBar.getProgress()+0.01);
+                        proficiencyProgressIndicator.setProgress(proficiencyProgressIndicator.getProgress()+0.01);
+                    }
+                }
+            }
+        }));
+        proficiencyProgressBarTimelineAnimation.setCycleCount(Timeline.INDEFINITE);
     }
 
     //set up menu
@@ -88,6 +107,10 @@ public class mdPageController {
 
         viewMenu = new Menu("View");
         helpMenu = new Menu("Help");
+    }
+
+    private double calculateProficiencyPercentage() {
+        return 0.7;
     }
 
 }
