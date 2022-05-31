@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.sql.Time;
+import java.util.Vector;
 
 
 public class mdPageController {
@@ -41,14 +42,14 @@ public class mdPageController {
     private Menu viewMenu;
     private Menu helpMenu;
     private Timeline proficiencyProgressBarTimelineAnimation;
-
+    private Vector<NoteBlock> noteBlocksVector = new Vector<>();
 
     @FXML
     public void initialize() {
         fileList.setMinWidth(150);
         this.blockDisplayVBox.getChildren().add(proficiencyHBox);
         fileMenu.setStyle("-fx-text-fill: #45587a;");
-        fileMenu.ge
+        //fileMenu.ge
         editMenu.setStyle("-fx-text-fill: white;");
         viewMenu.setStyle("-fx-text-fill: white;");
         helpMenu.setStyle("-fx-text-fill: white;");
@@ -60,7 +61,9 @@ public class mdPageController {
         mdPageMenuBar.setStyle("-fx-background-color:  #45587a;");
         this.blockDisplayVBox.getChildren().add(mdPageMenuBar);
 
-        this.blockDisplayVBox.getChildren().add(new NoteBlock());
+        NoteBlock noteBlock = new NoteBlock();
+        noteBlocksVector.add(noteBlock);
+        this.blockDisplayVBox.getChildren().add(noteBlock);
         this.blockDisplayVBox.setSpacing(8);
 
         proficiencyProgressBarTimelineAnimation.play();
@@ -116,12 +119,22 @@ public class mdPageController {
         exportMenu.getItems().add(new MenuItem("html"));
         exportMenu.getItems().add(new MenuItem("pdf"));
         exportMenu.getItems().add(new MenuItem("markdown"));
-        exportMenu.getItems().add(new MenuItem("text"));
+
+        MenuItem textMenuItem = new MenuItem("text");
+        textMenuItem.setOnAction(e -> {
+            //System.out.println();
+            for(NoteBlock noteBlock: noteBlocksVector) System.out.println(noteBlock.toString());
+        });
+        exportMenu.getItems().add(textMenuItem);
+
         fileMenu.getItems().add(exportMenu);
 
         editMenu = new Menu("Edit");//insert
         MenuItem insertMenuItem = new MenuItem("Insert Block");
-        insertMenuItem.setOnAction(e -> {this.blockDisplayVBox.getChildren().add(new NoteBlock());});
+        insertMenuItem.setOnAction(e -> {
+            NoteBlock noteBlock = new NoteBlock();
+            noteBlocksVector.add(noteBlock);
+            this.blockDisplayVBox.getChildren().add(noteBlock);});
         editMenu.getItems().add(insertMenuItem);
 
         viewMenu = new Menu("View");

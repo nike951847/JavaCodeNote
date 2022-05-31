@@ -255,4 +255,27 @@ public class NoteBlock extends HBox {
         this.getChildren().add(hBox);
     }
 
+    @Override
+    public String toString() {
+        String returnValue = "";
+        returnValue += "--------------------\n";
+        switch (comboBox.getValue()) {
+            case "Markdown" -> {
+                //System.out.println("markdown");
+                returnValue += "markdown";
+            }
+
+            case "Text" -> {
+                returnValue += ((TextArea)((Node)(hBox.getChildren().get(0)))).getText();
+            }
+
+            case "To-do list" -> {
+                returnValue += ((TextField)((Node)(hBox.getChildren().get(1)))).getText();
+            }
+        }
+        returnValue += "\n--------------------\n";
+
+        return returnValue;
+        //return super.toString();
+    }
 }
