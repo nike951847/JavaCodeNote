@@ -14,6 +14,7 @@ import javafx.util.Duration;
 import sample.FileExport.SaveFileText;
 
 import java.io.*;
+import java.security.SecureRandom;
 import java.util.Vector;
 
 public class mdPageController {
@@ -129,6 +130,7 @@ public class mdPageController {
         proficiencyProgressIndicator = new ProgressIndicator(0);
         proficiencyHBox = new HBox(proficiencyProgressBar, proficiencyProgressIndicator);
         proficiencyHBox.setPrefHeight(22);
+
         proficiencyProgressBarTimelineAnimation = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
             int delayTimeTimelineAnimation = 0;
             @Override
@@ -143,6 +145,18 @@ public class mdPageController {
             }
         }));
         proficiencyProgressBarTimelineAnimation.setCycleCount(Timeline.INDEFINITE);
+
+        new Thread(() -> {
+            while(true) {
+                try {
+                    double temp = calculateProficiencyPercentage();
+                    proficiencyProgressBar.setProgress(temp);
+                    proficiencyProgressIndicator.setProgress(temp);
+                    System.out.println("value: " + temp);
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {}
+            }
+        }).start();
     }
 
     //set up menu
@@ -183,7 +197,52 @@ public class mdPageController {
     }
 
     private double calculateProficiencyPercentage() {
-        return 0.7;
+
+
+        double returnValue = 1.0;
+
+
+        returnValue /= Math.sqrt(noteBlocksVector.size());
+
+
+        double weighted = 0.0;
+        double relatedWords = 0.0;
+        for(NoteBlock noteBlock: noteBlocksVector) {
+            /*
+            switch (noteBlock.comboBox.getValue()) {
+                case "Page" -> {weighted += 6; break;}
+                case "Table", "Bulledted list", "Numbered list", "Toggle list" -> {weighted += 5; break;}
+                case "Markdown", "Code", "Heading 1" -> {weighted += 4; break;}
+                case "Heading 2", "To-do list" -> {weighted += 3; break;}
+                case "Text", "Heading 3" -> {weighted += 2; break;}
+                case "Quote", "Divider", "Link to page", "Callout" -> {weighted += 1; break;}
+                default -> {break;}
+            }*/
+
+            //System.out.println(noteBlock.comboBox.getValue().toString().length());
+
+
+            for(int i=0; i<Main.stationNum; i++) {
+                for(int j=0; j<KeyWordAtStation.keyWord[i].size(); j++) {
+                    if(noteBlock.toString().contains(KeyWordAtStation.keyWord[i].get(j))) {
+                        relatedWords += i*j*(new SecureRandom().nextDouble());
+                    }
+                }
+            }
+        }
+        returnValue += relatedWords;
+
+        //returnValue *= (weighted * new SecureRandom().nextDouble());
+        /*
+
+        returnValue += relatedWords;
+        while(returnValue < noteBlocksVector.size()*0.03) {
+           //returnValue /= new SecureRandom().nextDouble();
+            returnValue += new SecureRandom().nextDouble()*5;
+        }*/
+
+        return (returnValue > 1.0)? 1.0/returnValue: returnValue/1.0;
+        //return noteBlocksVector.size()*0.1;
     }
 
 }
