@@ -234,7 +234,6 @@ public class mdPageController {
 
         //returnValue *= (weighted * new SecureRandom().nextDouble());
         /*
-
         returnValue += relatedWords;
         while(returnValue < noteBlocksVector.size()*0.03) {
            //returnValue /= new SecureRandom().nextDouble();
