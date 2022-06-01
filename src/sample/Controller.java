@@ -180,7 +180,6 @@ public class Controller {
         pane.getChildren().add(carPane);
         carPane.toBack();
 
-        System.out.println("wwwww");
         System.out.println(pane.getChildren());
         initMRT();
         searchTerminalTextField.setText("Type to search the station");
@@ -260,7 +259,8 @@ public class Controller {
         System.out.println(((ImageView) event.getSource()).getId());
         TerminalController.setCurTerminal(Main.allTerminal.get(index));
         System.out.println("curterminal: " + Main.allTerminal.get(index).getName());
-        //root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("terminalpage.fxml")));
+        mdPageController.curTerminal = Main.allTerminal.get(index);
+                //root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("terminalpage.fxml")));
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("mdPage.fxml")));
 
         desktopBorderPane.getChildren().add(root);
@@ -271,6 +271,12 @@ public class Controller {
         Button terminalPageReturn = new Button();
         terminalPageReturn.setText("Return");
         terminalPageReturn.setOnAction(actionEvent -> {
+            try {
+                mdPageController.save();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
             desktopBorderPane.getChildren().remove(root);
             desktopBorderPane.setTop(new VBox(desktopToolBar, searchTerminalTextField));
             searchTerminalTextField.setText("Type to search the station");
@@ -284,7 +290,14 @@ public class Controller {
             //System.out.println("here");
             desktopBorderPane.setTop(new ToolBar(terminalPageReturn));
         });
+        try {
+            mdPageController.read();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         timeline.play();
+
+
     }
 
     private void SaveFile(String content, File file, String buttonName) {

@@ -11,7 +11,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import sample.FileExport.SaveFileText;
 
+import java.io.*;
+import java.util.Vector;
 
 public class mdPageController {
 
@@ -26,20 +29,60 @@ public class mdPageController {
     @FXML
     private ImageView imageView;
     private MenuBar mdPageMenuBar = new MenuBar();
-    private HBox proficiencyHBox;
+    private static HBox proficiencyHBox;
     private ProgressBar proficiencyProgressBar;
     private ProgressIndicator proficiencyProgressIndicator;
-
+    static Terminal curTerminal;
 
     private Menu fileMenu;
     private Menu editMenu;
     private Menu viewMenu;
     private Menu helpMenu;
     private Timeline proficiencyProgressBarTimelineAnimation;
+    private static Vector<NoteBlock> noteBlocksVector = new Vector<>();
+    public static void save() throws FileNotFoundException {
+        System.out.println("save "+noteBlocksVector.size()+"blocks");
+        //File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/swp");
+        System.out.println("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
+        try (
+                FileOutputStream fos = new FileOutputStream("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/swp");
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
 
+
+        ) {
+            for(NoteBlock noteBlock: noteBlocksVector) {
+                oos.writeObject(noteBlock);
+                System.out.println(noteBlock);
+            }
+            oos.flush();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
+    public static void read() throws FileNotFoundException {
+        noteBlocksVector.clear();
+        try (
+                FileInputStream fis = new FileInputStream("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/swp");
+                ObjectInputStream ois = new ObjectInputStream(fis)
+
+        ) {
+            Object o = null;
+            while ((o=ois.readObject())!=null){
+                noteBlocksVector.add((NoteBlock)o);
+                //blockDisplayVBox.getChildren().add(mdPageMenuBar);
+                System.out.println(o);
+            }
+        }
+        catch (IOException | ClassNotFoundException e){
+            //e.printStackTrace();
+        }
+    }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws FileNotFoundException {
+        System.out.println(curTerminal.name+"wwwww");
         fileList.setMinWidth(150);
         this.blockDisplayVBox.getChildren().add(proficiencyHBox);
         fileMenu.setStyle("-fx-text-fill: #45587a;");
@@ -54,7 +97,16 @@ public class mdPageController {
         mdPageMenuBar.getMenus().add(helpMenu);
         this.blockDisplayVBox.getChildren().add(mdPageMenuBar);
 
-        this.blockDisplayVBox.getChildren().add(new NoteBlock());
+        /*
+        NoteBlock noteBlock = new NoteBlock();
+        noteBlocksVector.add(noteBlock);
+        */
+        System.out.println("init "+noteBlocksVector.size()+"blocks");
+        for(NoteBlock n:noteBlocksVector){
+            System.out.printf("init %s %n", n);
+            n.create(n.name);
+            this.blockDisplayVBox.getChildren().add(n);
+        }
         this.blockDisplayVBox.setSpacing(8);
 
         proficiencyProgressBarTimelineAnimation.play();
@@ -110,12 +162,20 @@ public class mdPageController {
         exportMenu.getItems().add(new MenuItem("html"));
         exportMenu.getItems().add(new MenuItem("pdf"));
         exportMenu.getItems().add(new MenuItem("markdown"));
-        exportMenu.getItems().add(new MenuItem("text"));
+
+        MenuItem textMenuItem = new MenuItem("text");
+        textMenuItem.setOnAction(e -> {new SaveFileText(noteBlocksVector);});
+        exportMenu.getItems().add(textMenuItem);
+
         fileMenu.getItems().add(exportMenu);
 
         editMenu = new Menu("Edit");//insert
         MenuItem insertMenuItem = new MenuItem("Insert Block");
-        insertMenuItem.setOnAction(e -> {this.blockDisplayVBox.getChildren().add(new NoteBlock());});
+        insertMenuItem.setOnAction(e -> {
+            NoteBlock noteBlock = new NoteBlock();
+            noteBlocksVector.add(noteBlock);
+            System.out.println("has inserted "+noteBlocksVector.size());
+            this.blockDisplayVBox.getChildren().add(noteBlock);});
         editMenu.getItems().add(insertMenuItem);
 
         viewMenu = new Menu("View");

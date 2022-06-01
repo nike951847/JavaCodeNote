@@ -54,7 +54,7 @@ public class Main extends Application {
         stationName.add("PolymorphismStation");//2
         stationName.add("EncapsulationStation");//3
         stationName.add("MPIStation");//4
-        stationName.add("ClassStation");//5
+        stationName.add("ClassStation");//5.
         stationName.add("InterfaceStation");//6
         stationName.add("ExceptionStation");//7
         stationName.add("ThreadStation");//8
@@ -82,6 +82,7 @@ public class Main extends Application {
             allTerminal.add(new Terminal(stationName.get(i)));
         }
     }
+
 
     //initialize proficiency percentage
     static {
