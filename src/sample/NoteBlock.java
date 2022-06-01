@@ -29,6 +29,8 @@ import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
 public class NoteBlock extends HBox {
+    static Vector<Color> colors = new Vector<>();
+    Vector<String>[]  javaKeyword = (Vector<String>[]) new Vector[8];
 
     HBox hBox = new HBox();
     Button deleteButton = new Button("X");
@@ -38,9 +40,83 @@ public class NoteBlock extends HBox {
     private int numberedListRowCount = 0;
     //set up optionOfNoteBlock
     {
+        for (int i = 0; i < 8; i++) {
+            javaKeyword[i] = new Vector<>();
+        }
+
+        javaKeyword[0].add("private");
+        javaKeyword[0].add("protected");
+        javaKeyword[0].add("public");
+
+        javaKeyword[1].add("abstract");
+        javaKeyword[1].add("class");
+        javaKeyword[1].add("extends");
+        javaKeyword[1].add("final");
+        javaKeyword[1].add("implements");
+        javaKeyword[1].add("interface");
+        javaKeyword[1].add("native");
+        javaKeyword[1].add("new");
+        javaKeyword[1].add("static");
+        javaKeyword[1].add("strictfp");
+        javaKeyword[1].add("synchronized");
+        javaKeyword[1].add("transient");
+        javaKeyword[1].add("volatile");
+
+        javaKeyword[2].add("break");
+        javaKeyword[2].add("case");
+        javaKeyword[2].add("continue");
+        javaKeyword[2].add("default");
+        javaKeyword[2].add("do");
+        javaKeyword[2].add("else");
+        javaKeyword[2].add("for");
+        javaKeyword[2].add("if");
+        javaKeyword[2].add("instanceof");
+        javaKeyword[2].add("return");
+        javaKeyword[2].add("switch");
+        javaKeyword[2].add("while");
+
+        javaKeyword[3].add("assert");
+        javaKeyword[3].add("catch");
+        javaKeyword[3].add("finally");
+        javaKeyword[3].add("throw");
+        javaKeyword[3].add("throws");
+        javaKeyword[3].add("try");
+
+        javaKeyword[4].add("import");
+        javaKeyword[4].add("package");
+
+        javaKeyword[5].add("boolean");
+        javaKeyword[5].add("byte");
+        javaKeyword[5].add("char");
+        javaKeyword[5].add("double");
+        javaKeyword[5].add("float");
+        javaKeyword[5].add("int");
+        javaKeyword[5].add("long");
+        javaKeyword[5].add("short");
+        javaKeyword[5].add("null");
+
+        javaKeyword[6].add("super");
+        javaKeyword[6].add("this");
+        javaKeyword[6].add("void");
+
+        javaKeyword[7].add("goto");
+        javaKeyword[7].add("const");
+        //javaKeyword[0].add(new Str);
+    }
+    {
+        colors.add(Color.rgb(107, 184, 219));
+        colors.add(Color.rgb(107, 219, 210));
+        colors.add(Color.rgb(108, 184, 142));
+        colors.add(Color.rgb(123, 165, 237));
+        colors.add(Color.rgb(164, 140, 209));
+        colors.add(Color.rgb(194, 177, 227));
+        colors.add(Color.rgb(71, 200, 230));
+        colors.add(Color.rgb(189, 242, 208));
+        colors.add(Color.rgb(165, 237, 126));
         optionOfNoteBlock.add("Markdown");
         optionOfNoteBlock.add("Text");
         optionOfNoteBlock.add("Page");
+        optionOfNoteBlock.add("Code");
         optionOfNoteBlock.add("To-do list");
         optionOfNoteBlock.add("Heading 1");
         optionOfNoteBlock.add("Heading 2");
@@ -67,6 +143,7 @@ public class NoteBlock extends HBox {
             switch (comboBox.getValue()) {
                 case "Markdown" -> {
                     TextArea lTextArea = new TextArea("Input Markdown");
+                    lTextArea.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: white; -fx-text-fill: white; ");
                     //TextArea rTextArea = new TextArea("Preview Markdown");
                     TextFlow rTextFlow = new TextFlow();
                     //rTextFlow.setEditable(false);
@@ -105,9 +182,74 @@ public class NoteBlock extends HBox {
                     break;
 
                 }
+                case "Code" -> {
+                    TextArea lTextArea = new TextArea("Input Code");
+                    lTextArea.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: white; -fx-text-fill: white; ");
 
+                    TextFlow rTextFlow = new TextFlow();
+                    lTextArea.setPrefSize(400,100);
+                    rTextFlow.setPrefSize(400,100);
+                    hBox = new HBox(lTextArea,rTextFlow);
+                    lTextArea.addEventHandler(InputEvent.ANY,(event)->{
+
+
+                        rTextFlow.getChildren().clear();
+                        boolean oneLineCommit = false;
+                        boolean multLineCommit = false;
+
+                        for(String line:lTextArea.getText().split("\n")){
+
+                            if(line.startsWith("//")){
+                                Text text = new Text("");
+                                text.setText(line);
+                                text.setFill(Color.rgb(94,94,94));
+                            }
+                            else{
+                                for(String word: line.split(" ")) {
+                                    Text text = new Text("");
+
+                                    text.setText(word + " ");
+                                    if (word.startsWith("//")){
+                                        oneLineCommit = true;
+                                    }
+                                    if(word.startsWith("/*")){
+                                        multLineCommit = true;
+                                    }
+                                    if(word.contains("*/")){
+                                        text.setFill(Color.rgb(94,94,94));
+                                        multLineCommit = false;
+                                    }
+
+                                    text.setFill(Color.WHITE);
+                                    if(multLineCommit||oneLineCommit){
+                                        text.setFill(Color.rgb(94,94,94));
+                                        rTextFlow.getChildren().add(text);
+                                        continue;
+                                    }
+                                    for (int i = 0; i < 8; i++) {
+                                        for (String keyword : javaKeyword[i]) {
+                                            if (word.equals(keyword)) {
+                                                text.setFill(colors.get(i));
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    rTextFlow.getChildren().add(text);
+                                }
+
+
+
+                            }
+                            rTextFlow.getChildren().add(new Text("\n"));
+                            oneLineCommit = false;
+
+                        }
+                    });
+                    break;
+                }
                 case "Text" -> {
                     TextArea textArea = new TextArea("input something here");
+                    textArea.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: white; -fx-text-fill: white; ");
                     textArea.setPrefSize(500,100);
                     hBox = new HBox(textArea);
                     break;
@@ -131,6 +273,8 @@ public class NoteBlock extends HBox {
 
                 case "Heading 1" ,"Heading 2", "Heading 3" -> {
                     TextField textField = new TextField();
+                    textField.setStyle("-fx-base:#1e2433;-fx-control-inner-background:#1e2433; -fx-highlight-fill: #1e2433; -fx-highlight-text-fill: white; -fx-text-fill: white; ");
+
                     switch (comboBox.getValue()) {
                         case "Heading 1" -> {textField.setText("Heading 1"); textField.setFont(Font.font("Verdana", FontWeight.BOLD, 30));}
                         case "Heading 2" -> {textField.setText("Heading 2"); textField.setFont(Font.font("Verdana", FontWeight.BOLD, 25));}

@@ -2,8 +2,6 @@ package sample;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -11,11 +9,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-
-import java.sql.Time;
 
 
 public class mdPageController {
@@ -48,16 +43,15 @@ public class mdPageController {
         fileList.setMinWidth(150);
         this.blockDisplayVBox.getChildren().add(proficiencyHBox);
         fileMenu.setStyle("-fx-text-fill: #45587a;");
-        fileMenu.ge
+
         editMenu.setStyle("-fx-text-fill: white;");
         viewMenu.setStyle("-fx-text-fill: white;");
         helpMenu.setStyle("-fx-text-fill: white;");
-
+        mdPageMenuBar.setStyle("-fx-base: #3c4759");
         mdPageMenuBar.getMenus().add(fileMenu);
         mdPageMenuBar.getMenus().add(editMenu);
         mdPageMenuBar.getMenus().add(viewMenu);
         mdPageMenuBar.getMenus().add(helpMenu);
-        mdPageMenuBar.setStyle("-fx-background-color:  #45587a;");
         this.blockDisplayVBox.getChildren().add(mdPageMenuBar);
 
         this.blockDisplayVBox.getChildren().add(new NoteBlock());

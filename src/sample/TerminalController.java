@@ -38,8 +38,8 @@ public class TerminalController {
     public static Vector<Button> static_button_vec = new Vector<Button>();
     public static Terminal curTerminal = new Terminal();
     @SuppressWarnings("unchecked")
-    Vector<String>[] javaKeyword = (Vector<String>[]) new Vector[8];
-    public Vector<String> javaKeywordColor = new Vector<>();
+    Vector<String>[]  javaKeyword = (Vector<String>[]) new Vector[8];
+    public static Vector<String> javaKeywordColor = new Vector<>();
 
     public CategoryAxis terminalBarChartXAxis = new CategoryAxis();
     public NumberAxis terminalBarChartYAxis = new NumberAxis();
@@ -127,6 +127,7 @@ public class TerminalController {
         javaKeyword[5].add("int");
         javaKeyword[5].add("long");
         javaKeyword[5].add("short");
+        javaKeyword[5].add("String");
         javaKeyword[5].add("null");
 
         javaKeyword[6].add("super");
