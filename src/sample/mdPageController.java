@@ -98,8 +98,6 @@ public class mdPageController {
         this.blockDisplayVBox.getChildren().add(mdPageMenuBar);
 
 
-        NoteBlock noteBlock = new NoteBlock();
-        noteBlocksVector.add(noteBlock);
 
         System.out.println("init "+noteBlocksVector.size()+"blocks");
         for(NoteBlock n:noteBlocksVector){
