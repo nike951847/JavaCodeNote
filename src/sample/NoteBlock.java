@@ -30,9 +30,9 @@ import java.util.concurrent.TimeUnit;
 
 public class NoteBlock extends HBox {
 
-    HBox hBox = new HBox();
-    Button deleteButton = new Button("X");
-    ComboBox<String> comboBox = new ComboBox<>();
+    public HBox hBox = new HBox();
+    public Button deleteButton = new Button("X");
+    public ComboBox<String> comboBox = new ComboBox<>();
     public static Vector<String> optionOfNoteBlock = new Vector<>();
     private int bulletedListRowCount = 0;
     private int numberedListRowCount = 0;
@@ -253,29 +253,5 @@ public class NoteBlock extends HBox {
         this.getChildren().add(deleteButton);
         this.getChildren().add(comboBox);
         this.getChildren().add(hBox);
-    }
-
-    @Override
-    public String toString() {
-        String returnValue = "";
-        returnValue += "--------------------\n";
-        switch (comboBox.getValue()) {
-            case "Markdown" -> {
-                //System.out.println("markdown");
-                returnValue += "markdown";
-            }
-
-            case "Text" -> {
-                returnValue += ((TextArea)((Node)(hBox.getChildren().get(0)))).getText();
-            }
-
-            case "To-do list" -> {
-                returnValue += ((TextField)((Node)(hBox.getChildren().get(1)))).getText();
-            }
-        }
-        returnValue += "\n--------------------\n";
-
-        return returnValue;
-        //return super.toString();
     }
 }

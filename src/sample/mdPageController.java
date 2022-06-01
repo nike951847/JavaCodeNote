@@ -14,6 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import sample.FileExport.SaveFileText;
 
 import java.sql.Time;
 import java.util.Vector;
@@ -121,10 +122,7 @@ public class mdPageController {
         exportMenu.getItems().add(new MenuItem("markdown"));
 
         MenuItem textMenuItem = new MenuItem("text");
-        textMenuItem.setOnAction(e -> {
-            //System.out.println();
-            for(NoteBlock noteBlock: noteBlocksVector) System.out.println(noteBlock.toString());
-        });
+        textMenuItem.setOnAction(e -> {new SaveFileText(noteBlocksVector);});
         exportMenu.getItems().add(textMenuItem);
 
         fileMenu.getItems().add(exportMenu);
