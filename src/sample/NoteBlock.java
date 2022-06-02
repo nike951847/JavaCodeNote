@@ -115,7 +115,7 @@ public class NoteBlock extends HBox implements Serializable {
         colors.add(Color.rgb(165, 237, 126));
         optionOfNoteBlock.add("Markdown");
         optionOfNoteBlock.add("Text");
-        optionOfNoteBlock.add("Page");
+        //optionOfNoteBlock.add("Page");
         optionOfNoteBlock.add("Code");
         optionOfNoteBlock.add("To-do list");
         optionOfNoteBlock.add("Heading 1");
@@ -124,9 +124,9 @@ public class NoteBlock extends HBox implements Serializable {
         optionOfNoteBlock.add("Table");
         optionOfNoteBlock.add("Bulledted list");
         optionOfNoteBlock.add("Numbered list");
-        optionOfNoteBlock.add("Toggle list");
-        optionOfNoteBlock.add("Quote");
-        optionOfNoteBlock.add("Divider");
+        //optionOfNoteBlock.add("Toggle list");
+        //optionOfNoteBlock.add("Quote");
+        //optionOfNoteBlock.add("Divider");
         optionOfNoteBlock.add("Link to page");
         optionOfNoteBlock.add("Callout");
     }

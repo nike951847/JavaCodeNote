@@ -42,6 +42,7 @@ public class mdPageController {
     private final Menu helpMenu;
     private final Timeline proficiencyProgressBarTimelineAnimation;
     protected static final Vector<NoteBlock> noteBlocksVector = new Vector<>();
+    private double randomNumber = new SecureRandom().nextDouble();
     public static void save() throws FileNotFoundException {
         System.out.println("save "+noteBlocksVector.size()+"blocks");
         //File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/swp");
@@ -179,8 +180,7 @@ public class mdPageController {
                     double temp = calculateProficiencyPercentage();
                     proficiencyProgressBar.setProgress(temp);
                     proficiencyProgressIndicator.setProgress(temp);
-                    //System.out.println("value: " + temp);
-                    Thread.sleep(300);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {}
             }
         }).start();
@@ -224,51 +224,47 @@ public class mdPageController {
     }
 
     private double calculateProficiencyPercentage() {
-
-
         double returnValue = 1.0;
-
-
         returnValue /= Math.sqrt(noteBlocksVector.size());
-
 
         double weighted = 0.0;
         double relatedWords = 0.0;
         for(NoteBlock noteBlock: noteBlocksVector) {
-            /*
-            switch (noteBlock.comboBox.getValue()) {
-                case "Page" -> {weighted += 6; break;}
-                case "Table", "Bulledted list", "Numbered list", "Toggle list" -> {weighted += 5; break;}
-                case "Markdown", "Code", "Heading 1" -> {weighted += 4; break;}
-                case "Heading 2", "To-do list" -> {weighted += 3; break;}
-                case "Text", "Heading 3" -> {weighted += 2; break;}
-                case "Quote", "Divider", "Link to page", "Callout" -> {weighted += 1; break;}
-                default -> {break;}
-            }*/
 
-            //System.out.println(noteBlock.comboBox.getValue().toString().length());
+            if(noteBlock.comboBox != null) {
 
+                String str = noteBlock.comboBox.getValue();
+                if(str != null)
+                    switch (str) {
+                        case "Page" -> {weighted += 6; break;}
+                        case "Table", "Bulledted list", "Numbered list", "Toggle list" -> {weighted += 5; break;}
+                        case "Markdown", "Code", "Heading 1" -> {weighted += 4; break;}
+                        case "Heading 2", "To-do list" -> {weighted += 3; break;}
+                        case "Text", "Heading 3" -> {weighted += 2; break;}
+                        case "Quote", "Divider", "Link to page", "Callout" -> {weighted += 1; break;}
+                        default -> {break;}
+                    }
+            }
 
             for(int i=0; i<Main.stationNum; i++) {
                 for(int j=0; j<KeyWordAtStation.keyWord[i].size(); j++) {
                     if(noteBlock.toString().contains(KeyWordAtStation.keyWord[i].get(j))) {
-                        relatedWords += i*j*(new SecureRandom().nextDouble());
+                        relatedWords += i*j*(randomNumber);
                     }
                 }
             }
         }
-        returnValue += relatedWords;
 
-        //returnValue *= (weighted * new SecureRandom().nextDouble());
+        returnValue += (weighted / randomNumber);
+        returnValue -= relatedWords;
+
         /*
-        returnValue += relatedWords;
         while(returnValue < noteBlocksVector.size()*0.03) {
-           //returnValue /= new SecureRandom().nextDouble();
-            returnValue += new SecureRandom().nextDouble()*5;
+           returnValue /= randomNumber;
+           //returnValue += randomNumber*5;
         }*/
 
         return (returnValue > 1.0)? 1.0/returnValue: returnValue;
-        //return noteBlocksVector.size()*0.1;
     }
 
 }
