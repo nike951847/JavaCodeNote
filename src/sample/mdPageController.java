@@ -117,6 +117,8 @@ public class mdPageController {
                 }
             });
             fileList.getItems().add(b);
+
+
         }
         editMenu.setStyle("-fx-text-fill: white;");
         viewMenu.setStyle("-fx-text-fill: white;");
@@ -150,6 +152,7 @@ public class mdPageController {
         }
         imageView.setImage(img);
         System.out.println(imageView.getFitHeight());
+
     }
 
     //initialize proficiency
@@ -260,7 +263,7 @@ public class mdPageController {
         }
 
         returnValue += (weighted / randomNumber);
-        returnValue -= relatedWords;
+        returnValue += relatedWords;
 
         /*
         while(returnValue < noteBlocksVector.size()*0.03) {
@@ -268,7 +271,7 @@ public class mdPageController {
            //returnValue += randomNumber*5;
         }*/
 
-        return (returnValue > 1.0)? 1.0/returnValue: returnValue;
+        return (returnValue > 1.0)? 1-(1.0/returnValue): (1-returnValue);
     }
 
 }
