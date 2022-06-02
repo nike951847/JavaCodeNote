@@ -8,12 +8,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import sample.FileExport.SaveFileText;
 
 import java.io.*;
+import java.security.SecureRandom;
 import java.util.Vector;
 
 public class mdPageController {
@@ -23,7 +25,7 @@ public class mdPageController {
     @FXML
     private VBox blockDisplayVBox;
     @FXML
-    private ListView<?> fileList;
+    private ListView<Button> fileList;
     @FXML
     private ScrollPane noteBlockScrollPane;
     @FXML
@@ -84,7 +86,33 @@ public class mdPageController {
         fileList.setMinWidth(150);
         this.blockDisplayVBox.getChildren().add(proficiencyHBox);
         fileMenu.setStyle("-fx-text-fill: #45587a;");
+        for (String s : Main.stationName){
+            Button b = new Button(s);
+            b.setOnAction((e)->{
+                for(NoteBlock n : noteBlocksVector){
+                    System.out.printf("remove to %s %n", n);
+                    n.setVisible(false);
+                    System.out.print(this.blockDisplayVBox.getChildren().remove(n));
+                }
+                try {
+                    save();
+                } catch (FileNotFoundException fileNotFoundException) {
+                    fileNotFoundException.printStackTrace();
+                }
+                curTerminal = Main.allTerminal.get(Main.stationName.indexOf(s));
 
+                try {
+                    read();
+                } catch (FileNotFoundException fileNotFoundException) {
+                    fileNotFoundException.printStackTrace();
+                }
+                for(NoteBlock n:noteBlocksVector){
+                    System.out.printf("switch to %s %n", n);
+                    this.blockDisplayVBox.getChildren().add(n);
+                }
+            });
+            fileList.getItems().add(b);
+        }
         editMenu.setStyle("-fx-text-fill: white;");
         viewMenu.setStyle("-fx-text-fill: white;");
         helpMenu.setStyle("-fx-text-fill: white;");
@@ -141,6 +169,18 @@ public class mdPageController {
             }
         }));
         proficiencyProgressBarTimelineAnimation.setCycleCount(Timeline.INDEFINITE);
+
+        new Thread(() -> {
+            while(true) {
+                try {
+                    double temp = calculateProficiencyPercentage();
+                    proficiencyProgressBar.setProgress(temp);
+                    proficiencyProgressIndicator.setProgress(temp);
+                    //System.out.println("value: " + temp);
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {}
+            }
+        }).start();
     }
 
     //set up menu
@@ -181,7 +221,51 @@ public class mdPageController {
     }
 
     private double calculateProficiencyPercentage() {
-        return 0.7;
+
+
+        double returnValue = 1.0;
+
+
+        returnValue /= Math.sqrt(noteBlocksVector.size());
+
+
+        double weighted = 0.0;
+        double relatedWords = 0.0;
+        for(NoteBlock noteBlock: noteBlocksVector) {
+            /*
+            switch (noteBlock.comboBox.getValue()) {
+                case "Page" -> {weighted += 6; break;}
+                case "Table", "Bulledted list", "Numbered list", "Toggle list" -> {weighted += 5; break;}
+                case "Markdown", "Code", "Heading 1" -> {weighted += 4; break;}
+                case "Heading 2", "To-do list" -> {weighted += 3; break;}
+                case "Text", "Heading 3" -> {weighted += 2; break;}
+                case "Quote", "Divider", "Link to page", "Callout" -> {weighted += 1; break;}
+                default -> {break;}
+            }*/
+
+            //System.out.println(noteBlock.comboBox.getValue().toString().length());
+
+
+            for(int i=0; i<Main.stationNum; i++) {
+                for(int j=0; j<KeyWordAtStation.keyWord[i].size(); j++) {
+                    if(noteBlock.toString().contains(KeyWordAtStation.keyWord[i].get(j))) {
+                        relatedWords += i*j*(new SecureRandom().nextDouble());
+                    }
+                }
+            }
+        }
+        returnValue += relatedWords;
+
+        //returnValue *= (weighted * new SecureRandom().nextDouble());
+        /*
+        returnValue += relatedWords;
+        while(returnValue < noteBlocksVector.size()*0.03) {
+           //returnValue /= new SecureRandom().nextDouble();
+            returnValue += new SecureRandom().nextDouble()*5;
+        }*/
+
+        return (returnValue > 1.0)? 1.0/returnValue: returnValue;
+        //return noteBlocksVector.size()*0.1;
     }
 
 }

@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Vector;
 
@@ -186,11 +187,15 @@ public class NoteBlock extends HBox implements Serializable {
 
 
     private void update(){
-        for(NoteBlock n:mdPageController.noteBlocksVector){
-            if (n.id == id){
+        for(int i =0;i<mdPageController.noteBlocksVector.size();i++){
+            if (mdPageController.noteBlocksVector.get(i).id == id){
+                mdPageController.noteBlocksVector.set(i,this);
+                /*
                 n.context = context;
                 n.needSave = needSave;
                 n.name = name;
+
+                 */
             }
         }
     }
@@ -384,14 +389,23 @@ public class NoteBlock extends HBox implements Serializable {
                 textField.setStyle("-fx-base:#1e2433;-fx-control-inner-background:#1e2433; -fx-highlight-fill: #1e2433; -fx-highlight-text-fill: white; -fx-text-fill: white; ");
 
                 switch (comboBox.getValue()) {
-                    case "Heading 1" -> {textField.setText("Heading 1"); textField.setFont(Font.font("Verdana", FontWeight.BOLD, 30));}
-                    case "Heading 2" -> {textField.setText("Heading 2"); textField.setFont(Font.font("Verdana", FontWeight.BOLD, 25));}
-                    case "Heading 3" -> {textField.setText("Heading 3"); textField.setFont(Font.font("Verdana", FontWeight.BOLD, 20));}
+                    case "Heading 1" -> {
+                        textField.setText(Objects.requireNonNullElse(context, "Heading 1"));
+                        textField.setFont(Font.font("Verdana", FontWeight.BOLD, 30));}
+                    case "Heading 2" -> {
+                        textField.setText(Objects.requireNonNullElse(context, "Heading 2"));
+                        textField.setFont(Font.font("Verdana", FontWeight.BOLD, 25));}
+                    case "Heading 3" -> {
+                        textField.setText(Objects.requireNonNullElse(context, "Heading 3"));
+                        textField.setFont(Font.font("Verdana", FontWeight.BOLD, 20));}
                 }
                 textField.setOnAction(e2 -> {
                     Text textForCount = new Text(textField.getText());
                     textForCount.setFont(textField.getFont());
-                    textField.setPrefSize(textForCount.getBoundsInLocal().getWidth()*1.05+25,30);});
+                    context = textField.getText();
+                    update();
+                    textField.setPrefSize(textForCount.getBoundsInLocal().getWidth()*1.05+25,30);}
+                );
                 hBox = new HBox(textField);
                 break;
             }
