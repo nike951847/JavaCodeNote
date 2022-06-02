@@ -25,8 +25,11 @@ public class SaveFileText {
             FileWriter fileWriter;
             fileWriter = new FileWriter(file);
 
-            StringBuffer stringBuffer = new StringBuffer();
             for(NoteBlock noteBlock: vector) {
+                if(noteBlock == null) continue;
+                if(noteBlock.comboBox == null) continue;
+                if(noteBlock.comboBox.getValue() == null) continue;
+
                 switch (noteBlock.comboBox.getValue()) {
                     case "Markdown" -> {
                         for(int i=0; i<(((TextFlow)((Node)(noteBlock.hBox.getChildren().get(1)))).getChildren().size()); i++) {
@@ -51,7 +54,7 @@ public class SaveFileText {
                     }
 
                     case "Table" -> {
-                        fileWriter.write(((TextArea)((Node)(noteBlock.hBox.getChildren().get(0)))).getText());
+                        //d;j;
                     }
 
                     case "Bulledted list", "Numbered list" -> {
@@ -65,7 +68,7 @@ public class SaveFileText {
                     }
 
                     case "Code" -> {
-
+                        fileWriter.write(((TextArea)((Node)(noteBlock.hBox.getChildren().get(0)))).getText());
                     }
 
                     case "Toggle list" -> {

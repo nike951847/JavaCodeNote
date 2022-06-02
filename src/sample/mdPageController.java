@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import sample.FileExport.SaveFIleMarkdown;
 import sample.FileExport.SaveFileText;
 
 import java.io.*;
@@ -202,7 +203,10 @@ public class mdPageController {
         exportMenu.getItems().add(new MenuItem("docx"));
         exportMenu.getItems().add(new MenuItem("html"));
         exportMenu.getItems().add(new MenuItem("pdf"));
-        exportMenu.getItems().add(new MenuItem("markdown"));
+
+        MenuItem markDownMenuItem = new MenuItem("markdown");
+        markDownMenuItem.setOnAction(e -> new SaveFIleMarkdown(noteBlocksVector));
+        exportMenu.getItems().add(markDownMenuItem);
 
         MenuItem textMenuItem = new MenuItem("text");
         textMenuItem.setOnAction(e -> new SaveFileText(noteBlocksVector));
