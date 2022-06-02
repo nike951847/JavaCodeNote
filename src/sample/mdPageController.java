@@ -86,8 +86,11 @@ public class mdPageController {
         fileList.setMinWidth(150);
         this.blockDisplayVBox.getChildren().add(proficiencyHBox);
         fileMenu.setStyle("-fx-text-fill: #45587a;");
+        fileList.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: white; -fx-text-fill: white; ");
         for (String s : Main.stationName){
             Button b = new Button(s);
+            b.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: white; -fx-text-fill: white; ");
+            b.setPrefWidth(140);
             b.setOnAction((e)->{
                 for(NoteBlock n : noteBlocksVector){
                     System.out.printf("remove to %s %n", n);
