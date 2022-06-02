@@ -486,14 +486,6 @@
           <url>file://$PROJECT_DIR$/src/sample/Controller.java</url>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/sample/Building.java</url>
-          <line>107</line>
-          <properties class="sample.Building" method="setHeight">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

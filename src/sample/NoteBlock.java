@@ -19,23 +19,26 @@ import javafx.stage.Stage;
 import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Vector;
 
 public class NoteBlock extends HBox implements Serializable {
     static Vector<Color> colors = new Vector<>();
     static Vector<String>[]  javaKeyword = (Vector<String>[]) new Vector[8];
 
-    public transient HBox hBox = new HBox();
-    public transient Button deleteButton = new Button("X");
-    public transient ComboBox<String> comboBox = new ComboBox<>();
+    public transient HBox hBox;
+    public transient Button deleteButton;
+    public transient ComboBox<String> comboBox;
     public static Vector<String> optionOfNoteBlock = new Vector<>();
     protected String name ="";
     protected String context;
+    protected boolean needSave;
+    protected int id;
 
     private int bulletedListRowCount = 0;
     private int numberedListRowCount = 0;
     //set up optionOfNoteBlock
-    {
+    static {
         for (int i = 0; i < 8; i++) {
             javaKeyword[i] = new Vector<>();
         }
@@ -99,7 +102,7 @@ public class NoteBlock extends HBox implements Serializable {
         javaKeyword[7].add("const");
         //javaKeyword[0].add(new Str);
     }
-    {
+    static {
         colors.add(Color.rgb(107, 184, 219));
         colors.add(Color.rgb(107, 219, 210));
         colors.add(Color.rgb(108, 184, 142));
@@ -126,30 +129,71 @@ public class NoteBlock extends HBox implements Serializable {
         optionOfNoteBlock.add("Link to page");
         optionOfNoteBlock.add("Callout");
     }
+    NoteBlock(){
 
-    {
+        id = new Random().nextInt();
         this.setSpacing(10);
         this.setHeight(150);
-        //comboBox.getItems().addAll("Text", "Page", "To-do list", "Heading 1", "Heading 2", "Heading 3", "Table", "Bulledted list", "Numbered list", "Toggle list", "Quote", "Divider", "Link to page", "Callout");
-       for(String str: optionOfNoteBlock) comboBox.getItems().add(str);
-
+        needSave = true;
+        comboBox = new ComboBox<>();
+        for(String str: optionOfNoteBlock) comboBox.getItems().add(str);
+        deleteButton = new Button("X");
+        hBox = new HBox();
         comboBox.setOnAction(e -> {
-            if(name.equals(comboBox.getValue())) return;
             create(comboBox.getValue());
-
         });
-
-        /*deleteButton.setOnAction(e -> {
+        deleteButton.setOnAction(e -> {
             this.getChildren().remove(hBox);
             this.getChildren().remove(comboBox);
             this.getChildren().remove(deleteButton);
-        });*/
-
+            needSave = false;
+            update();
+        });
         this.getChildren().add(deleteButton);
         this.getChildren().add(comboBox);
         this.getChildren().add(hBox);
     }
+    NoteBlock(NoteBlock noteBlock){
+        System.out.println("Copy Con called");
+        this.setSpacing(10);
+        this.setHeight(150);
+        comboBox = new ComboBox<>();
+        for(String str: optionOfNoteBlock) comboBox.getItems().add(str);
+        comboBox.getSelectionModel().select(optionOfNoteBlock.indexOf(noteBlock.name));
+        deleteButton = new Button("X");
+        hBox = new HBox();
+        needSave = true;
+        id = noteBlock.id;
+        name = noteBlock.name;
+        context = noteBlock.context;
+        System.out.println("context="+context);
+        comboBox.setOnAction(e -> {
+            create(comboBox.getValue());
+        });
+        deleteButton.setOnAction(e -> {
+            this.getChildren().remove(hBox);
+            this.getChildren().remove(comboBox);
+            this.getChildren().remove(deleteButton);
+            needSave = false;
+            update();
+        });
 
+        this.getChildren().add(deleteButton);
+        this.getChildren().add(comboBox);
+        if (!this.getChildren().contains(hBox))this.getChildren().add(hBox);
+        if(context!=null)create(name);
+    }
+
+
+    private void update(){
+        for(NoteBlock n:mdPageController.noteBlocksVector){
+            if (n.id == id){
+                n.context = context;
+                n.needSave = needSave;
+                n.name = name;
+            }
+        }
+    }
 
     public String toString() {
         return "NoteBlock{" +
@@ -157,8 +201,7 @@ public class NoteBlock extends HBox implements Serializable {
                 ", hBox=" + hBox +
                 ", deleteButton=" + deleteButton +
                 ", comboBox=" + comboBox +
-                ", bulletedListRowCount=" + bulletedListRowCount +
-                ", numberedListRowCount=" + numberedListRowCount +
+                ", context="+context+
                 '}';
     }
     protected void create(String type){
@@ -169,6 +212,7 @@ public class NoteBlock extends HBox implements Serializable {
                 this.getChildren().remove(hBox);
                 this.getChildren().remove(comboBox);
                 this.getChildren().remove(deleteButton);
+
             });
         }
         if(comboBox==null) {
@@ -194,12 +238,7 @@ public class NoteBlock extends HBox implements Serializable {
         switch (type) {
             case "Markdown" -> {
                 TextArea lTextArea;
-                if(!name.equals("")){
-                    lTextArea = new TextArea(context);
-                }
-                else{
-                    lTextArea = new TextArea("Input Markdown");
-                }
+                lTextArea = new TextArea(context);
                 lTextArea.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: white; -fx-text-fill: white; ");
                 //TextArea rTextArea = new TextArea("Preview Markdown");
                 TextFlow rTextFlow = new TextFlow();
@@ -208,7 +247,10 @@ public class NoteBlock extends HBox implements Serializable {
                 rTextFlow.setPrefSize(400,100);
                 hBox = new HBox(lTextArea,rTextFlow);
                 lTextArea.addEventHandler(InputEvent.ANY,(event)->{
-                    if(lTextArea.getText() != null) {context = lTextArea.getText();
+                    if(lTextArea.getText() == null)  return;
+                    context = lTextArea.getText();
+                    update();
+                    System.out.println("change context to "+context);
                     String[] lines = lTextArea.getText().split("\n");
 
                     rTextFlow.getChildren().clear();
@@ -233,21 +275,15 @@ public class NoteBlock extends HBox implements Serializable {
                         }
                         text.setFill(Color.WHITE);
                         rTextFlow.getChildren().add(text);
-                    }
-                    }
+                     }
                 });
                 break;
 
             }
             case "Code" -> {
                 TextArea lTextArea;
-                if(!name.equals("")){
 
-                     lTextArea = new TextArea(context);
-                }
-                else{
-                     lTextArea = new TextArea("Input Code");
-                }
+                lTextArea = new TextArea(context);
 
                 lTextArea.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: white; -fx-text-fill: white; ");
 
@@ -258,7 +294,7 @@ public class NoteBlock extends HBox implements Serializable {
                 lTextArea.addEventHandler(InputEvent.ANY,(event)->{
                     if(lTextArea.getText()==null)return;
                     context = lTextArea.getText();
-
+                    update();
                     rTextFlow.getChildren().clear();
                     boolean oneLineCommit = false;
                     boolean multLineCommit = false;
@@ -315,17 +351,14 @@ public class NoteBlock extends HBox implements Serializable {
             }
             case "Text" -> {
                 TextArea textArea;
-                if(!name.equals("")){
 
-                    textArea = new TextArea(context);
-                }
-                else{
-                    textArea = new TextArea("Input Code");
-                }
+                textArea = new TextArea(context);
+
                 textArea.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: white; -fx-text-fill: white; ");
                 textArea.setPrefSize(500,100);
                 textArea.addEventHandler(InputEvent.ANY,(event)->{
                     context = textArea.getText();
+                    update();
                 });
                 hBox = new HBox(textArea);
             }

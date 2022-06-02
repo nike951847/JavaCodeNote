@@ -36,23 +36,21 @@ public class mdPageController {
 
     private Menu fileMenu;
     private Menu editMenu;
-    private Menu viewMenu;
-    private Menu helpMenu;
-    private Timeline proficiencyProgressBarTimelineAnimation;
-    private static Vector<NoteBlock> noteBlocksVector = new Vector<>();
+    private final Menu viewMenu;
+    private final Menu helpMenu;
+    private final Timeline proficiencyProgressBarTimelineAnimation;
+    protected static final Vector<NoteBlock> noteBlocksVector = new Vector<>();
     public static void save() throws FileNotFoundException {
         System.out.println("save "+noteBlocksVector.size()+"blocks");
         //File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/swp");
-        System.out.println("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
         try (
                 FileOutputStream fos = new FileOutputStream("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/swp");
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-
+                ObjectOutputStream oos = new ObjectOutputStream(fos)
         ) {
             for(NoteBlock noteBlock: noteBlocksVector) {
-                oos.writeObject(noteBlock);
-                System.out.println(noteBlock);
+                System.out.println(noteBlock.context);
+                if(noteBlock.needSave)oos.writeObject(noteBlock);
+                System.out.println(noteBlock+" "+noteBlock.needSave);
             }
             oos.flush();
         }
@@ -68,9 +66,9 @@ public class mdPageController {
                 ObjectInputStream ois = new ObjectInputStream(fis)
 
         ) {
-            Object o = null;
+            Object o;
             while ((o=ois.readObject())!=null){
-                noteBlocksVector.add((NoteBlock)o);
+                noteBlocksVector.add(new NoteBlock((NoteBlock) o));
                 //blockDisplayVBox.getChildren().add(mdPageMenuBar);
                 System.out.println(o);
             }
@@ -81,7 +79,7 @@ public class mdPageController {
     }
 
     @FXML
-    public void initialize() throws FileNotFoundException {
+    public void initialize() {
         System.out.println(curTerminal.name+"wwwww");
         fileList.setMinWidth(150);
         this.blockDisplayVBox.getChildren().add(proficiencyHBox);
@@ -96,13 +94,14 @@ public class mdPageController {
         mdPageMenuBar.getMenus().add(viewMenu);
         mdPageMenuBar.getMenus().add(helpMenu);
         this.blockDisplayVBox.getChildren().add(mdPageMenuBar);
-
-
-
+        try {
+            read();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         System.out.println("init "+noteBlocksVector.size()+"blocks");
         for(NoteBlock n:noteBlocksVector){
             System.out.printf("init %s %n", n);
-            n.create(n.name);
             this.blockDisplayVBox.getChildren().add(n);
         }
         this.blockDisplayVBox.setSpacing(8);
@@ -127,15 +126,16 @@ public class mdPageController {
         proficiencyProgressIndicator = new ProgressIndicator(0);
         proficiencyHBox = new HBox(proficiencyProgressBar, proficiencyProgressIndicator);
         proficiencyHBox.setPrefHeight(22);
-        proficiencyProgressBarTimelineAnimation = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
+        proficiencyProgressBarTimelineAnimation = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<>() {
             int delayTimeTimelineAnimation = 0;
+
             @Override
             public void handle(ActionEvent actionEvent) {
-                if(delayTimeTimelineAnimation < 120) delayTimeTimelineAnimation++;
+                if (delayTimeTimelineAnimation < 120) delayTimeTimelineAnimation++;
                 else {
-                    if(proficiencyProgressBar.getProgress() < calculateProficiencyPercentage()) {
-                        proficiencyProgressBar.setProgress(proficiencyProgressBar.getProgress()+0.01);
-                        proficiencyProgressIndicator.setProgress(proficiencyProgressIndicator.getProgress()+0.01);
+                    if (proficiencyProgressBar.getProgress() < calculateProficiencyPercentage()) {
+                        proficiencyProgressBar.setProgress(proficiencyProgressBar.getProgress() + 0.01);
+                        proficiencyProgressIndicator.setProgress(proficiencyProgressIndicator.getProgress() + 0.01);
                     }
                 }
             }
@@ -162,7 +162,7 @@ public class mdPageController {
         exportMenu.getItems().add(new MenuItem("markdown"));
 
         MenuItem textMenuItem = new MenuItem("text");
-        textMenuItem.setOnAction(e -> {new SaveFileText(noteBlocksVector);});
+        textMenuItem.setOnAction(e -> new SaveFileText(noteBlocksVector));
         exportMenu.getItems().add(textMenuItem);
 
         fileMenu.getItems().add(exportMenu);
