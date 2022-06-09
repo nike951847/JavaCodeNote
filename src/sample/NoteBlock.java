@@ -155,7 +155,6 @@ public class NoteBlock extends HBox implements Serializable {
         this.getChildren().add(hBox);
     }
     NoteBlock(NoteBlock noteBlock){
-        System.out.println("Copy Con called");
         this.setSpacing(10);
         this.setHeight(150);
         comboBox = new ComboBox<>();
@@ -167,7 +166,6 @@ public class NoteBlock extends HBox implements Serializable {
         id = noteBlock.id;
         name = noteBlock.name;
         context = noteBlock.context;
-        System.out.println("context="+context);
         comboBox.setOnAction(e -> {
             create(comboBox.getValue());
         });
@@ -249,10 +247,21 @@ public class NoteBlock extends HBox implements Serializable {
                 TextFlow rTextFlow = new TextFlow();
                 //rTextFlow.setEditable(false);
                 lTextArea.setPrefSize(400,100);
-                rTextFlow.setPrefSize(400,100);
+                rTextFlow.setPrefSize(500,100);
                 hBox = new HBox(lTextArea,rTextFlow);
                 mdUpdate(lTextArea,rTextFlow);
                 lTextArea.addEventHandler(InputEvent.ANY,(event)->{
+                    String stat =event.getEventType().getName();
+                    switch (stat){
+                        case "MOUSE_ENTERED"->{
+                            lTextArea.setPrefSize(400,100);
+                            rTextFlow.setPrefSize(500,100);
+                        }
+                        case "MOUSE_EXITED"->{
+                            lTextArea.setPrefSize(100,100);
+                            rTextFlow.setPrefSize(500,100);
+                        }
+                    }
                     mdUpdate(lTextArea,rTextFlow);
                 });
                 break;
@@ -272,6 +281,16 @@ public class NoteBlock extends HBox implements Serializable {
                 hBox = new HBox(lTextArea,rTextFlow);
 
                 lTextArea.addEventHandler(InputEvent.ANY,(event)->{
+                    String stat =event.getEventType().getName();
+                    switch (stat){
+                        case "MOUSE_ENTERED"->{
+                            lTextArea.setPrefSize(400,100);
+                        }
+                        case "MOUSE_EXITED"->{
+                            lTextArea.setPrefSize(100,100);
+                        }
+                    }
+
                     codeUpdate(lTextArea,rTextFlow);
                 });
                 break;
@@ -435,7 +454,6 @@ public class NoteBlock extends HBox implements Serializable {
         if(lTextArea.getText() == null)  return;
         context = lTextArea.getText();
         update();
-        System.out.println("change context to "+context);
         String[] lines = lTextArea.getText().split("\n");
 
         rTextFlow.getChildren().clear();
