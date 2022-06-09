@@ -3,6 +3,8 @@ package sample.FileExport;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import sample.NoteBlock;
@@ -23,11 +25,16 @@ public class SaveFileText {
             FileWriter fileWriter;
             fileWriter = new FileWriter(file);
 
-            StringBuffer stringBuffer = new StringBuffer();
             for(NoteBlock noteBlock: vector) {
+                if(noteBlock == null) continue;
+                if(noteBlock.comboBox == null) continue;
+                if(noteBlock.comboBox.getValue() == null) continue;
+
                 switch (noteBlock.comboBox.getValue()) {
                     case "Markdown" -> {
-                        //ad
+                        for(int i=0; i<(((TextFlow)((Node)(noteBlock.hBox.getChildren().get(1)))).getChildren().size()); i++) {
+                            fileWriter.write(((Text)(((TextFlow)((Node)(noteBlock.hBox.getChildren().get(1)))).getChildren().get(i))).getText());
+                        }
                     }
 
                     case "Text", "Callout", "Link to page" -> {
@@ -47,7 +54,7 @@ public class SaveFileText {
                     }
 
                     case "Table" -> {
-                        //sd
+                        //d;j;
                     }
 
                     case "Bulledted list", "Numbered list" -> {
@@ -61,7 +68,7 @@ public class SaveFileText {
                     }
 
                     case "Code" -> {
-
+                        fileWriter.write(((TextArea)((Node)(noteBlock.hBox.getChildren().get(0)))).getText());
                     }
 
                     case "Toggle list" -> {
