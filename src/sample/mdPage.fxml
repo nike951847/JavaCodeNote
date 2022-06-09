@@ -16,10 +16,11 @@
                <children>
                   <ScrollPane fx:id="noteBlockScrollPane" fitToHeight="true" fitToWidth="true" maxHeight="1080.0" maxWidth="1.7976931348623157E308" pannable="true" prefHeight="900.0" prefWidth="1500.0" style="-fx-background-color: #23353b;">
                      <content>
-                        <VBox fx:id="blockDisplayVBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #23353b;">
+                        <VBox fx:id="blockDisplayVBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="9000.0" minWidth="1500.0" prefHeight="9000.0" prefWidth="1500.0" style="-fx-background-color: #23353b;">
                            <children>
                               <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="1500.0" pickOnBounds="true" preserveRatio="true" />
-                           </children></VBox>
+                           </children>
+                        </VBox>
                      </content>
                   </ScrollPane>
                </children>
