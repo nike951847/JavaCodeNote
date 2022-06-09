@@ -176,6 +176,8 @@ public class NoteBlock extends HBox implements Serializable {
             this.getChildren().remove(comboBox);
             this.getChildren().remove(deleteButton);
             needSave = false;
+            this.setSpacing(0);
+            this.setHeight(0);
             update();
         });
 
@@ -217,7 +219,9 @@ public class NoteBlock extends HBox implements Serializable {
                 this.getChildren().remove(hBox);
                 this.getChildren().remove(comboBox);
                 this.getChildren().remove(deleteButton);
-
+                this.setSpacing(0);
+                update();
+                this.setHeight(0);
             });
         }
         if(comboBox==null) {
@@ -232,11 +236,7 @@ public class NoteBlock extends HBox implements Serializable {
 
 
 
-        /*deleteButton.setOnAction(e -> {
-            this.getChildren().remove(hBox);
-            this.getChildren().remove(comboBox);
-            this.getChildren().remove(deleteButton);
-        });*/
+
         for(String str: optionOfNoteBlock) comboBox.getItems().add(str);
         this.getChildren().remove(hBox);
         name = type;
@@ -251,36 +251,9 @@ public class NoteBlock extends HBox implements Serializable {
                 lTextArea.setPrefSize(400,100);
                 rTextFlow.setPrefSize(400,100);
                 hBox = new HBox(lTextArea,rTextFlow);
+                mdUpdate(lTextArea,rTextFlow);
                 lTextArea.addEventHandler(InputEvent.ANY,(event)->{
-                    if(lTextArea.getText() == null)  return;
-                    context = lTextArea.getText();
-                    update();
-                    System.out.println("change context to "+context);
-                    String[] lines = lTextArea.getText().split("\n");
-
-                    rTextFlow.getChildren().clear();
-                    for(String line:lines) {
-                        line += "\n";
-                        Text text = new Text("");
-                        if (line.startsWith("#")) {
-                            if (line.startsWith("###")) {
-                                text.setText(line.substring(3));
-                                text.setFont(Font.font("", FontWeight.BOLD, 15));
-
-                            } else if (line.startsWith("##")) {
-                                text.setText(line.substring(2));
-                                text.setFont(Font.font("", FontWeight.BOLD, 20));
-                            } else {
-                                text.setText(line.substring(1));
-                                text.setFont(Font.font("", FontWeight.BOLD, 30));
-                            }
-
-                        } else {
-                            text.setText(line);
-                        }
-                        text.setFill(Color.WHITE);
-                        rTextFlow.getChildren().add(text);
-                     }
+                    mdUpdate(lTextArea,rTextFlow);
                 });
                 break;
 
@@ -295,62 +268,11 @@ public class NoteBlock extends HBox implements Serializable {
                 TextFlow rTextFlow = new TextFlow();
                 lTextArea.setPrefSize(400,100);
                 rTextFlow.setPrefSize(400,100);
+                codeUpdate(lTextArea,rTextFlow);
                 hBox = new HBox(lTextArea,rTextFlow);
+
                 lTextArea.addEventHandler(InputEvent.ANY,(event)->{
-                    if(lTextArea.getText()==null)return;
-                    context = lTextArea.getText();
-                    update();
-                    rTextFlow.getChildren().clear();
-                    boolean oneLineCommit = false;
-                    boolean multLineCommit = false;
-
-                    for(String line:lTextArea.getText().split("\n")){
-
-                        if(line.startsWith("//")){
-                            Text text = new Text("");
-                            text.setText(line);
-                            text.setFill(Color.rgb(94,94,94));
-                        }
-                        else{
-                            for(String word: line.split(" ")) {
-                                Text text = new Text("");
-
-                                text.setText(word + " ");
-                                if (word.startsWith("//")){
-                                    oneLineCommit = true;
-                                }
-                                if(word.startsWith("/*")){
-                                    multLineCommit = true;
-                                }
-                                if(word.contains("*/")){
-                                    text.setFill(Color.rgb(94,94,94));
-                                    multLineCommit = false;
-                                }
-
-                                text.setFill(Color.WHITE);
-                                if(multLineCommit||oneLineCommit){
-                                    text.setFill(Color.rgb(94,94,94));
-                                    rTextFlow.getChildren().add(text);
-                                    continue;
-                                }
-                                for (int i = 0; i < 8; i++) {
-                                    for (String keyword : javaKeyword[i]) {
-                                        if (word.equals(keyword)) {
-                                            text.setFill(colors.get(i));
-                                            break;
-                                        }
-                                    }
-                                }
-                                rTextFlow.getChildren().add(text);
-                            }
-
-
-
-                        }
-                        rTextFlow.getChildren().add(new Text("\n"));
-                        oneLineCommit = false;
-
-                    }
+                    codeUpdate(lTextArea,rTextFlow);
                 });
                 break;
             }
@@ -509,4 +431,92 @@ public class NoteBlock extends HBox implements Serializable {
         if(hBox!=null)hBox.setSpacing(10);
         if(hBox!=null)this.getChildren().add(hBox);
     }
+    private void mdUpdate(TextArea lTextArea,TextFlow rTextFlow){
+        if(lTextArea.getText() == null)  return;
+        context = lTextArea.getText();
+        update();
+        System.out.println("change context to "+context);
+        String[] lines = lTextArea.getText().split("\n");
+
+        rTextFlow.getChildren().clear();
+        for(String line:lines) {
+            line += "\n";
+            Text text = new Text("");
+            if (line.startsWith("#")) {
+                if (line.startsWith("###")) {
+                    text.setText(line.substring(3));
+                    text.setFont(Font.font("", FontWeight.BOLD, 15));
+
+                } else if (line.startsWith("##")) {
+                    text.setText(line.substring(2));
+                    text.setFont(Font.font("", FontWeight.BOLD, 20));
+                } else {
+                    text.setText(line.substring(1));
+                    text.setFont(Font.font("", FontWeight.BOLD, 30));
+                }
+
+            } else {
+                text.setText(line);
+            }
+            text.setFill(Color.WHITE);
+            rTextFlow.getChildren().add(text);
+        }
+    }
+    private void codeUpdate(TextArea lTextArea,TextFlow rTextFlow){
+        if(lTextArea.getText()==null)return;
+        context = lTextArea.getText();
+        update();
+        rTextFlow.getChildren().clear();
+        boolean oneLineCommit = false;
+        boolean multLineCommit = false;
+
+        for(String line:lTextArea.getText().split("\n")){
+
+            if(line.startsWith("//")){
+                Text text = new Text("");
+                text.setText(line);
+                text.setFill(Color.rgb(94,94,94));
+            }
+            else{
+                for(String word: line.split(" ")) {
+                    Text text = new Text("");
+
+                    text.setText(word + " ");
+                    if (word.startsWith("//")){
+                        oneLineCommit = true;
+                    }
+                    if(word.startsWith("/*")){
+                        multLineCommit = true;
+                    }
+                    if(word.contains("*/")){
+                        text.setFill(Color.rgb(94,94,94));
+                        multLineCommit = false;
+                    }
+
+                    text.setFill(Color.WHITE);
+                    if(multLineCommit||oneLineCommit){
+                        text.setFill(Color.rgb(94,94,94));
+                        rTextFlow.getChildren().add(text);
+                        continue;
+                    }
+                    for (int i = 0; i < 8; i++) {
+                        for (String keyword : javaKeyword[i]) {
+                            if (word.equals(keyword)) {
+                                text.setFill(colors.get(i));
+                                break;
+                            }
+                        }
+                    }
+                    rTextFlow.getChildren().add(text);
+                }
+
+
+
+            }
+            rTextFlow.getChildren().add(new Text("\n"));
+            oneLineCommit = false;
+
+        }
+    }
 }
+

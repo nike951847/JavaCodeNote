@@ -11,14 +11,14 @@
    <children>
       <HBox style="-fx-background-color: #23353b;">
          <children>
-            <ListView fx:id="fileList" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #41575e;" />
-             <AnchorPane fx:id="baseAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #23353b;">
+            <ListView fx:id="fileList" editable="true" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #41575e;" />
+             <AnchorPane fx:id="baseAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1500.0" style="-fx-background-color: #23353b;">
                <children>
-                  <ScrollPane fx:id="noteBlockScrollPane" fitToHeight="true" fitToWidth="true" pannable="true" style="-fx-background-color: #23353b;">
+                  <ScrollPane fx:id="noteBlockScrollPane" fitToHeight="true" fitToWidth="true" maxHeight="1080.0" maxWidth="1.7976931348623157E308" pannable="true" prefHeight="900.0" prefWidth="1500.0" style="-fx-background-color: #23353b;">
                      <content>
-                        <VBox fx:id="blockDisplayVBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="900.0" prefWidth="1500.0" style="-fx-background-color: #23353b;">
+                        <VBox fx:id="blockDisplayVBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #23353b;">
                            <children>
-                              <ImageView fx:id="imageView" fitHeight="100.0" fitWidth="1500.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="1500.0" pickOnBounds="true" preserveRatio="true" />
                            </children></VBox>
                      </content>
                   </ScrollPane>

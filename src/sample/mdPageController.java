@@ -42,6 +42,8 @@ public class mdPageController {
     private final Menu helpMenu;
     private final Timeline proficiencyProgressBarTimelineAnimation;
     protected static final Vector<NoteBlock> noteBlocksVector = new Vector<>();
+    private double randomNumber = new SecureRandom().nextDouble();
+
     public static void save() throws FileNotFoundException {
         System.out.println("save "+noteBlocksVector.size()+"blocks");
         //File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/swp");
@@ -95,7 +97,7 @@ public class mdPageController {
                 for(NoteBlock n : noteBlocksVector){
                     System.out.printf("remove to %s %n", n);
                     n.setVisible(false);
-                    System.out.print(this.blockDisplayVBox.getChildren().remove(n));
+                    this.blockDisplayVBox.getChildren().remove(n);
                 }
                 try {
                     save();
@@ -177,11 +179,12 @@ public class mdPageController {
             while(true) {
                 try {
                     double temp = calculateProficiencyPercentage();
+
                     proficiencyProgressBar.setProgress(temp);
                     proficiencyProgressIndicator.setProgress(temp);
                     //System.out.println("value: " + temp);
                     Thread.sleep(300);
-                } catch (InterruptedException e) {}
+                } catch (InterruptedException ignored) {}
             }
         }).start();
     }
@@ -252,7 +255,7 @@ public class mdPageController {
             for(int i=0; i<Main.stationNum; i++) {
                 for(int j=0; j<KeyWordAtStation.keyWord[i].size(); j++) {
                     if(noteBlock.toString().contains(KeyWordAtStation.keyWord[i].get(j))) {
-                        relatedWords += i*j*(new SecureRandom().nextDouble());
+                        relatedWords += i*j*(randomNumber);
                     }
                 }
             }
