@@ -7,6 +7,7 @@ import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -18,7 +19,6 @@ import javafx.stage.Stage;
 
 import java.io.Serializable;
 import java.nio.charset.Charset;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Vector;
@@ -29,6 +29,8 @@ public class NoteBlock extends HBox implements Serializable {
 
     public transient HBox hBox;
     public transient Button deleteButton;
+    public transient Button upButton;
+    public transient Button downButton;
     public transient ComboBox<String> comboBox;
     public static Vector<String> optionOfNoteBlock = new Vector<>();
     protected String name ="";
@@ -122,9 +124,9 @@ public class NoteBlock extends HBox implements Serializable {
         optionOfNoteBlock.add("Heading 2");
         optionOfNoteBlock.add("Heading 3");
         optionOfNoteBlock.add("Table");
-        optionOfNoteBlock.add("Bulledted list");
+        optionOfNoteBlock.add("Bullet list");
         optionOfNoteBlock.add("Numbered list");
-        //optionOfNoteBlock.add("Toggle list");
+        optionOfNoteBlock.add("Toggle list");
         //optionOfNoteBlock.add("Quote");
         //optionOfNoteBlock.add("Divider");
         optionOfNoteBlock.add("Link to page");
@@ -139,6 +141,7 @@ public class NoteBlock extends HBox implements Serializable {
         comboBox = new ComboBox<>();
         for(String str: optionOfNoteBlock) comboBox.getItems().add(str);
         deleteButton = new Button("X");
+        upDownInit();
         hBox = new HBox();
         comboBox.setOnAction(e -> {
             create(comboBox.getValue());
@@ -151,6 +154,7 @@ public class NoteBlock extends HBox implements Serializable {
             update();
         });
         this.getChildren().add(deleteButton);
+        this.getChildren().add(new VBox(upButton,downButton));
         this.getChildren().add(comboBox);
         this.getChildren().add(hBox);
     }
@@ -166,6 +170,7 @@ public class NoteBlock extends HBox implements Serializable {
         id = noteBlock.id;
         name = noteBlock.name;
         context = noteBlock.context;
+        upDownInit();
         comboBox.setOnAction(e -> {
             create(comboBox.getValue());
         });
@@ -180,6 +185,7 @@ public class NoteBlock extends HBox implements Serializable {
         });
 
         this.getChildren().add(deleteButton);
+        this.getChildren().add(new VBox(upButton,downButton));
         this.getChildren().add(comboBox);
         if (!this.getChildren().contains(hBox))this.getChildren().add(hBox);
         if(context!=null)create(name);
@@ -264,7 +270,6 @@ public class NoteBlock extends HBox implements Serializable {
                     }
                     mdUpdate(lTextArea,rTextFlow);
                 });
-                break;
 
             }
             case "Code" -> {
@@ -283,17 +288,12 @@ public class NoteBlock extends HBox implements Serializable {
                 lTextArea.addEventHandler(InputEvent.ANY,(event)->{
                     String stat =event.getEventType().getName();
                     switch (stat){
-                        case "MOUSE_ENTERED"->{
-                            lTextArea.setPrefSize(400,100);
-                        }
-                        case "MOUSE_EXITED"->{
-                            lTextArea.setPrefSize(100,100);
-                        }
+                        case "MOUSE_ENTERED"-> lTextArea.setPrefSize(400,100);
+                        case "MOUSE_EXITED"-> lTextArea.setPrefSize(100,100);
                     }
 
                     codeUpdate(lTextArea,rTextFlow);
                 });
-                break;
             }
             case "Text" -> {
                 TextArea textArea;
@@ -322,7 +322,6 @@ public class NoteBlock extends HBox implements Serializable {
                     textForCount.setFont(textField.getFont());
                     textField.setPrefSize(textForCount.getBoundsInLocal().getWidth()*1.05+15,20);});
                 hBox = new HBox(new SwitchButton(), textField);
-                break;
             }
 
             case "Heading 1" ,"Heading 2", "Heading 3" -> {
@@ -348,7 +347,6 @@ public class NoteBlock extends HBox implements Serializable {
                     textField.setPrefSize(textForCount.getBoundsInLocal().getWidth()*1.05+25,30);}
                 );
                 hBox = new HBox(textField);
-                break;
             }
 
             case "Table" -> {
@@ -357,7 +355,6 @@ public class NoteBlock extends HBox implements Serializable {
                 tableView.getColumns().addAll(new TableColumn<>("A"), new TableColumn<>("B"), new TableColumn<>("C"), new TableColumn<>("D"), new TableColumn<>("E"));
 
                 hBox = new HBox(tableView);
-                break;
             }
 
             case "Bulledted list" -> {
@@ -381,19 +378,34 @@ public class NoteBlock extends HBox implements Serializable {
 
             case "Numbered list" -> {
                 numberedListRowCount = 1;
-                ListView listView = new ListView();
+                ListView<String> listView = new ListView<>();
                 listView.setEditable(true);
                 listView.setCellFactory(TextFieldListCell.forListView());
                 listView.setFixedCellSize(20);
                 listView.setMaxHeight(listView.getFixedCellSize()*numberedListRowCount);
                 listView.getItems().addAll(String.valueOf(numberedListRowCount));
+                if(context!=null){
+                    String[] slist = context.split("\n");
+                    for(String s:slist){
+                        numberedListRowCount++;
+                        listView.getItems().add(String.valueOf(s));
+                        listView.setMaxHeight(listView.getFixedCellSize()*numberedListRowCount);
+                    }
+                }
                 listView.setOnKeyPressed(e2 -> {
                     if(e2.getCode().equals(KeyCode.ENTER)) {
                         numberedListRowCount++;
                         listView.getItems().add(String.valueOf(numberedListRowCount));
                         listView.setMaxHeight(listView.getFixedCellSize()*numberedListRowCount);
                     }
+                    StringBuilder stringBuilder = new StringBuilder();
+                    for(String s: listView.getItems()){
+                        stringBuilder.append("\n").append(s);
+                    }
+                    context= stringBuilder.toString();
+                    update();
                 });
+
                 hBox = new HBox(listView);
                 break;
             }
@@ -401,7 +413,6 @@ public class NoteBlock extends HBox implements Serializable {
             case "Toggle list" -> {
 
                 hBox = new HBox();
-                break;
             }
 
             case "Link to page" -> {
@@ -535,6 +546,26 @@ public class NoteBlock extends HBox implements Serializable {
             oneLineCommit = false;
 
         }
+    }
+    private void upDownInit(){
+        upButton = new Button("▲");
+        downButton = new Button("▼");
+        upButton.setOnAction((e)->{
+            for(int i =0;i<mdPageController.noteBlocksVector.size();i++){
+                if(mdPageController.noteBlocksVector.get(i).id == id){
+                    mdPageController.blockUp(i);
+                    break;
+                }
+            }
+        });
+        upButton.setOnAction((e)->{
+            for(int i =0;i<mdPageController.noteBlocksVector.size();i++){
+                if(mdPageController.noteBlocksVector.get(i).id == id) {
+                    mdPageController.blockDown(i);
+                    break;
+                }
+            }
+        });
     }
 }
 

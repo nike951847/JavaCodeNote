@@ -517,11 +517,6 @@
           <url>file://$PROJECT_DIR$/src/sample/Controller.java</url>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/sample/NoteBlock.java</url>
-          <line>345</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

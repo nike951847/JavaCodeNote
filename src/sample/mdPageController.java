@@ -22,28 +22,26 @@ import java.util.Vector;
 public class mdPageController {
 
     //vector here
-
+    protected static VBox staticBlockDisplayVBox;
     @FXML
     private VBox blockDisplayVBox;
     @FXML
     private ListView<Button> fileList;
     @FXML
-    private ScrollPane noteBlockScrollPane;
-    @FXML
     private ImageView imageView;
-    private MenuBar mdPageMenuBar = new MenuBar();
+    private final MenuBar mdPageMenuBar = new MenuBar();
     private static HBox proficiencyHBox;
-    private ProgressBar proficiencyProgressBar;
-    private ProgressIndicator proficiencyProgressIndicator;
+    private final ProgressBar proficiencyProgressBar;
+    private final ProgressIndicator proficiencyProgressIndicator;
     static Terminal curTerminal;
 
-    private Menu fileMenu;
-    private Menu editMenu;
+    private final Menu fileMenu;
+    private final Menu editMenu;
     private final Menu viewMenu;
     private final Menu helpMenu;
     private final Timeline proficiencyProgressBarTimelineAnimation;
     protected static final Vector<NoteBlock> noteBlocksVector = new Vector<>();
-    private double randomNumber = new SecureRandom().nextDouble();
+    private final double randomNumber = new SecureRandom().nextDouble();
     public static void save() throws FileNotFoundException {
         System.out.println("save "+noteBlocksVector.size()+"blocks");
         //File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/swp");
@@ -86,6 +84,7 @@ public class mdPageController {
     public void initialize() {
         System.out.println(curTerminal.name+"wwwww");
         fileList.setMinWidth(150);
+        staticBlockDisplayVBox = blockDisplayVBox;
         this.blockDisplayVBox.getChildren().add(proficiencyHBox);
         fileMenu.setStyle("-fx-text-fill: #45587a;");
         fileList.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: white; -fx-text-fill: white; ");
@@ -273,6 +272,33 @@ public class mdPageController {
         }*/
 
         return (returnValue > 1.0)? 1-(1.0/returnValue): (1-returnValue);
+    }
+    protected static void blockDown(int n){
+        if(n==noteBlocksVector.size()-1) return;
+
+        System.out.println(n);
+        staticBlockDisplayVBox.getChildren().remove(3,3+noteBlocksVector.size());
+        NoteBlock temp = noteBlocksVector.get(n-1);
+        noteBlocksVector.set(n-1,noteBlocksVector.get(n));
+        noteBlocksVector.set(n,temp);
+        for(NoteBlock N:noteBlocksVector){
+            staticBlockDisplayVBox.getChildren().add(N);
+        }
+
+
+    }
+    protected static void blockUp(int n){
+        if(n==0) return;
+
+        System.out.println(n);
+        staticBlockDisplayVBox.getChildren().remove(3,3+noteBlocksVector.size());
+        NoteBlock temp = noteBlocksVector.get(n+1);
+        noteBlocksVector.set(n+1,noteBlocksVector.get(n));
+        noteBlocksVector.set(n,temp);
+        for(NoteBlock N:noteBlocksVector){
+            staticBlockDisplayVBox.getChildren().add(N);
+        }
+
     }
 
 }
