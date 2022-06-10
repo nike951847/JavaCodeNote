@@ -147,11 +147,15 @@ public class NoteBlock extends HBox implements Serializable {
             create(comboBox.getValue());
         });
         deleteButton.setOnAction(e -> {
-            this.getChildren().remove(hBox);
-            this.getChildren().remove(comboBox);
-            this.getChildren().remove(deleteButton);
-            needSave = false;
-            update();
+                needSave = false;
+                update();
+
+                for(NoteBlock n : mdPageController.noteBlocksVector){
+                    if(n.id == id){
+                        mdPageController.staticBlockDisplayVBox.getChildren().removeAll(n);
+                        mdPageController.noteBlocksVector.remove(n);
+                    }
+                }
         });
         this.getChildren().add(deleteButton);
         this.getChildren().add(new VBox(upButton,downButton));
@@ -175,13 +179,16 @@ public class NoteBlock extends HBox implements Serializable {
             create(comboBox.getValue());
         });
         deleteButton.setOnAction(e -> {
-            this.getChildren().remove(hBox);
-            this.getChildren().remove(comboBox);
-            this.getChildren().remove(deleteButton);
             needSave = false;
             this.setSpacing(0);
             this.setHeight(0);
             update();
+            for(NoteBlock n : mdPageController.noteBlocksVector){
+                if(n.id == id){
+                    mdPageController.staticBlockDisplayVBox.getChildren().removeAll(n);
+                    mdPageController.noteBlocksVector.remove(n);
+                }
+            }
         });
 
         this.getChildren().add(deleteButton);
@@ -393,16 +400,17 @@ public class NoteBlock extends HBox implements Serializable {
                     }
                 }
                 listView.setOnKeyPressed(e2 -> {
-                    if(e2.getCode().equals(KeyCode.ENTER)) {
+                    if (e2.getCode().equals(KeyCode.ENTER)) {
                         numberedListRowCount++;
                         listView.getItems().add(String.valueOf(numberedListRowCount));
-                        listView.setMaxHeight(listView.getFixedCellSize()*numberedListRowCount);
+                        listView.setMaxHeight(listView.getFixedCellSize() * numberedListRowCount);
                     }
                     StringBuilder stringBuilder = new StringBuilder();
                     for(String s: listView.getItems()){
                         stringBuilder.append("\n").append(s);
                     }
                     context= stringBuilder.toString();
+                    System.out.println(context);
                     update();
                 });
 
