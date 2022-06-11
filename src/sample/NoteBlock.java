@@ -260,7 +260,7 @@ public class NoteBlock extends HBox implements Serializable {
             case "Markdown" -> {
                 TextArea lTextArea;
                 lTextArea = new TextArea(context);
-                lTextArea.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: white; -fx-text-fill: white; ");
+                lTextArea.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: #66fff7; -fx-text-fill: white; ");
                 //TextArea rTextArea = new TextArea("Preview Markdown");
                 TextFlow rTextFlow = new TextFlow();
                 //rTextFlow.setEditable(false);
@@ -289,7 +289,7 @@ public class NoteBlock extends HBox implements Serializable {
 
                 lTextArea = new TextArea(context);
 
-                lTextArea.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: white; -fx-text-fill: white; ");
+                lTextArea.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: #66fff7; -fx-text-fill: white; ");
 
                 TextFlow rTextFlow = new TextFlow();
                 lTextArea.setPrefSize(400,100);
@@ -312,7 +312,7 @@ public class NoteBlock extends HBox implements Serializable {
 
                 textArea = new TextArea(context);
 
-                textArea.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: white; -fx-text-fill: white; ");
+                textArea.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: #66fff7; -fx-text-fill: white; ");
                 textArea.setPrefSize(500,100);
                 textArea.addEventHandler(InputEvent.ANY,(event)->{
                     context = textArea.getText();
@@ -529,18 +529,19 @@ public class NoteBlock extends HBox implements Serializable {
             if (line.startsWith("#")) {
                 if (line.startsWith("###")) {
                     text.setText(line.substring(3));
-                    text.setFont(Font.font("", FontWeight.BOLD, 15));
+                    text.setFont(Font.font("", FontWeight.BOLD, 24));
 
                 } else if (line.startsWith("##")) {
                     text.setText(line.substring(2));
-                    text.setFont(Font.font("", FontWeight.BOLD, 20));
+                    text.setFont(Font.font("", FontWeight.BOLD, 36));
                 } else {
                     text.setText(line.substring(1));
-                    text.setFont(Font.font("", FontWeight.BOLD, 30));
+                    text.setFont(Font.font("", FontWeight.BOLD,48));
                 }
 
             } else {
                 text.setText(line);
+                text.setFont(new Font(16));
             }
             text.setFill(Color.WHITE);
             rTextFlow.getChildren().add(text);
@@ -553,16 +554,17 @@ public class NoteBlock extends HBox implements Serializable {
         rTextFlow.getChildren().clear();
         boolean oneLineCommit = false;
         boolean multLineCommit = false;
-
+        boolean multLineCommitend = false;
         for(String line:lTextArea.getText().split("\n")){
 
             if(line.startsWith("//")){
-                Text text = new Text("");
-                text.setText(line);
+                Text text = new Text(line);
                 text.setFill(Color.rgb(94,94,94));
+                text.setFont(new Font(16));
+                rTextFlow.getChildren().add(text);
             }
             else{
-                for(String word: line.split(" ")) {
+                for(String word :line.split("(?<=;|\\(|\\(| |\t)") ){
                     Text text = new Text("");
 
                     text.setText(word + " ");
@@ -574,24 +576,47 @@ public class NoteBlock extends HBox implements Serializable {
                     }
                     if(word.contains("*/")){
                         text.setFill(Color.rgb(94,94,94));
-                        multLineCommit = false;
+                        multLineCommitend = true;
                     }
 
                     text.setFill(Color.WHITE);
                     if(multLineCommit||oneLineCommit){
                         text.setFill(Color.rgb(94,94,94));
                         rTextFlow.getChildren().add(text);
+                        if(multLineCommitend){
+                            multLineCommit = false;
+                            multLineCommitend = false;
+                        }
                         continue;
                     }
+                    text.setFont(new Font(16));
+                    boolean printed = false;
                     for (int i = 0; i < 8; i++) {
                         for (String keyword : javaKeyword[i]) {
                             if (word.equals(keyword)) {
                                 text.setFill(colors.get(i));
+                                rTextFlow.getChildren().add(text);
+                                printed = true;
                                 break;
+
+                            }
+                            else if (word.startsWith(keyword)&&word.length()==keyword.length()+1){
+                                text.setFill(colors.get(i));
+                                text.setText(keyword);
+                                rTextFlow.getChildren().add(text);
+                                Text end = new Text(""+word.charAt(word.length()-1));
+                                end.setFont(new Font(16));
+                                end.setFill(Color.WHITE);
+                                rTextFlow.getChildren().add(end);
+                                printed = true;
+
                             }
                         }
                     }
-                    rTextFlow.getChildren().add(text);
+                    if(!printed)  rTextFlow.getChildren().add(text);
+
+
+
                 }
 
 
