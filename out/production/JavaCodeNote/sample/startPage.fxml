@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.startPageController">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.startPageController">
    <children>
-      <Label layoutX="262.0" layoutY="72.0" text="Java Code Note">
+      <Button fx:id="exitButton" layoutX="25.0" layoutY="555.0" mnemonicParsing="false" onAction="#exitPage" style="-fx-background-color: #17181c;" text="Exit" textFill="WHITE" />
+      <Button layoutX="193.0" layoutY="359.0" mnemonicParsing="false" onAction="#newPage" prefHeight="44.0" prefWidth="154.0" style="-fx-background-color: #17181c;" text="New" textFill="WHITE">
          <font>
-            <Font size="34.0" />
-         </font>
-      </Label>
-      <Button fx:id="exitButton" layoutX="25.0" layoutY="555.0" mnemonicParsing="false" onAction="#exitPage" text="Exit" />
-      <Button layoutX="193.0" layoutY="359.0" mnemonicParsing="false" onAction="#newPage" text="New" />
-      <Button layoutX="521.0" layoutY="359.0" mnemonicParsing="false" onAction="#importButton" text="Import from local" />
+            <Font size="22.0" />
+         </font></Button>
+      <Button layoutX="430.0" layoutY="359.0" mnemonicParsing="false" onAction="#importButton" prefHeight="44.0" prefWidth="211.0" style="-fx-background-color: #17181c;" text="Import from local" textFill="WHITE">
+         <font>
+            <Font size="22.0" />
+         </font></Button>
    </children>
 </Pane>

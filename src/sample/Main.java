@@ -63,7 +63,7 @@ public class Main extends Application {
         stationName.add("ExceptionStation");//7
         stationName.add("ThreadStation");//8
         stationName.add("CentralStation");//9
-        stationName.add("DFS_BFSStation");//10
+        stationName.add("DFS_BFSStation");//10.
         stationName.add("DistributedStation");//11
         stationName.add("GPUStation");//12
         stationName.add("DataTypeStation");//13

@@ -235,6 +235,8 @@ public class mdPageController {
     }
 
     private double calculateProficiencyPercentage() {
+        return 0;
+        /*
         double returnValue = 1.0;
         returnValue /= Math.sqrt(noteBlocksVector.size());
 
@@ -269,13 +271,14 @@ public class mdPageController {
         returnValue += (weighted / randomNumber);
         returnValue += relatedWords;
 
-        /*
+
         while(returnValue < noteBlocksVector.size()*0.03) {
            returnValue /= randomNumber;
            //returnValue += randomNumber*5;
-        }*/
+        }
 
-        return (returnValue > 1.0)? 1-(1.0/returnValue): (1-returnValue);
+        return (returnValue > 1.0)? 1-(1.0/returnValue): (1-returnValue);*/
+
     }
     protected static void blockDown(int n){
         System.out.println(n);

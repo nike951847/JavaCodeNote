@@ -7,6 +7,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.scene.input.KeyCombination;
@@ -18,7 +20,6 @@ import java.io.InputStreamReader;
 import java.util.Objects;
 import javafx.stage.StageStyle;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.geometry.Insets;
 import javafx.application.Platform;
@@ -31,9 +32,24 @@ public class startPageController {
 
     @FXML
     private Button exitButton;
-
+    @FXML
+    private Pane pane;
+    @FXML
     public void initialize() {
         //System.out.println("start page controller");
+        String s = System.getProperty("user.dir");
+        Image img;
+        if(s.charAt(s.length()-1)=='c'){
+            img = new Image("file:sample/photo/" + "start" + ".jpg");
+        }
+        else{
+            img = new Image("file:src/sample/photo/" + "start" + ".jpg");
+        }
+        System.out.println(img.getHeight());
+        pane.setBackground(new Background(new BackgroundImage(img, BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT)));
     }
 
     @FXML
