@@ -51,9 +51,8 @@ public class mdPageController {
         ) {
             for(NoteBlock noteBlock: noteBlocksVector) {
                 if(noteBlock.name.equals("Toggle list")){
-                    noteBlock.context = noteBlock.subn.comboBox.getValue()+"\n"+noteBlock.subn.context;
                     //noteBlock.context = noteBlock.subn.name+"\n"+noteBlock.subHeading.getText()+"\n"+noteBlock.subn.context;
-
+                    System.out.printf("save %s %n",noteBlock.context);
                 }
                 System.out.println(noteBlock.context);
                 if(noteBlock.needSave)oos.writeObject(noteBlock);

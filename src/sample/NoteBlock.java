@@ -35,7 +35,6 @@ public class NoteBlock extends HBox implements Serializable {
     public static Vector<String> optionOfNoteBlock = new Vector<>();
     protected String name ="";
     protected String context;
-    protected NoteBlock subn;
     protected boolean needSave;
     protected int id;
     protected transient TextField subHeading;
@@ -127,7 +126,7 @@ public class NoteBlock extends HBox implements Serializable {
         optionOfNoteBlock.add("Table");
         optionOfNoteBlock.add("Bullet list");
         optionOfNoteBlock.add("Numbered list");
-        optionOfNoteBlock.add("Toggle list");
+        optionOfNoteBlock.add("Toggle MD");
         //optionOfNoteBlock.add("Quote");
         //optionOfNoteBlock.add("Divider");
         optionOfNoteBlock.add("Link to page");
@@ -214,7 +213,6 @@ public class NoteBlock extends HBox implements Serializable {
         for(int i =0;i<mdPageController.noteBlocksVector.size();i++){
             if (mdPageController.noteBlocksVector.get(i).id == id){
                 mdPageController.noteBlocksVector.set(i,this);
-                System.out.println("update ["+mdPageController.noteBlocksVector.get(i).subn.context+"] update ");
             }
         }
     }
@@ -423,35 +421,55 @@ public class NoteBlock extends HBox implements Serializable {
                 hBox = new HBox(listView);
             }
 
-            case "Toggle list" -> {
-                subn = new NoteBlock();
-                subn.deleteButton.setText(">");
-                subn.upButton.setVisible(false);
-                subn.downButton.setVisible(false);
-                subn.deleteButton.setOnAction((e)-> {
-                    subn.getChildren().forEach((node)->node.setVisible(!node.isVisible()));
-                    subn.deleteButton.setVisible(true);
-                    subn.upButton.setVisible(false);
-                    subn.downButton.setVisible(false);
-
-                });
-                //subHeading = new TextField();
-                if(context!=null) {
-                    String[] strings = context.split("\n", 2);
-                    System.out.printf("name:%s %n", strings[0]);
-                    if(strings.length>1) {
-                        //if(strings.length>2)
-                        subn.context = strings[1];
-                        //subHeading.setText(strings[1]);
-                        subn.create(strings[0]);
-                    }
+            case "Toggle MD" -> {
+                String[] contexts = {"Title","context"};
+                if(context!=null){
+                    contexts = context.split("\n",2);
                 }
+
+                TextField subHeading = new TextField(contexts[0]);
+                subHeading.setFont(new Font(24));
+                Button togButton = new Button(">");
+                togButton.setStyle("-fx-background-color:#2d3c45;-fx-text-fill: white;");
                 update();
-                // subHeading.addEventHandler(InputEvent.ANY,(e)->{});
+                subHeading.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: white; -fx-text-fill: white; ");
+                TextArea lTextArea;
+
+                lTextArea = new TextArea(contexts[1]);
+
+                lTextArea.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: white; -fx-text-fill: white; ");
+                TextFlow rTextFlow = new TextFlow();
+                lTextArea.setPrefSize(400,100);
+                rTextFlow.setPrefSize(500,100);
+                HBox subHBox = new HBox(togButton,lTextArea,rTextFlow);
+                subHeading.addEventHandler(InputEvent.ANY,(e)->{
+                    context = subHeading.getText()+"\n"+lTextArea.getText();
+                });
+                togButton.setOnAction((e)->{
+                    lTextArea.setVisible(!lTextArea.isVisible());
+                    rTextFlow.setVisible(!rTextFlow.isVisible());
+                });
+                mdUpdate(lTextArea,rTextFlow);
+                context = subHeading.getText()+"\n"+lTextArea.getText();
+                lTextArea.addEventHandler(InputEvent.ANY,(event)->{
+                    String stat =event.getEventType().getName();
+                    switch (stat){
+                        case "MOUSE_ENTERED"->{
+                            lTextArea.setPrefSize(400,100);
+                            rTextFlow.setPrefSize(500,100);
+                        }
+                        case "MOUSE_EXITED"->{
+                            lTextArea.setPrefSize(100,100);
+                            rTextFlow.setPrefSize(500,100);
+                        }
+                    }
+                    mdUpdate(lTextArea,rTextFlow);
+                    context = subHeading.getText()+"\n"+lTextArea.getText();
+                });
                 // subHeading.setPrefWidth(200);
                 // subHeading.setStyle("-fx-background-color:#2d3c45;-fx-text-fill: white;");
 
-                hBox = new HBox(subn);
+                hBox = new HBox(new VBox(subHeading,subHBox));
             }
 
             case "Link to page" -> {
