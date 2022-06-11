@@ -120,14 +120,9 @@ public class Controller {
                             case 4 -> {filePathName = "greenLine.txt";}
                         }
 
-
-
                         InputStreamReader reader = new InputStreamReader(new FileInputStream(new File(Main.importPath + filePathName)));
                         BufferedReader bufferedReader = new BufferedReader(reader);
-                        /*
-                        String readLine = bufferedReader.readLine();//width
-                        readLine = bufferedReader.readLine();//height
-                        readLine = bufferedReader.readLine();*/
+
                         String readLine = "";
 
                         System.out.println("w: " + bufferedReader.readLine());
@@ -176,35 +171,6 @@ public class Controller {
 
                             readLine = bufferedReader.readLine();
                         }
-
-                        /*
-                        while(readLine != null) {
-
-                            System.out.println("readline " + readLine);
-
-                            int index[] = new int[3];
-                            int curIndex = 0;
-                            for(int j=0; j<readLine.length(); j++) {
-                                if(readLine.charAt(j)=='|') {
-                                    index[curIndex] = j;
-                                    curIndex++;
-                                }
-                            }
-
-
-                            int curWidth = Integer.parseInt(readLine.substring(0, index[0]));
-                            int curHeight = Integer.parseInt(readLine.substring(index[0]+1, index[1]));
-                            String lineColor = readLine.substring(index[1]+1, index[2]);
-                            String name = readLine.substring(index[2]+1, readLine.length());
-
-                            ImageView tempImageView = new ImageView(new Image(Main.importPath + "red.png"));
-                            System.out.println("save path: " + Main.importPath + "red.png");
-                            tempImageView.setFitHeight(90);
-                            tempImageView.setFitWidth(90);
-                            desktop.add(tempImageView, curWidth, curHeight);
-
-                            readLine = bufferedReader.readLine();
-                        }*/
 
                     }
 
