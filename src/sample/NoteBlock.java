@@ -529,18 +529,19 @@ public class NoteBlock extends HBox implements Serializable {
             if (line.startsWith("#")) {
                 if (line.startsWith("###")) {
                     text.setText(line.substring(3));
-                    text.setFont(Font.font("", FontWeight.BOLD, 15));
+                    text.setFont(Font.font("", FontWeight.BOLD, 24));
 
                 } else if (line.startsWith("##")) {
                     text.setText(line.substring(2));
-                    text.setFont(Font.font("", FontWeight.BOLD, 20));
+                    text.setFont(Font.font("", FontWeight.BOLD, 36));
                 } else {
                     text.setText(line.substring(1));
-                    text.setFont(Font.font("", FontWeight.BOLD, 30));
+                    text.setFont(Font.font("", FontWeight.BOLD,48));
                 }
 
             } else {
                 text.setText(line);
+                text.setFont(new Font(16));
             }
             text.setFill(Color.WHITE);
             rTextFlow.getChildren().add(text);
@@ -583,14 +584,20 @@ public class NoteBlock extends HBox implements Serializable {
                         rTextFlow.getChildren().add(text);
                         continue;
                     }
+                    text.setFont(new Font(16));
                     for (int i = 0; i < 8; i++) {
                         for (String keyword : javaKeyword[i]) {
                             if (word.equals(keyword)) {
                                 text.setFill(colors.get(i));
                                 break;
                             }
+                            else if(word.contains(keyword)){
+                                word.indexOf(keyword);
+
+                            }
                         }
                     }
+
                     rTextFlow.getChildren().add(text);
                 }
 
