@@ -49,31 +49,6 @@ public class startPageController {
         Main.importPath = jFileChooser.getSelectedFile() + "\\";
         System.out.println(Main.importPath);
 
-        /*
-        if(Main.importPath != null) {
-            try {
-
-                String [] fileName = new String[5];
-                fileName[0] = "redLine.txt";
-                fileName[1] = "blueLine.txt";
-                fileName[2] = "yellowLine.txt";
-                fileName[3] = "orangeLine.txt";
-                fileName[4] = "greenLine.txt";
-
-                for(int i=0; i<5; i++) {
-                    InputStreamReader reader = new InputStreamReader(new FileInputStream(new File(Main.importPath + fileName[i])));
-                    BufferedReader bufferedReader = new BufferedReader(reader);
-                    String readLine = bufferedReader.readLine();
-                    while(readLine != null) {
-                        System.out.println(readLine);
-                        readLine = bufferedReader.readLine();
-                    }
-                    System.out.println("------------");
-                }
-
-            } catch(Exception e) {}
-        }*/
-
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
 
         try {
