@@ -6,15 +6,19 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -165,9 +169,17 @@ public class Controller {
 
                             ImageView tempImageView = new ImageView(new Image(Main.importPath + photoColorName));
                             System.out.println("save path: " + Main.importPath + "red.png");
-                            tempImageView.setFitHeight(75);
-                            tempImageView.setFitWidth(75);
-                            desktop.add(tempImageView, curWidth, curHeight);
+                            tempImageView.setFitHeight(120);
+                            tempImageView.setFitWidth(120);
+                            tempImageView.setOnMouseClicked(new stationPressedHandler());
+                            Label displayName = new Label(name);
+                            displayName.setFont(new Font("Arial", 24));
+                            displayName.setAlignment(Pos.BOTTOM_CENTER);
+                            displayName.setPrefSize(120, 25);
+                            desktop.add(new VBox(tempImageView, displayName), curWidth*3, curHeight*3);
+
+                            allStationImageView.add(tempImageView);
+                            Main.allTerminal.add(new Terminal(name));
 
                             readLine = bufferedReader.readLine();
                         }
@@ -271,31 +283,36 @@ public class Controller {
         initMRT();
         searchTerminalTextField.setText("Type to search the station");
         scrollPane = desktopScrollPane;
-        Building.init();
-        for(int i =0;i<27;i++){
-            for (int j =0; j<27; j++) {
-                boolean flag = false;
-                for(ImageView imgv :allStationImageView){
-                    if(j == GridPane.getColumnIndex(imgv)&&(i-GridPane.getRowIndex(imgv)>=-1&&i-GridPane.getRowIndex(imgv)<=1)) {
-                        //System.out.println("station at I:"+i+" J:"+j);
-                        flag = true;
-                        break;
+
+        if(Main.ifImport) {
+
+        } else {
+            Building.init(); //?
+            for(int i =0;i<27;i++){
+                for (int j =0; j<27; j++) {
+                    boolean flag = false;
+                    for(ImageView imgv :allStationImageView){
+                        if(j == GridPane.getColumnIndex(imgv)&&(i-GridPane.getRowIndex(imgv)>=-1&&i-GridPane.getRowIndex(imgv)<=1)) {
+                            //System.out.println("station at I:"+i+" J:"+j);
+                            flag = true;
+                            break;
+                        }
                     }
-                }
-                for(Pair<Integer,Integer> pair : Building.Road){
-                    if(j== pair.getKey()&&i== pair.getValue()){
-                        flag = true;
-                        break;
+                    for(Pair<Integer,Integer> pair : Building.Road){
+                        if(j== pair.getKey()&&i== pair.getValue()){
+                            flag = true;
+                            break;
+                        }
                     }
+                    Building.buildingMat[i][j] = new Building(1);
+                    ImageView temp = new ImageView(Building.buildingMat[i][j].img);
+                    temp.setFitHeight(60);
+                    temp.setFitWidth(60);
+                    if(!flag) desktop.add(temp,j,i);
+
                 }
-                Building.buildingMat[i][j] = new Building(1);
-                ImageView temp = new ImageView(Building.buildingMat[i][j].img);
-                temp.setFitHeight(60);
-                temp.setFitWidth(60);
-                if(!flag) desktop.add(temp,j,i);
 
             }
-
         }
 
     }
@@ -340,6 +357,56 @@ public class Controller {
         fullScene = !fullScene;
     }
 
+    class stationPressedHandler implements EventHandler<MouseEvent> {
+        @Override
+        public void handle(MouseEvent event) {
+            int index = allStationImageView.indexOf((ImageView) event.getSource());
+            System.out.println(((ImageView) event.getSource()).getId());
+            TerminalController.setCurTerminal(Main.allTerminal.get(index));
+            System.out.println("curterminal: " + Main.allTerminal.get(index).getName());
+            mdPageController.curTerminal = Main.allTerminal.get(index);
+            //root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("terminalpage.fxml")));
+
+            try {
+                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("mdPage.fxml")));
+            } catch (Exception e) {}
+
+
+            desktopBorderPane.getChildren().add(root);
+
+
+            root.translateYProperty().set(((Node) (event.getSource())).getScene().getHeight() - desktopToolBar.getHeight());
+            //System.out.println(desktopToolBar.getHeight());
+            Button terminalPageReturn = new Button();
+            terminalPageReturn.setText("Return");
+            terminalPageReturn.setOnAction(actionEvent -> {
+                try {
+                    mdPageController.save();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                desktopBorderPane.getChildren().remove(root);
+                desktopBorderPane.setTop(new VBox(desktopToolBar, searchTerminalTextField));
+                searchTerminalTextField.setText("Type to search the station");
+            });
+
+            Timeline timeline = new Timeline();
+            KeyValue kv = new KeyValue(root.translateYProperty(), desktopToolBar.getHeight(), Interpolator.EASE_IN);
+            KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+            timeline.getKeyFrames().add(kf);
+            timeline.setOnFinished(t -> {
+                //System.out.println("here");
+                desktopBorderPane.setTop(new ToolBar(terminalPageReturn));
+            });
+            try {
+                mdPageController.read();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            timeline.play();
+        }
+    }
     @FXML
     void StationPressed(MouseEvent event) throws IOException {
         int index = allStationImageView.indexOf((ImageView) event.getSource());
@@ -549,6 +616,16 @@ public class Controller {
         for(ImageView imageView: vehicleImages){
             carPane.getChildren().add(imageView);
         }
+
+    }
+
+    @FXML
+    void returnToStartPage(ActionEvent event) {
+
+        try {
+            Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("startPage.fxml")))));
+        } catch (Exception e) {}
 
     }
 
