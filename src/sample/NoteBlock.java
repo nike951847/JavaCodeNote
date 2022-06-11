@@ -263,6 +263,8 @@ public class NoteBlock extends HBox implements Serializable {
                 lTextArea.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: #66fff7; -fx-text-fill: white; ");
                 //TextArea rTextArea = new TextArea("Preview Markdown");
                 TextFlow rTextFlow = new TextFlow();
+                rTextFlow.setStyle("-fx-background-color:#2d3c45;");
+
                 //rTextFlow.setEditable(false);
                 lTextArea.setPrefSize(400,100);
                 rTextFlow.setPrefSize(500,100);
@@ -277,7 +279,7 @@ public class NoteBlock extends HBox implements Serializable {
                         }
                         case "MOUSE_EXITED"->{
                             lTextArea.setPrefSize(100,100);
-                            rTextFlow.setPrefSize(500,100);
+                            rTextFlow.setPrefSize(800,100);
                         }
                     }
                     mdUpdate(lTextArea,rTextFlow);
@@ -293,15 +295,23 @@ public class NoteBlock extends HBox implements Serializable {
 
                 TextFlow rTextFlow = new TextFlow();
                 lTextArea.setPrefSize(400,100);
-                rTextFlow.setPrefSize(400,100);
+                rTextFlow.setStyle("-fx-background-color:#2d3c45;");
+                rTextFlow.setPrefSize(500,100);
                 codeUpdate(lTextArea,rTextFlow);
                 hBox = new HBox(lTextArea,rTextFlow);
 
                 lTextArea.addEventHandler(InputEvent.ANY,(event)->{
                     String stat =event.getEventType().getName();
                     switch (stat){
-                        case "MOUSE_ENTERED"-> lTextArea.setPrefSize(400,100);
-                        case "MOUSE_EXITED"-> lTextArea.setPrefSize(100,100);
+                        case "MOUSE_ENTERED"-> {
+                            lTextArea.setPrefSize(400,100);
+                            rTextFlow.setPrefSize(500,100);
+
+                        }
+                        case "MOUSE_EXITED"-> {
+                            lTextArea.setPrefSize(100,100);
+                            rTextFlow.setPrefSize(800,100);
+                        }
                     }
 
                     codeUpdate(lTextArea,rTextFlow);
@@ -441,6 +451,8 @@ public class NoteBlock extends HBox implements Serializable {
                 TextFlow rTextFlow = new TextFlow();
                 lTextArea.setPrefSize(400,100);
                 rTextFlow.setPrefSize(500,100);
+                rTextFlow.setStyle("-fx-background-color:#2d3c45;");
+
                 HBox subHBox = new HBox(togButton,lTextArea,rTextFlow);
                 subHeading.addEventHandler(InputEvent.ANY,(e)->{
                     context = subHeading.getText()+"\n"+lTextArea.getText();
@@ -460,7 +472,7 @@ public class NoteBlock extends HBox implements Serializable {
                         }
                         case "MOUSE_EXITED"->{
                             lTextArea.setPrefSize(100,100);
-                            rTextFlow.setPrefSize(500,100);
+                            rTextFlow.setPrefSize(800,100);
                         }
                     }
                     mdUpdate(lTextArea,rTextFlow);

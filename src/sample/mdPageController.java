@@ -148,10 +148,10 @@ public class mdPageController {
         String s = System.getProperty("user.dir");
         Image img;
         if(s.charAt(s.length()-1)=='c'){
-            img = new Image("file:sample/photo/cover/" + "temp" + ".jpg");
+            img = new Image("file:sample/photo/cover/" + "temp"+((int) proficiencyProgressBar.getProgress()*4.99)+ ".jpg");
         }
         else{
-            img = new Image("file:src/sample/photo/cover/" + "temp" + ".jpg");
+            img = new Image("file:src/sample/photo/cover/" + "temp"+((int) proficiencyProgressBar.getProgress()*4.99) + ".jpg");
         }
         imageView.setImage(img);
         System.out.println(imageView.getFitHeight());
@@ -175,23 +175,44 @@ public class mdPageController {
                     if (proficiencyProgressBar.getProgress() < calculateProficiencyPercentage()) {
                         proficiencyProgressBar.setProgress(proficiencyProgressBar.getProgress() + 0.01);
                         proficiencyProgressIndicator.setProgress(proficiencyProgressIndicator.getProgress() + 0.01);
+                        Image img;
+                        String s = System.getProperty("user.dir");
+
+                        if(s.charAt(s.length()-1)=='c'){
+                            img = new Image("file:sample/photo/cover/" + "temp"+(int)( proficiencyProgressBar.getProgress()*4.99)+ ".jpg");
+                        }
+                        else{
+                            img = new Image("file:src/sample/photo/cover/" + "temp"+(int) (proficiencyProgressBar.getProgress()*4.99) + ".jpg");
+                        }
+                        imageView.setImage(img);
                     }
                 }
             }
         }));
         proficiencyProgressBarTimelineAnimation.setCycleCount(Timeline.INDEFINITE);
 
-        new Thread(() -> {
+        /*new Thread(() -> {
             while(true) {
                 try {
                     double temp = calculateProficiencyPercentage();
 
                     proficiencyProgressBar.setProgress(temp);
                     proficiencyProgressIndicator.setProgress(temp);
+                    String s = System.getProperty("user.dir");
+                    Image img;
+                    if(s.charAt(s.length()-1)=='c'){
+                        img = new Image("file:sample/photo/cover/" + "temp"+((int) proficiencyProgressBar.getProgress()*4.99)+ ".jpg");
+                    }
+                    else{
+                        img = new Image("file:src/sample/photo/cover/" + "temp"+((int) proficiencyProgressBar.getProgress()*4.99) + ".jpg");
+                    }
+                    imageView.setImage(img);
+                    System.out.println(((int) proficiencyProgressBar.getProgress()*4.99));
                     Thread.sleep(500);
-                } catch (InterruptedException e) {}
+
+                } catch (InterruptedException ignored) {}
             }
-        }).start();
+        }).start();*/
     }
 
     //set up menu
@@ -235,7 +256,16 @@ public class mdPageController {
     }
 
     private double calculateProficiencyPercentage() {
-        return 0;
+        int Max = 100;
+        double sum = 0;
+        for(NoteBlock n:noteBlocksVector){
+            sum += 1;
+
+            if(n.name.equals("Code")) sum+=3;
+            if(n.context!=null)sum += n.context.length()*0.1;
+        }
+        if (sum >=Max) sum = Max;
+        return sum/Max;
         /*
         double returnValue = 1.0;
         returnValue /= Math.sqrt(noteBlocksVector.size());
