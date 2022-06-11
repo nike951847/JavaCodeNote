@@ -45,10 +45,24 @@ public class mdPageController {
     public static void save() throws FileNotFoundException {
         System.out.println("save "+noteBlocksVector.size()+"blocks");
         //File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/swp");
-        try (
-                FileOutputStream fos = new FileOutputStream("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/swp");
-                ObjectOutputStream oos = new ObjectOutputStream(fos)
-        ) {
+        try {
+            FileOutputStream fos = new FileOutputStream("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/swp");
+
+            String folderPath = Main.importPath + "/swp";
+            if(Main.ifImport) {
+
+                if(new File(folderPath).mkdir()) {
+                    System.out.println("create folder in mdPage");
+                } else {
+                    //already exist
+                    System.out.println("mdPage cannot create folder or already exist");
+                }
+                fos = new FileOutputStream(folderPath);
+            }
+
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+
             for(NoteBlock noteBlock: noteBlocksVector) {
                 if(noteBlock.name.equals("Toggle list")){
                     //noteBlock.context = noteBlock.subn.name+"\n"+noteBlock.subHeading.getText()+"\n"+noteBlock.subn.context;
@@ -67,11 +81,14 @@ public class mdPageController {
     }
     public static void read() throws FileNotFoundException {
         noteBlocksVector.clear();
-        try (
-                FileInputStream fis = new FileInputStream("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/swp");
-                ObjectInputStream ois = new ObjectInputStream(fis)
+        try {
 
-        ) {
+            FileInputStream fis = new FileInputStream("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/swp");
+            if(Main.ifImport) {
+                fis = new FileInputStream(Main.importPath + "/swp");
+            }
+            ObjectInputStream ois = new ObjectInputStream(fis);
+
             Object o;
             while ((o=ois.readObject())!=null){
                 noteBlocksVector.add(new NoteBlock((NoteBlock) o));

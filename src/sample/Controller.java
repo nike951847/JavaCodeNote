@@ -108,6 +108,7 @@ public class Controller {
         }
         //set all station to a vector
         if(Main.ifImport) {
+            Main.stationName.clear();
 
             if(Main.importPath != null) {
                 System.out.println("import path not null");
@@ -180,6 +181,7 @@ public class Controller {
 
                             allStationImageView.add(tempImageView);
                             Main.allTerminal.add(new Terminal(name));
+                            Main.stationName.add(name);
 
                             readLine = bufferedReader.readLine();
                         }
