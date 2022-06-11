@@ -84,6 +84,7 @@ public class Main extends Application {
     }
 
 
+
     //initialize proficiency percentage
     static {
         for(int i=0; i<stationNum; i++) {
@@ -101,13 +102,11 @@ public class Main extends Application {
         primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         primaryStage.setFullScreen(true);
         primaryStage.initStyle(StageStyle.DECORATED);
-
         //loading stage
         Stage loadingStage = new Stage();
         loadingStage.setTitle("Take Notes");
         ProgressBar progressBar = new ProgressBar(0);
         VBox vBox = new VBox(progressBar);
-
         vBox.getChildren().add(new Text("        LOADING"));
         Scene scene = new Scene(vBox);
         vBox.setPadding(new Insets(350, 100, 100, 550));
@@ -115,20 +114,15 @@ public class Main extends Application {
         loadingStage.show();
         loadingStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         loadingStage.setFullScreen(true);
-
         Thread taskThread = new Thread(() -> {
             double progress = 0;
-
             for (int i = 0; i < 100; i++) {
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
-
                 progress += 0.01;
-
                 double reportedProgress = progress;
                 Platform.runLater(() -> {
                     progressBar.setProgress(reportedProgress);
