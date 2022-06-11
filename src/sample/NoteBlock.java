@@ -37,7 +37,7 @@ public class NoteBlock extends HBox implements Serializable {
     protected String context;
     protected boolean needSave;
     protected int id;
-
+    protected transient TextField subHeading;
     private int bulletedListRowCount = 0;
     private int numberedListRowCount = 0;
     //set up optionOfNoteBlock
@@ -126,7 +126,7 @@ public class NoteBlock extends HBox implements Serializable {
         optionOfNoteBlock.add("Table");
         optionOfNoteBlock.add("Bullet list");
         optionOfNoteBlock.add("Numbered list");
-        optionOfNoteBlock.add("Toggle list");
+        optionOfNoteBlock.add("Toggle MD");
         //optionOfNoteBlock.add("Quote");
         //optionOfNoteBlock.add("Divider");
         optionOfNoteBlock.add("Link to page");
@@ -135,27 +135,32 @@ public class NoteBlock extends HBox implements Serializable {
     NoteBlock(){
 
         id = new Random().nextInt();
-        this.setSpacing(10);
+        this.setSpacing(1);
         this.setHeight(150);
         needSave = true;
         comboBox = new ComboBox<>();
         for(String str: optionOfNoteBlock) comboBox.getItems().add(str);
         deleteButton = new Button("X");
+        deleteButton.setStyle("-fx-background-color:#2d3c45;-fx-text-fill: white;");
+        comboBox.setStyle("-fx-background-color:#2d3c45;-fx-text-fill: white;");
+        comboBox.setMaxWidth(30);
         upDownInit();
         hBox = new HBox();
         comboBox.setOnAction(e -> {
             create(comboBox.getValue());
         });
         deleteButton.setOnAction(e -> {
-                needSave = false;
-                update();
-
-                for(NoteBlock n : mdPageController.noteBlocksVector){
-                    if(n.id == id){
-                        mdPageController.staticBlockDisplayVBox.getChildren().removeAll(n);
-                        mdPageController.noteBlocksVector.remove(n);
-                    }
+            needSave = false;
+            update();
+            NoteBlock n =  this;
+            for(NoteBlock block : mdPageController.noteBlocksVector){
+                if(block.id == id){
+                    n = block;
+                    break;
                 }
+            }
+            mdPageController.staticBlockDisplayVBox.getChildren().removeAll(n);
+            mdPageController.noteBlocksVector.remove(n);
         });
         this.getChildren().add(deleteButton);
         this.getChildren().add(new VBox(upButton,downButton));
@@ -163,12 +168,16 @@ public class NoteBlock extends HBox implements Serializable {
         this.getChildren().add(hBox);
     }
     NoteBlock(NoteBlock noteBlock){
-        this.setSpacing(10);
+        this.setSpacing(1);
         this.setHeight(150);
         comboBox = new ComboBox<>();
         for(String str: optionOfNoteBlock) comboBox.getItems().add(str);
         comboBox.getSelectionModel().select(optionOfNoteBlock.indexOf(noteBlock.name));
         deleteButton = new Button("X");
+        deleteButton.setStyle("-fx-background-color:#2d3c45;-fx-text-fill: white;");
+        comboBox.setStyle("-fx-background-color:#2d3c45;-fx-text-fill: white;");
+        comboBox.setMaxWidth(30);
+
         hBox = new HBox();
         needSave = true;
         id = noteBlock.id;
@@ -180,15 +189,16 @@ public class NoteBlock extends HBox implements Serializable {
         });
         deleteButton.setOnAction(e -> {
             needSave = false;
-            this.setSpacing(0);
-            this.setHeight(0);
             update();
-            for(NoteBlock n : mdPageController.noteBlocksVector){
-                if(n.id == id){
-                    mdPageController.staticBlockDisplayVBox.getChildren().removeAll(n);
-                    mdPageController.noteBlocksVector.remove(n);
+            NoteBlock n = this;
+            for(NoteBlock block : mdPageController.noteBlocksVector){
+                if(block.id == id){
+                    n = block;
+                    break;
                 }
             }
+            mdPageController.staticBlockDisplayVBox.getChildren().removeAll(n);
+            mdPageController.noteBlocksVector.remove(n);
         });
 
         this.getChildren().add(deleteButton);
@@ -203,12 +213,6 @@ public class NoteBlock extends HBox implements Serializable {
         for(int i =0;i<mdPageController.noteBlocksVector.size();i++){
             if (mdPageController.noteBlocksVector.get(i).id == id){
                 mdPageController.noteBlocksVector.set(i,this);
-                /*
-                n.context = context;
-                n.needSave = needSave;
-                n.name = name;
-
-                 */
             }
         }
     }
@@ -244,12 +248,13 @@ public class NoteBlock extends HBox implements Serializable {
 
             });
         }
-
+        comboBox.getSelectionModel().select(type);
 
 
 
         for(String str: optionOfNoteBlock) comboBox.getItems().add(str);
         this.getChildren().remove(hBox);
+
         name = type;
         switch (type) {
             case "Markdown" -> {
@@ -346,7 +351,7 @@ public class NoteBlock extends HBox implements Serializable {
                         textField.setText(Objects.requireNonNullElse(context, "Heading 3"));
                         textField.setFont(Font.font("Verdana", FontWeight.BOLD, 20));}
                 }
-                textField.setOnAction(e2 -> {
+                textField.addEventHandler(InputEvent.ANY,(event)->{
                     Text textForCount = new Text(textField.getText());
                     textForCount.setFont(textField.getFont());
                     context = textField.getText();
@@ -380,7 +385,6 @@ public class NoteBlock extends HBox implements Serializable {
                     }
                 });
                 hBox = new HBox(listView);
-                break;
             }
 
             case "Numbered list" -> {
@@ -415,12 +419,57 @@ public class NoteBlock extends HBox implements Serializable {
                 });
 
                 hBox = new HBox(listView);
-                break;
             }
 
-            case "Toggle list" -> {
+            case "Toggle MD" -> {
+                String[] contexts = {"Title","context"};
+                if(context!=null){
+                    contexts = context.split("\n",2);
+                }
 
-                hBox = new HBox();
+                TextField subHeading = new TextField(contexts[0]);
+                subHeading.setFont(new Font(24));
+                Button togButton = new Button(">");
+                togButton.setStyle("-fx-background-color:#2d3c45;-fx-text-fill: white;");
+                update();
+                subHeading.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: white; -fx-text-fill: white; ");
+                TextArea lTextArea;
+
+                lTextArea = new TextArea(contexts[1]);
+
+                lTextArea.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: white; -fx-text-fill: white; ");
+                TextFlow rTextFlow = new TextFlow();
+                lTextArea.setPrefSize(400,100);
+                rTextFlow.setPrefSize(500,100);
+                HBox subHBox = new HBox(togButton,lTextArea,rTextFlow);
+                subHeading.addEventHandler(InputEvent.ANY,(e)->{
+                    context = subHeading.getText()+"\n"+lTextArea.getText();
+                });
+                togButton.setOnAction((e)->{
+                    lTextArea.setVisible(!lTextArea.isVisible());
+                    rTextFlow.setVisible(!rTextFlow.isVisible());
+                });
+                mdUpdate(lTextArea,rTextFlow);
+                context = subHeading.getText()+"\n"+lTextArea.getText();
+                lTextArea.addEventHandler(InputEvent.ANY,(event)->{
+                    String stat =event.getEventType().getName();
+                    switch (stat){
+                        case "MOUSE_ENTERED"->{
+                            lTextArea.setPrefSize(400,100);
+                            rTextFlow.setPrefSize(500,100);
+                        }
+                        case "MOUSE_EXITED"->{
+                            lTextArea.setPrefSize(100,100);
+                            rTextFlow.setPrefSize(500,100);
+                        }
+                    }
+                    mdUpdate(lTextArea,rTextFlow);
+                    context = subHeading.getText()+"\n"+lTextArea.getText();
+                });
+                // subHeading.setPrefWidth(200);
+                // subHeading.setStyle("-fx-background-color:#2d3c45;-fx-text-fill: white;");
+
+                hBox = new HBox(new VBox(subHeading,subHBox));
             }
 
             case "Link to page" -> {
@@ -440,7 +489,6 @@ public class NoteBlock extends HBox implements Serializable {
                     }
                 });
                 hBox = new HBox(textArea);
-                break;
             }
 
             case "Callout" -> {
@@ -460,7 +508,6 @@ public class NoteBlock extends HBox implements Serializable {
                 Label label = new Label( new String(new byte[]{(byte)0xF0, (byte)0x9F, (byte)0x92, (byte)0xA1}, Charset.forName("UTF-8")));
                 label.setFont(Font.font("Verdana", FontWeight.BOLD, 25));
                 hBox = new HBox(label, textArea);
-                break;
             }
 
             default -> {break;}
@@ -558,6 +605,8 @@ public class NoteBlock extends HBox implements Serializable {
     private void upDownInit(){
         upButton = new Button("▲");
         downButton = new Button("▼");
+        upButton.setStyle("-fx-background-color:#2d3c45;-fx-text-fill: white;");
+        downButton.setStyle("-fx-background-color:#2d3c45;-fx-text-fill: white;");
         upButton.setOnAction((e)->{
             for(int i =0;i<mdPageController.noteBlocksVector.size();i++){
                 if(mdPageController.noteBlocksVector.get(i).id == id){
@@ -566,7 +615,7 @@ public class NoteBlock extends HBox implements Serializable {
                 }
             }
         });
-        upButton.setOnAction((e)->{
+        downButton.setOnAction((e)->{
             for(int i =0;i<mdPageController.noteBlocksVector.size();i++){
                 if(mdPageController.noteBlocksVector.get(i).id == id) {
                     mdPageController.blockDown(i);

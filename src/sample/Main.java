@@ -110,8 +110,6 @@ public class Main extends Application {
         primaryStage.setFullScreen(true);
         primaryStage.initStyle(StageStyle.DECORATED);
 
-//
-
         //loading stage
         Stage loadingStage = new Stage();
         loadingStage.setTitle("Take Notes");
@@ -150,7 +148,7 @@ public class Main extends Application {
             }
 
         });
-        taskThread.start();*/
+        taskThread.start();
     }
 
 

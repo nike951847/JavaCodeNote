@@ -50,6 +50,10 @@ public class mdPageController {
                 ObjectOutputStream oos = new ObjectOutputStream(fos)
         ) {
             for(NoteBlock noteBlock: noteBlocksVector) {
+                if(noteBlock.name.equals("Toggle list")){
+                    //noteBlock.context = noteBlock.subn.name+"\n"+noteBlock.subHeading.getText()+"\n"+noteBlock.subn.context;
+                    System.out.printf("save %s %n",noteBlock.context);
+                }
                 System.out.println(noteBlock.context);
                 if(noteBlock.needSave)oos.writeObject(noteBlock);
                 System.out.println(noteBlock+" "+noteBlock.needSave);
@@ -274,13 +278,13 @@ public class mdPageController {
         return (returnValue > 1.0)? 1-(1.0/returnValue): (1-returnValue);
     }
     protected static void blockDown(int n){
+        System.out.println(n);
         if(n==noteBlocksVector.size()-1) return;
 
-        System.out.println(n);
         staticBlockDisplayVBox.getChildren().remove(3,3+noteBlocksVector.size());
-        NoteBlock temp = noteBlocksVector.get(n-1);
-        noteBlocksVector.set(n-1,noteBlocksVector.get(n));
-        noteBlocksVector.set(n,temp);
+        NoteBlock temp = noteBlocksVector.get(n);
+        noteBlocksVector.set(n,noteBlocksVector.get(n+1));
+        noteBlocksVector.set(n+1,temp);
         for(NoteBlock N:noteBlocksVector){
             staticBlockDisplayVBox.getChildren().add(N);
         }
@@ -289,12 +293,10 @@ public class mdPageController {
     }
     protected static void blockUp(int n){
         if(n==0) return;
-
-        System.out.println(n);
         staticBlockDisplayVBox.getChildren().remove(3,3+noteBlocksVector.size());
-        NoteBlock temp = noteBlocksVector.get(n+1);
-        noteBlocksVector.set(n+1,noteBlocksVector.get(n));
-        noteBlocksVector.set(n,temp);
+        NoteBlock temp = noteBlocksVector.get(n);
+        noteBlocksVector.set(n,noteBlocksVector.get(n-1));
+        noteBlocksVector.set(n-1,temp);
         for(NoteBlock N:noteBlocksVector){
             staticBlockDisplayVBox.getChildren().add(N);
         }
