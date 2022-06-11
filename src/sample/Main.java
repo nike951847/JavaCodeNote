@@ -148,7 +148,7 @@ public class Main extends Application {
             }
 
         });
-        taskThread.start();
+        taskThread.start();*/
     }
 
 
