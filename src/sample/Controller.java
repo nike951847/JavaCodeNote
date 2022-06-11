@@ -92,14 +92,128 @@ public class Controller {
         //set background image
         String s = System.getProperty("user.dir");
         Image img;
-        if(s.charAt(s.length()-1)=='c'){
+
+        if(Main.ifImport) {
+            //need change to white background
+            img = new Image("file:sample/photo/" + "WhiteDesktopBackground" + ".png");
+        } else if(s.charAt(s.length()-1)=='c'){
             img = new Image("file:sample/photo/" + "DesktopBackground" + ".png");
         }
         else{
             img = new Image("file:src/sample/photo/" + "DesktopBackground" + ".png");
         }
         //set all station to a vector
-        {
+        if(Main.ifImport) {
+
+            if(Main.importPath != null) {
+                System.out.println("import path not null");
+                try {
+
+                    for(int i=0; i<5; i++) {
+
+                        String filePathName = "";
+                        switch (i) {
+                            case 0 -> {filePathName = "redLine.txt";}
+                            case 1 -> {filePathName = "blueLine.txt";}
+                            case 2 -> {filePathName = "yellowLine.txt";}
+                            case 3 -> {filePathName = "orangeLine.txt";}
+                            case 4 -> {filePathName = "greenLine.txt";}
+                        }
+
+
+
+                        InputStreamReader reader = new InputStreamReader(new FileInputStream(new File(Main.importPath + filePathName)));
+                        BufferedReader bufferedReader = new BufferedReader(reader);
+                        /*
+                        String readLine = bufferedReader.readLine();//width
+                        readLine = bufferedReader.readLine();//height
+                        readLine = bufferedReader.readLine();*/
+                        String readLine = "";
+
+                        System.out.println("w: " + bufferedReader.readLine());
+                        System.out.println("h: " + bufferedReader.readLine());
+
+                        readLine = bufferedReader.readLine();
+                        while(readLine != null) {
+                            System.out.println(readLine);
+
+                            int index[] = new int[3];
+                            int curIndex = 0;
+                            for(int j=0; j<readLine.length(); j++) {
+                                if(readLine.charAt(j)=='|') {
+                                    index[curIndex] = j;
+                                    curIndex++;
+                                }
+                            }
+
+                            if(index[1]==0  || index[2]==0) {
+                                System.out.println("index 0 and continue");
+                                continue;
+                            }
+
+                            int curWidth = Integer.parseInt(readLine.substring(0, index[0]));
+                            int curHeight = Integer.parseInt(readLine.substring(index[0]+1, index[1]));
+                            String lineColor = readLine.substring(index[1]+1, index[2]);
+                            String name = readLine.substring(index[2]+1, readLine.length());
+
+                            String photoColorName = "";
+                            //photoColorName = "red.png";
+
+                            switch (i) {
+                                case 0 -> {photoColorName = "red.png";}
+                                case 1 -> {photoColorName = "blue.png";}
+                                case 2 -> {photoColorName = "yellow.png";}
+                                case 3 -> {photoColorName = "orange.png";}
+                                case 4 -> {photoColorName = "green.png";}
+                            }
+
+
+                            ImageView tempImageView = new ImageView(new Image(Main.importPath + photoColorName));
+                            System.out.println("save path: " + Main.importPath + "red.png");
+                            tempImageView.setFitHeight(75);
+                            tempImageView.setFitWidth(75);
+                            desktop.add(tempImageView, curWidth, curHeight);
+
+                            readLine = bufferedReader.readLine();
+                        }
+
+                        /*
+                        while(readLine != null) {
+
+                            System.out.println("readline " + readLine);
+
+                            int index[] = new int[3];
+                            int curIndex = 0;
+                            for(int j=0; j<readLine.length(); j++) {
+                                if(readLine.charAt(j)=='|') {
+                                    index[curIndex] = j;
+                                    curIndex++;
+                                }
+                            }
+
+
+                            int curWidth = Integer.parseInt(readLine.substring(0, index[0]));
+                            int curHeight = Integer.parseInt(readLine.substring(index[0]+1, index[1]));
+                            String lineColor = readLine.substring(index[1]+1, index[2]);
+                            String name = readLine.substring(index[2]+1, readLine.length());
+
+                            ImageView tempImageView = new ImageView(new Image(Main.importPath + "red.png"));
+                            System.out.println("save path: " + Main.importPath + "red.png");
+                            tempImageView.setFitHeight(90);
+                            tempImageView.setFitWidth(90);
+                            desktop.add(tempImageView, curWidth, curHeight);
+
+                            readLine = bufferedReader.readLine();
+                        }*/
+
+                    }
+
+                } catch(Exception e) {}
+            } else {
+                System.out.println("import path is null");
+            }
+
+        } else {
             allStationImageView.add(openMPStation);//0
             allStationImageView.add(inheritanceStation);
             allStationImageView.add(polymorphismStation);
@@ -119,7 +233,10 @@ public class Controller {
             allStationImageView.add(algorithmStation);
             allStationImageView.add(graphStation);
         }
-        {
+
+        if(Main.ifImport) {
+
+        } else {
             for (int i = 0; i < Main.stationNum; i++) {
                 allStationImageView.get(i).setImage(Main.imageVector.get(i));
             }
@@ -134,11 +251,15 @@ public class Controller {
         }
 
         //set the point(x, y) of all terminal
-        {
+        if(Main.ifImport) {
+
+        } else {
             for (int i = 0; i < Main.stationNum; i++) {
                 Main.allTerminal.get(i).setPoint(GridPane.getColumnIndex(allStationImageView.get(i)), GridPane.getRowIndex(allStationImageView.get(i)));
             }
         }
+
+        //aaa here
 
         //check if the file exist, if not, create them
         {

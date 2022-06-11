@@ -26,6 +26,9 @@ public class Main extends Application {
     static public CentralTerminal centralTerminal = new CentralTerminal();
     static public Vector<Double> skillProficiencyDeTerminal = new Vector<>();
 
+    static public Boolean ifImport = false;
+    static public String importPath = "";
+
     /*
      * 0: OpenMPStation
      * 1: InheritanceStation
@@ -94,6 +97,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        primaryStage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("startPage.fxml")))));
+        primaryStage.show();
+
+
+        /*
         //primary stage
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("sample.fxml")));
         primaryStage.setTitle("EXAMPLE");
@@ -101,6 +109,8 @@ public class Main extends Application {
         primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         primaryStage.setFullScreen(true);
         primaryStage.initStyle(StageStyle.DECORATED);
+
+//
 
         //loading stage
         Stage loadingStage = new Stage();
@@ -140,7 +150,7 @@ public class Main extends Application {
             }
 
         });
-        taskThread.start();
+        taskThread.start();*/
     }
 
 
