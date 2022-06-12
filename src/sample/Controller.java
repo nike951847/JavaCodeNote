@@ -189,7 +189,6 @@ public class Controller {
                     }
                     Main.allTerminal.clear();
                     for(String str:Main.stationName){
-                        System.out.println("add :" +str);
                         Main.allTerminal.add(new Terminal(str));
                     }
                 } catch(Exception e) {}

@@ -34,7 +34,7 @@ public class mdPageController {
     private final ProgressBar proficiencyProgressBar;
     private final ProgressIndicator proficiencyProgressIndicator;
     static Terminal curTerminal;
-
+    private Button add;
     private final Menu fileMenu;
     private final Menu editMenu;
     private final Menu viewMenu;
@@ -104,6 +104,16 @@ public class mdPageController {
 
     @FXML
     public void initialize() {
+        add = new Button("+");
+        add.setStyle("-fx-background-color:#2d3c45;-fx-text-fill: white;");
+        add.setOnAction(e->{
+            NoteBlock noteBlock = new NoteBlock();
+            noteBlocksVector.add(noteBlock);
+            System.out.println("has inserted "+noteBlocksVector.size());
+            this.blockDisplayVBox.getChildren().add(noteBlock);
+            this.blockDisplayVBox.getChildren().remove(add);
+            this.blockDisplayVBox.getChildren().add(add);
+        });
         System.out.println(curTerminal.name+"wwwww");
         fileList.setMinWidth(150);
         staticBlockDisplayVBox = blockDisplayVBox;
@@ -174,6 +184,8 @@ public class mdPageController {
         }
         imageView.setImage(img);
         System.out.println(imageView.getFitHeight());
+        this.blockDisplayVBox.getChildren().add(add);
+
 
     }
 
