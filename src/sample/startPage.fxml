@@ -7,11 +7,11 @@
 <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.startPageController">
    <children>
       <Button fx:id="exitButton" layoutX="25.0" layoutY="555.0" mnemonicParsing="false" onAction="#exitPage" style="-fx-background-color: #17181c;" text="Exit" textFill="WHITE" />
-      <Button layoutX="193.0" layoutY="359.0" mnemonicParsing="false" onAction="#newPage" prefHeight="44.0" prefWidth="154.0" style="-fx-background-color: #17181c;" text="New" textFill="WHITE">
+      <Button layoutX="150.0" layoutY="359.0" mnemonicParsing="false" onAction="#newPage" prefHeight="44.0" prefWidth="210.0" style="-fx-background-color: #17181c;" text="Open Default" textFill="WHITE">
          <font>
             <Font size="22.0" />
          </font></Button>
-      <Button layoutX="430.0" layoutY="359.0" mnemonicParsing="false" onAction="#importButton" prefHeight="44.0" prefWidth="211.0" style="-fx-background-color: #17181c;" text="Import from local" textFill="WHITE">
+      <Button layoutX="450.0" layoutY="359.0" mnemonicParsing="false" onAction="#importButton" prefHeight="44.0" prefWidth="210.0" style="-fx-background-color: #17181c;" text="Customize" textFill="WHITE">
          <font>
             <Font size="22.0" />
          </font></Button>

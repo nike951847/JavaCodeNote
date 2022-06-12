@@ -4,6 +4,8 @@ package sample;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
@@ -16,6 +18,8 @@ import javafx.scene.text.TextFlow;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.io.Serializable;
 import java.nio.charset.Charset;
@@ -117,7 +121,7 @@ public class NoteBlock extends HBox implements Serializable {
         colors.add(Color.rgb(165, 237, 126));
         optionOfNoteBlock.add("Markdown");
         optionOfNoteBlock.add("Text");
-        //optionOfNoteBlock.add("Page");
+        optionOfNoteBlock.add("online Image");
         optionOfNoteBlock.add("Code");
         optionOfNoteBlock.add("To-do list");
         optionOfNoteBlock.add("Heading 1");
@@ -130,7 +134,7 @@ public class NoteBlock extends HBox implements Serializable {
         //optionOfNoteBlock.add("Quote");
         //optionOfNoteBlock.add("Divider");
         optionOfNoteBlock.add("Link to page");
-        optionOfNoteBlock.add("Callout");
+        //optionOfNoteBlock.add("Callout");
     }
     NoteBlock(){
 
@@ -266,7 +270,7 @@ public class NoteBlock extends HBox implements Serializable {
                 rTextFlow.setStyle("-fx-background-color:#2d3c45;");
 
                 //rTextFlow.setEditable(false);
-                lTextArea.setPrefSize(400,100);
+                lTextArea.setPrefSize(100,100);
                 rTextFlow.setPrefSize(500,100);
                 hBox = new HBox(lTextArea,rTextFlow);
                 mdUpdate(lTextArea,rTextFlow);
@@ -294,7 +298,7 @@ public class NoteBlock extends HBox implements Serializable {
                 lTextArea.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: #66fff7; -fx-text-fill: white; ");
 
                 TextFlow rTextFlow = new TextFlow();
-                lTextArea.setPrefSize(400,100);
+                lTextArea.setPrefSize(100,100);
                 rTextFlow.setStyle("-fx-background-color:#2d3c45;");
                 rTextFlow.setPrefSize(500,100);
                 codeUpdate(lTextArea,rTextFlow);
@@ -336,14 +340,17 @@ public class NoteBlock extends HBox implements Serializable {
 
             case "To-do list" -> {
                 //add an toggle switch here
+                TextArea textArea;
+                textArea = new TextArea(Objects.requireNonNullElse(context, ""));
+                textArea.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: #91ffef; -fx-text-fill: #91ffef; ");
 
-                TextField textField = new TextField("To-do");
-                textField.setPrefSize(50,20);//should be revised
-                textField.setOnAction(e2 -> {
-                    Text textForCount = new Text(textField.getText());
-                    textForCount.setFont(textField.getFont());
-                    textField.setPrefSize(textForCount.getBoundsInLocal().getWidth()*1.05+15,20);});
-                hBox = new HBox(new SwitchButton(), textField);
+                //TextField textField = new TextField("To-do");
+                textArea.setPrefSize(300,20);//should be revised
+                textArea.addEventHandler(InputEvent.ANY,e2 -> {
+                    context = textArea.getText();
+                    update();
+                });
+                hBox = new HBox(new SwitchButton(), textArea);
             }
 
             case "Heading 1" ,"Heading 2", "Heading 3" -> {
@@ -353,13 +360,13 @@ public class NoteBlock extends HBox implements Serializable {
                 switch (comboBox.getValue()) {
                     case "Heading 1" -> {
                         textField.setText(Objects.requireNonNullElse(context, "Heading 1"));
-                        textField.setFont(Font.font("Verdana", FontWeight.BOLD, 30));}
+                        textField.setFont(Font.font(30));}
                     case "Heading 2" -> {
                         textField.setText(Objects.requireNonNullElse(context, "Heading 2"));
-                        textField.setFont(Font.font("Verdana", FontWeight.BOLD, 25));}
+                        textField.setFont(Font.font(25));}
                     case "Heading 3" -> {
                         textField.setText(Objects.requireNonNullElse(context, "Heading 3"));
-                        textField.setFont(Font.font("Verdana", FontWeight.BOLD, 20));}
+                        textField.setFont(Font.font(20));}
                 }
                 textField.addEventHandler(InputEvent.ANY,(event)->{
                     Text textForCount = new Text(textField.getText());
@@ -446,14 +453,15 @@ public class NoteBlock extends HBox implements Serializable {
                 TextArea lTextArea;
 
                 lTextArea = new TextArea(contexts[1]);
-
+                subHeading.setPrefWidth(600);
                 lTextArea.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: white; -fx-text-fill: white; ");
                 TextFlow rTextFlow = new TextFlow();
-                lTextArea.setPrefSize(400,100);
+                lTextArea.setPrefSize(100,100);
                 rTextFlow.setPrefSize(500,100);
                 rTextFlow.setStyle("-fx-background-color:#2d3c45;");
 
-                HBox subHBox = new HBox(togButton,lTextArea,rTextFlow);
+                HBox subHBox = new HBox(lTextArea,rTextFlow);
+                subHBox.setSpacing(10);
                 subHeading.addEventHandler(InputEvent.ANY,(e)->{
                     context = subHeading.getText()+"\n"+lTextArea.getText();
                 });
@@ -480,14 +488,48 @@ public class NoteBlock extends HBox implements Serializable {
                 });
                 // subHeading.setPrefWidth(200);
                 // subHeading.setStyle("-fx-background-color:#2d3c45;-fx-text-fill: white;");
-
-                hBox = new HBox(new VBox(subHeading,subHBox));
+                VBox vBox = new VBox(new HBox(subHeading,togButton),subHBox);
+                vBox.setSpacing(10);
+                hBox = new HBox(vBox);
             }
-
-            case "Link to page" -> {
-                TextArea textArea = new TextArea("Input URL");
+            case "online Image" -> {
+                TextArea textArea;
+                if(context!=null) textArea = new TextArea(context);
+                else textArea = new TextArea("Input URL");
+                textArea.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: #91ffef; -fx-text-fill: #91ffef; ");
                 textArea.setEditable(true);
                 textArea.setPrefSize(300,23);
+                ImageView imageView = new ImageView();
+                try {
+                    Image img = new Image(textArea.getText());
+                    imageView.setImage(img);
+                }
+                catch (Exception ignored){
+                }
+                textArea.addEventHandler(InputEvent.ANY,(e)->{
+                    if(context.equals(textArea.getText())) return;
+                    context= textArea.getText();
+                    update();
+
+                    if(!context.startsWith("http"))return;
+                    try {
+                        Image img = new Image(textArea.getText());
+                        imageView.setImage(img);
+                    }
+                    catch (Exception ignored){
+                    }
+                });
+                hBox = new HBox(new VBox(textArea,imageView));
+            }
+            case "Link to page" -> {
+                TextArea textArea;
+                if(context!=null) textArea = new TextArea(context);
+                else textArea = new TextArea("Input URL");
+                textArea.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: #91ffef; -fx-text-fill: #91ffef; ");
+
+                textArea.setEditable(true);
+                textArea.setPrefSize(300,23);
+                textArea.addEventHandler(InputEvent.ANY,(e)->{context= textArea.getText(); update();});
                 textArea.setOnMouseClicked(e2 -> {
                     if(e2.getClickCount()==2) {
                         try {
