@@ -46,17 +46,17 @@ public class mdPageController {
         System.out.println("save "+noteBlocksVector.size()+"blocks");
         //File openFile = new File("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/swp");
         try {
-            FileOutputStream fos = new FileOutputStream("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/swp");
-
-            String folderPath = Main.importPath + "/swp";
-            if(Main.ifImport) {
-
+            FileOutputStream fos;
+            String folderPath = Main.importPath + "/swp/"+curTerminal.name.replace(' ','_')+".swp";
+            if(!Main.ifImport) fos = new FileOutputStream("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name.replace(' ','_') + "/swp");
+            else {
+                /*
                 if(new File(folderPath).mkdir()) {
                     System.out.println("create folder in mdPage");
                 } else {
                     //already exist
                     System.out.println("mdPage cannot create folder or already exist");
-                }
+                }*/
                 fos = new FileOutputStream(folderPath);
             }
 
@@ -83,9 +83,10 @@ public class mdPageController {
         noteBlocksVector.clear();
         try {
 
-            FileInputStream fis = new FileInputStream("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name + "/swp");
-            if(Main.ifImport) {
-                fis = new FileInputStream(Main.importPath + "/swp");
+            FileInputStream fis;
+            if(!Main.ifImport) fis = new FileInputStream("C:/Users/Public/Documents/JavaCodeNote/" + curTerminal.name.replace(' ','_') + "/swp");
+            else {
+                fis = new FileInputStream(Main.importPath + "/swp/"+curTerminal.name.replace(' ','_')+".swp");
             }
             ObjectInputStream ois = new ObjectInputStream(fis);
 
@@ -110,6 +111,7 @@ public class mdPageController {
         fileMenu.setStyle("-fx-text-fill: #45587a;");
         fileList.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: white; -fx-text-fill: white; ");
         for (String s : Main.stationName){
+            System.out.println("Main.stationName: "+s);
             Button b = new Button(s);
             b.setStyle("-fx-base:#2d3c45;-fx-control-inner-background:#2d3c45; -fx-highlight-fill: #2d3c45; -fx-highlight-text-fill: white; -fx-text-fill: white; ");
             b.setPrefWidth(140);

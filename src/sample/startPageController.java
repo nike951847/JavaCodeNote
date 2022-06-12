@@ -76,7 +76,7 @@ public class startPageController {
             stage.setFullScreen(true);
             stage.initStyle(StageStyle.DECORATED);
 
-        } catch(Exception e) {}
+        } catch(Exception ignored) {}
 
     }
 
@@ -99,7 +99,7 @@ public class startPageController {
 
     @FXML
     void exitPage(ActionEvent event) {
-        ((Stage)Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null)).close();
+        ((Stage) Objects.requireNonNull(Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null))).close();
     }
 
 }
