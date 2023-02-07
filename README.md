@@ -21,4 +21,4 @@ The application has multiple features that allow users to take notes by adding i
 &nbsp;
 
 We also build another project, which allow users to design their own homepage.  
-For more information: https://github.com/yushliu/MakerJavaCodeNote
+For more information: https://github.com/yushliu/JavaCodeNoteMaker
